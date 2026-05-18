@@ -1,0 +1,64 @@
+﻿/* =============================================
+   AVIVU — responsive.css
+   Media queries cho toàn bộ dự án
+   Tác giả: Thành viên C
+   ============================================= */
+
+/* ── TABLET (≤ 1024px) ──────────────────────── */
+@media (max-width: 1024px) {
+  :root { --container-pad: 20px; }
+
+  .categories-grid { grid-template-columns: repeat(4, 1fr); }
+  .tours-grid      { grid-template-columns: repeat(2, 1fr); }
+  .destinations-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+  .dest-card:first-child { grid-row: auto; }
+  .stats-grid      { grid-template-columns: repeat(2, 1fr); gap: var(--sp-8); }
+  .why-grid        { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid     { grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+}
+
+/* ── MOBILE (≤ 768px) ───────────────────────── */
+@media (max-width: 768px) {
+  .nav-links        { display: none; }
+  .hamburger        { display: flex; }
+
+  /* Mobile menu open */
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: fixed; top: 70px; left: 0; right: 0;
+    background: rgba(13,27,42,0.97);
+    padding: var(--sp-6);
+    gap: var(--sp-2);
+    z-index: 200;
+  }
+
+  .hero-search      { flex-direction: column; border-radius: var(--r-lg); }
+  .search-field     { border-right: none; border-bottom: 1px solid var(--border); width: 100%; }
+  .search-field:last-of-type { border-bottom: none; }
+  .btn-search       { width: 100%; justify-content: center; }
+
+  .categories-grid  { grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+  .category-icon    { width: 48px; height: 48px; font-size: 1.3rem; }
+
+  .tours-grid        { grid-template-columns: 1fr; }
+  .destinations-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .stats-grid        { grid-template-columns: repeat(2, 1fr); }
+  .why-grid          { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .footer-grid       { grid-template-columns: 1fr; }
+  .footer-bottom     { flex-direction: column; gap: var(--sp-3); text-align: center; }
+
+  .newsletter-form   { flex-direction: column; border-radius: var(--r-lg); padding: var(--sp-3); gap: var(--sp-3); }
+  .newsletter-form button { border-radius: var(--r-md); }
+
+  .hero-arrows       { display: none; }
+}
+
+/* ── SMALL MOBILE (≤ 480px) ─────────────────── */
+@media (max-width: 480px) {
+  :root { --container-pad: 16px; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid      { grid-template-columns: 1fr; }
+  .section         { padding: var(--sp-12) 0; }
+}
