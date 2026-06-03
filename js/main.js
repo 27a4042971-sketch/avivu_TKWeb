@@ -9,29 +9,43 @@ AOS.init({ duration: 700, once: true, offset: 60 });
 
 // ── NAVBAR SCROLL EFFECT ────────────────────────────────────────
 const navbar = document.getElementById('navbar');
+
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-  backToTop.classList.toggle('visible', window.scrollY > 400);
+  if (navbar) {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+
+  if (backToTop) {
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+  }
 });
 
 // ── HAMBURGER MENU ──────────────────────────────────────────────
 const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navLinks.classList.toggle('open');
-});
-// Đóng menu khi click link
-navLinks.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navLinks.classList.remove('open');
+const navLinks = document.getElementById('navLinks');
+
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
   });
-});
+
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
 
 // ── BACK TO TOP ─────────────────────────────────────────────────
 const backToTop = document.getElementById('backToTop');
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+if (backToTop) {
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
 
 // ── COUNTER ANIMATION ───────────────────────────────────────────
 function animateCounter(el) {
