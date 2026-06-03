@@ -17,9 +17,74 @@
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </div></div></nav>
-  <div style="padding:160px 0 80px;text-align:center;">
-    <h2>🚧 Trang Liên Hệ (Thành viên C)</h2><p>Form liên hệ + Google Maps embed + thông tin công ty</p>
-    <a href="../index.html" style="color:#FF6B35;">← Về trang chủ</a>
-  </div>
+  <main>
+    <section class="section section-alt">
+      <div class="container section-header">
+        <span class="section-label">Liên hệ</span>
+        <h2>Gửi yêu cầu hoặc đặt câu hỏi cho AVIVU</h2>
+        <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn với lịch trình du lịch, giá tour và tư vấn hành trình.</p>
+      </div>
+      <div class="container contact-grid">
+        <div class="contact-card">
+          <h3>Thông tin công ty</h3>
+          <p>Địa chỉ văn phòng, số điện thoại và giờ làm việc để bạn dễ liên hệ.</p>
+          <ul class="contact-info-list">
+            <li class="contact-info-item"><i class="fas fa-map-marker-alt"></i><div><strong>Địa chỉ</strong><p>12 Chùa Bộc, Đống Đa Hà Nội</p></div></li>
+            <li class="contact-info-item"><i class="fas fa-phone"></i><div><strong>Điện thoại</strong><p>0123456789</p></div></li>
+            <li class="contact-info-item"><i class="fas fa-envelope"></i><div><strong>Email</strong><p>habaonhi2006@avivu.com</p></div></li>
+            <li class="contact-info-item"><i class="fas fa-clock"></i><div><strong>Giờ làm việc</strong><p>Thứ 2 - Thứ 7: 8:30 - 18:00</p></div></li>
+          </ul>
+          <div class="map-card">
+            <iframe class="map-frame" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.5545126709966!2d106.70098127475424!3d10.77615199233022!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f20ec27eaab%3A0x1e96c21dede68ef2!2zMTIzIMO0bmcgSMawxqFuLCBRdeG6o25nIDEsIFRow6BuaCBI4buNYywgVGjDoG5oIHBo4buRLCBWaWV0bmFt!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"></iframe>
+          </div>
+        </div>
+        <div class="contact-card">
+          <h3>Form liên hệ</h3>
+          <p>Điền đầy đủ thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ.</p>
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-field"><label for="contactName">Họ và tên</label><input id="contactName" name="name" type="text" required placeholder="Nguyễn Văn A" /></div>
+            <div class="form-field"><label for="contactEmail">Email</label><input id="contactEmail" name="email" type="email" required placeholder="email@domain.com" /></div>
+            <div class="form-field"><label for="contactPhone">Số điện thoại</label><input id="contactPhone" name="phone" type="tel" required placeholder="+84 912 345 678" /></div>
+            <div class="form-field"><label for="contactSubject">Tiêu đề</label><input id="contactSubject" name="subject" type="text" required placeholder="Yêu cầu tư vấn tour" /></div>
+            <div class="form-field"><label for="contactMessage">Nội dung</label><textarea id="contactMessage" name="message" required placeholder="Mô tả ngắn gọn yêu cầu của bạn"></textarea></div>
+            <div id="contactError" class="form-error" aria-live="polite"></div>
+            <div id="contactSuccess" class="form-success" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary">Gửi liên hệ</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const contactForm = document.getElementById('contactForm');
+    const contactError = document.getElementById('contactError');
+    const contactSuccess = document.getElementById('contactSuccess');
+
+    contactForm?.addEventListener('submit', event => {
+      event.preventDefault();
+      contactError.style.display = 'none';
+      contactSuccess.style.display = 'none';
+      const form = event.target;
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const subject = form.subject.value.trim();
+      const message = form.message.value.trim();
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!name || !email || !phone || !subject || !message) {
+        contactError.textContent = 'Vui lòng điền đầy đủ tất cả các trường.';
+        contactError.style.display = 'block';
+        return;
+      }
+      if (!emailPattern.test(email)) {
+        contactError.textContent = 'Email không hợp lệ, vui lòng kiểm tra lại.';
+        contactError.style.display = 'block';
+        return;
+      }
+      contactSuccess.textContent = 'Yêu cầu của bạn đã được gửi! Chúng tôi sẽ phản hồi sớm nhất.';
+      contactSuccess.style.display = 'block';
+      form.reset();
+    });
+  </script>
   <script src="../js/main.js"></script>
 </body></html>

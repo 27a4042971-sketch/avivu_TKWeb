@@ -12,3 +12,902 @@
    - [ ] Related tours carousel
    - [ ] Breadcrumb
    ============================================= */
+
+
+/* Đảm bảo container không bị tràn mép màn hình */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--sp-4);
+}
+
+/* ── FIX NAVBAR CHO TRANG CON nền tối ───────── */
+/* Đồng bộ với màu header trang chủ và giữ thanh menu giống trang chủ */
+.navbar {
+    background: rgba(13, 27, 42, 0.95);
+    color: #fff;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .logo,
+.navbar .nav-link,
+.navbar .nav-actions a {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.navbar .nav-actions a.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.navbar.scrolled {
+    background: rgba(13, 27, 42, 0.98);
+}
+
+
+/* ── 1. BREADCRUMB NAV ──────────────────────── */
+.breadcrumb-nav {
+    background: var(--bg-alt);
+    padding: var(--sp-3) 0;
+    margin-top: 80px; /* Tạo khoảng trống an toàn dưới Navbar cố định */
+    font-size: 0.88rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb li a {
+    color: var(--text-muted);
+    transition: var(--t);
+}
+
+.breadcrumb li a:hover {
+    color: var(--primary);
+}
+
+.breadcrumb li::after {
+    content: "/";
+    margin-left: var(--sp-2);
+    color: #94a3b8;
+}
+
+.breadcrumb li.active::after {
+    content: "";
+}
+
+.breadcrumb li.active {
+    color: var(--text);
+    font-weight: 500;
+}
+
+
+/* ── 2. LAYOUT 2 CỘT CHUẨN GRID (MAIN + SIDEBAR) ─ */
+.tour-detail-container {
+    display: grid;
+    grid-template-columns: 2.2fr 1.1fr; /* Định hình rõ tỷ lệ 2 cột */
+    gap: var(--sp-8);
+    margin-top: var(--sp-8);
+    margin-bottom: var(--sp-16);
+    align-items: start; /* Giữ cho sidebar không bị kéo giãn chiều cao */
+}
+
+/* Tiêu đề lớn */
+.detail-title {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    color: var(--secondary);
+    line-height: 1.3;
+    margin-bottom: var(--sp-3);
+    font-weight: 700;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid #e2e8f0;
+    align-items: center;
+    font-size: 0.92rem;
+}
+
+.detail-meta span i {
+    color: var(--primary);
+    margin-right: var(--sp-1);
+}
+
+
+/* ── 3. IMAGE GALLERY GRID ─────────────────── */
+.detail-gallery {
+    margin-bottom: var(--sp-8);
+}
+
+.gallery-main {
+    position: relative;
+    height: 450px;
+    border-radius: var(--br-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+}
+
+.gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+}
+
+.gallery-main:hover img {
+    transform: scale(1.02);
+}
+
+.gallery-badge {
+    position: absolute;
+    bottom: var(--sp-4);
+    right: var(--sp-4);
+    background: rgba(26, 83, 92, 0.88);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: var(--br-full);
+    font-size: 0.85rem;
+    backdrop-filter: blur(4px);
+}
+
+.gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-3);
+    margin-top: var(--sp-3);
+}
+
+.thumb-item {
+    height: 90px;
+    border-radius: var(--br-md);
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--t);
+    opacity: 0.7;
+}
+
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-item:hover, .thumb-item.active {
+    border-color: var(--primary);
+    opacity: 1;
+}
+
+
+/* ── 4. TABS NỘI DUNG ──────────────────────── */
+.tabs-nav {
+    display: flex;
+    border-bottom: 2px solid #e2e8f0;
+    gap: var(--sp-6);
+    margin-bottom: var(--sp-6);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: var(--sp-3) 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    font-family: var(--font-body);
+    transition: var(--t);
+}
+
+.tab-btn:hover, .tab-btn.active {
+    color: var(--primary);
+}
+
+.tab-btn.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.tab-heading {
+    font-family: var(--font-heading);
+    color: var(--secondary);
+    margin-bottom: var(--sp-4);
+    font-size: 1.4rem;
+}
+
+
+/* ── 5. TIMELINE LỊCH TRÌNH ────────────────── */
+.itinerary-timeline {
+    position: relative;
+    padding-left: 50px;
+    margin-top: var(--sp-4);
+}
+
+.itinerary-timeline::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--border);
+}
+
+.timeline-node {
+    position: relative;
+    margin-bottom: var(--sp-5);
+}
+
+.node-day {
+    position: absolute;
+    left: -50px;
+    width: 48px;
+    background: var(--secondary);
+    color: #fff;
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 4px 0;
+    border-radius: var(--br-sm);
+    font-weight: 600;
+}
+
+.node-body {
+    background: var(--bg-surface);
+    padding: var(--sp-4);
+    border-radius: var(--br-lg);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary);
+}
+
+.node-body h4 {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin-bottom: var(--sp-1);
+}
+
+
+/* ── 6. STICKY SIDEBAR ĐẶT TOUR ────────────── */
+.booking-sticky-card {
+    position: sticky;
+    top: 100px;
+    background: var(--surface);
+    border-radius: var(--br-xl);
+    padding: var(--sp-5);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 107, 53, 0.12);
+}
+
+.sidebar-card-header {
+    margin-bottom: var(--sp-5);
+}
+
+.sidebar-card-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+}
+
+.sidebar-card-header p {
+    margin: 0.65rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.sidebar-card-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--sp-4);
+    padding: var(--sp-4);
+    border-radius: var(--br-lg);
+    background: var(--primary-bg);
+    border: 1px solid rgba(255, 107, 53, 0.18);
+}
+
+.sidebar-card-price small {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.sidebar-card-price strong {
+    font-size: 2rem;
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.form-item {
+    margin-bottom: var(--sp-4);
+}
+
+.form-item label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: var(--sp-2);
+    color: var(--text);
+}
+
+.form-item label i {
+    color: var(--primary);
+    margin-right: 0.35rem;
+}
+
+.form-item input[type="text"],
+.form-item select {
+    width: 100%;
+    padding: 1rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--br-lg);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--bg-alt);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-item input[type="text"]:focus,
+.form-item select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.16);
+}
+
+.quantity-control {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: var(--br-lg);
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.ctrl-btn {
+    width: 48px;
+    height: 44px;
+    background: var(--primary-bg);
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--primary);
+    border: none;
+    font-weight: 700;
+    transition: background 0.25s ease;
+}
+
+.ctrl-btn:hover {
+    background: rgba(255, 107, 53, 0.14);
+}
+
+.quantity-control input {
+    flex: 1;
+    text-align: center;
+    border: none;
+    font-weight: 700;
+    background: transparent;
+    color: var(--text);
+}
+
+.invoice-summary {
+    background: var(--primary-bg);
+    padding: var(--sp-4);
+    border-radius: var(--br-lg);
+    margin-top: var(--sp-4);
+    border: 1px solid rgba(255, 107, 53, 0.16);
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    margin-bottom: var(--sp-3);
+    color: var(--text-secondary);
+}
+
+.invoice-row.total-row {
+    border-top: 1px solid rgba(255, 107, 53, 0.16);
+    padding-top: var(--sp-3);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.invoice-row.total-row strong {
+    color: var(--primary);
+}
+
+.btn-submit-booking {
+    width: 100%;
+    margin-top: var(--sp-4);
+    padding: 1rem 1.1rem;
+    border-radius: var(--br-xl);
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #ffffff;
+    box-shadow: var(--shadow-primary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-submit-booking:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 34px rgba(255, 107, 53, 0.24);
+}
+
+
+/* ── 7. REVIEWS & COMMENTS ─────────────────── */
+.reviews-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+    background: var(--bg-surface);
+    padding: var(--sp-4);
+    border-radius: var(--br-lg);
+    margin-bottom: var(--sp-6);
+    box-shadow: var(--shadow-sm);
+}
+
+.summary-score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+.review-comment-card {
+    display: flex;
+    gap: var(--sp-4);
+    background: var(--bg-surface);
+    padding: var(--sp-4);
+    border-radius: var(--br-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--sp-4);
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    background: #e2e8f0;
+    color: var(--secondary);
+    border-radius: var(--br-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.user-info-body {
+    flex: 1;
+}
+
+.comment-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* ── 8. RELATED TOURS GRID ─────────────────── */
+.related-section {
+    background: var(--bg-alt);
+    padding: var(--sp-12) 0;
+    border-top: 1px solid var(--border);
+}
+
+.text-center { text-align: center; }
+.section-title { margin-bottom: var(--sp-8); }
+.section-title h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--secondary);
+}
+
+.tour-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-6);
+}
+
+.tour-item {
+    border-radius: var(--br-lg);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.tour-item:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+}
+
+.card-img {
+    position: relative;
+    overflow: hidden;
+    height: 230px;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.tour-item:hover .card-img img {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    min-height: 340px;
+}
+
+.card-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: var(--sp-4);
+    flex: 1;
+}
+
+.card-info {
+    margin-bottom: var(--sp-3);
+}
+
+.card-meta {
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: var(--sp-3);
+}
+
+.card-meta .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.card-meta .rating i {
+    color: var(--accent);
+}
+
+.card-info span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--text-muted);
+}
+
+.card-price strong {
+    font-size: 1.1rem;
+}
+
+.promo-banner {
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.95) 0%, rgba(26, 83, 92, 0.95) 100%);
+    color: #fff;
+    border-radius: var(--br-xl);
+    padding: var(--sp-6);
+    margin: calc(var(--sp-4) * 2) 0;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+}
+
+.promo-banner-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: var(--sp-4);
+}
+
+.promo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: var(--br-full);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.promo-title {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin: var(--sp-3) 0 var(--sp-2);
+    font-weight: 700;
+    color: #fff;
+}
+
+.promo-title em {
+    color: var(--accent);
+    font-style: normal;
+}
+
+.promo-sub {
+    max-width: 640px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    font-size: 0.98rem;
+}
+
+.promo-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.promo-badge-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px dashed rgba(255, 255, 255, 0.35);
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.promo-pct {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.promo-for {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.86);
+}
+
+.meal-plan-section label,
+.meal-plan-section .meal-plan-help {
+    display: block;
+    color: var(--secondary);
+    margin-bottom: var(--sp-2);
+    font-weight: 600;
+}
+
+.meal-plan-select {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border-radius: var(--br-md);
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    appearance: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6H0z' fill='%23949DA8'/%3E%3C/svg%3E") no-repeat right 1rem center/10px 6px;
+}
+
+.meal-plan-help {
+    margin-top: var(--sp-2);
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.write-review-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--br-lg);
+    padding: var(--sp-5);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--sp-6);
+}
+
+.write-review-title {
+    font-size: 1.25rem;
+    margin-bottom: var(--sp-4);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--secondary);
+}
+
+.star-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: var(--sp-4);
+    flex-wrap: wrap;
+}
+
+.star-picker i {
+    font-size: 1.35rem;
+    color: var(--border);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.star-picker i.fas {
+    color: var(--accent);
+}
+
+.star-picker-label {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.review-form-error {
+    border-radius: var(--br-md);
+    background: #fef2f2;
+    color: #991b1b;
+    padding: 0.9rem 1rem;
+    margin-bottom: var(--sp-4);
+    border: 1px solid #fecaca;
+}
+
+.review-textarea,
+.review-name-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--br-md);
+    padding: var(--sp-3);
+    font-family: inherit;
+    font-size: 0.96rem;
+    color: var(--text);
+    background: var(--bg-alt);
+}
+
+.review-textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.review-form-row {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.review-name-input {
+    flex: 1;
+    min-width: 210px;
+}
+
+.review-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.3rem;
+    border-radius: var(--br-md);
+    font-weight: 700;
+    color: #fff;
+    background: var(--primary);
+    border: none;
+    transition: background 0.2s ease;
+}
+
+.review-submit-btn:hover {
+    background: var(--primary-dark);
+}
+
+.review-new-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: var(--sp-3);
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--br-full);
+    background: #ecfdf5;
+    color: #166534;
+    font-size: 0.9rem;
+}
+
+.review-comment-card.review-new {
+    border: 1px solid #d1fae5;
+    background: #f0fdf4;
+}
+
+.card-title a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 992px) {
+    .tour-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ── 9. LIGHTBOX PREVIEW OVERLAY ───────────── */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(26, 83, 92, 0.95);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-overlay.active {
+    display: flex;
+}
+
+.lightbox-img {
+    max-width: 85%;
+    max-height: 80%;
+    border-radius: var(--br-md);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.lightbox-arrow {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.arrow-left { left: 40px; }
+.arrow-right { right: 40px; }
+
+
+/* ── 10. ĐÁP ỨNG DI ĐỘNG (RESPONSIVE VÁ LỖI) ── */
+@media (max-width: 992px) {
+    .tour-detail-container {
+        grid-template-columns: 1fr; /* Sập về 1 cột trên iPad/Mobile */
+    }
+    .booking-sticky-card {
+        position: static; /* Bỏ sticky trên màn hình nhỏ để tránh lỗi cuộn */
+    }
+}

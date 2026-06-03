@@ -447,3 +447,195 @@
   padding: var(--sp-5) 0;
   font-size: 0.82rem;
 }
+
+/* Contact & About page utilities */
+.contact-grid, .about-grid, .team-grid, .timeline {
+  display: grid;
+  gap: var(--sp-8);
+}
+
+.contact-grid {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.about-grid {
+  grid-template-columns: 1.3fr 0.9fr;
+  align-items: start;
+}
+
+.team-grid {
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+}
+
+.timeline {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contact-card, .about-vision-card, .team-card, .timeline-item {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  padding: var(--sp-8);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-card h3, .about-vision-card h3, .team-card h3, .timeline-item h4 {
+  margin-top: 0;
+  color: var(--secondary);
+}
+
+.contact-info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.contact-info-item {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.contact-info-item i {
+  color: var(--primary);
+  font-size: 1.2rem;
+  min-width: 32px;
+  margin-top: 4px;
+}
+
+.map-frame {
+  width: 100%;
+  border: 0;
+  border-radius: var(--r-lg);
+  min-height: 300px;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-form {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.form-field textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.12);
+}
+
+.form-error,
+.form-success {
+  display: none;
+  border-radius: var(--r-md);
+  padding: 1rem 1.1rem;
+  font-size: 0.95rem;
+}
+
+.form-error {
+  background: rgba(254, 226, 226, 0.7);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  color: #B91C1C;
+}
+
+.form-success {
+  background: rgba(220, 248, 220, 0.7);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #166534;
+}
+
+.about-vision-card ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--sp-5) 0 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.about-vision-card ul li {
+  position: relative;
+  padding-left: 1.8rem;
+  color: var(--text-secondary);
+}
+
+.about-vision-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  color: var(--primary);
+}
+
+.team-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-size: 1.8rem;
+  margin-bottom: var(--sp-4);
+}
+
+.team-card span {
+  display: inline-block;
+  margin-bottom: var(--sp-3);
+  color: var(--text-muted);
+}
+
+.team-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.timeline-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: var(--sp-4);
+}
+
+.timeline-item p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .contact-grid,
+  .about-grid,
+  .team-grid,
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}
