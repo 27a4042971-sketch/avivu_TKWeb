@@ -1,26 +1,1378 @@
-﻿<!DOCTYPE html><html lang="vi"><head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đặt Tour — AVIVU</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/global.css" /><link rel="stylesheet" href="../css/components.css" /><link rel="stylesheet" href="../css/booking.css" /><link rel="stylesheet" href="../css/responsive.css" />
-</head><body>
-  <nav class="navbar" id="navbar"><div class="container"><div class="navbar-inner">
-    <a href="../index.html" class="logo"><span class="logo-icon"><i class="fas fa-compass"></i></span><span class="logo-text">Avi<span>vu</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
-      <li><a href="tours.html" class="nav-link">Tours</a></li>
-      <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-      <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
-    </ul>
-    <div class="nav-actions"><a href="login.html" class="btn-login"><i class="fas fa-user"></i> Đăng nhập</a>
-      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+  <style>
+    :root {
+      --primary: #FF6B35; --primary-hover: #e55a2b; --primary-light: rgba(255,107,53,0.08);
+      --dark: #1A1A1A; --dark-2: #1e293b; --slate: #475569; --slate-light: #64748b;
+      --border: #e2e8f0; --bg-soft: #f8fafc; --white: #ffffff;
+      --success: #10b981; --ai-blue: #0ea5e9;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06); --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+      --radius-sm: 8px; --radius-md: 12px; --radius-lg: 20px;
+      --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-soft); color: var(--dark-2); line-height: 1.6; overflow-x: hidden; }
+
+    /* NAVBAR */
+    .navbar { position: fixed; top:0; left:0; right:0; z-index:1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+    .container { max-width:1200px; margin:0 auto; padding:0 24px; }
+    .navbar-inner { display:flex; align-items:center; justify-content:space-between; height:72px; gap:24px; }
+    .logo { text-decoration:none; display:flex; align-items:center; gap:10px; font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--dark); }
+    .logo-icon { width:38px; height:38px; background:var(--primary); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1rem; }
+    .logo span { color:var(--primary); }
+    .nav-links { display:flex; list-style:none; gap:4px; align-items:center; }
+    .nav-link { text-decoration:none; color:var(--slate); font-weight:500; font-size:0.9rem; padding:8px 14px; border-radius:var(--radius-sm); transition:var(--transition); }
+    .nav-link:hover { color:var(--primary); background:var(--primary-light); }
+    .nav-actions { display:flex; align-items:center; gap:12px; }
+    .btn-login { background:var(--primary); color:#fff; text-decoration:none; padding:9px 20px; border-radius:var(--radius-sm); font-weight:600; font-size:0.88rem; display:flex; align-items:center; gap:7px; transition:var(--transition); }
+    .btn-login:hover { background:var(--primary-hover); transform:translateY(-1px); box-shadow:0 4px 12px rgba(255,107,53,0.3); }
+    .hamburger { display:none; background:none; border:none; cursor:pointer; flex-direction:column; gap:5px; padding:6px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--dark-2); border-radius:2px; transition:var(--transition); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: #0f172a;
+      padding: 130px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Animated hero background */
+    .hero-bg-anim {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(255,107,53,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(14,165,233,0.12) 0%, transparent 55%),
+        linear-gradient(135deg, #0f172a 0%, #1e1035 50%, #0a1628 100%);
+      animation: heroBgShift 10s ease-in-out infinite alternate;
+    }
+    @keyframes heroBgShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    /* Floating orbs */
+    .hero-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); animation: orbFloat ease-in-out infinite alternate;
+    }
+    .hero-orb-1 {
+      width: 400px; height: 400px; top: -100px; left: -80px;
+      background: radial-gradient(circle, rgba(255,107,53,0.25) 0%, transparent 70%);
+      animation-duration: 8s; animation-delay: 0s;
+    }
+    .hero-orb-2 {
+      width: 300px; height: 300px; top: 20px; right: 10%;
+      background: radial-gradient(circle, rgba(14,165,233,0.2) 0%, transparent 70%);
+      animation-duration: 11s; animation-delay: 2s;
+    }
+    .hero-orb-3 {
+      width: 200px; height: 200px; bottom: 0; left: 40%;
+      background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%);
+      animation-duration: 9s; animation-delay: 1s;
+    }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -20px) scale(1.1); }
+    }
+    /* Grid lines decoration */
+    .hero-grid-lines {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 100% at 50% 0%, black 40%, transparent 100%);
+    }
+    /* Floating destination cards in hero */
+    .hero-floats {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; overflow: hidden;
+    }
+    .hero-float-card {
+      position: absolute; background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; padding: 10px 16px; color: rgba(255,255,255,0.85);
+      font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+      display: flex; align-items: center; gap: 8px;
+      animation: cardFloat ease-in-out infinite alternate;
+    }
+    .hero-float-card .card-icon { font-size: 1.2rem; }
+    .hero-float-card .card-sub { font-size: 0.68rem; color: rgba(255,255,255,0.55); font-weight: 400; }
+    @keyframes cardFloat {
+      0% { transform: translateY(0px) rotate(-1deg); }
+      100% { transform: translateY(-14px) rotate(1deg); }
+    }
+    /* Stars in hero bg */
+    .hero-stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .hero-star {
+      position: absolute; border-radius: 50%;
+      background: white; animation: twinkle ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.1; transform: scale(1); }
+      100% { opacity: 0.8; transform: scale(1.5); }
+    }
+    /* Progress bar glow */
+    #progressBarFill { height:100%; width:0%; background:linear-gradient(90deg,var(--primary),#ff8c61); border-radius:2px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 10px rgba(255,107,53,0.5); }
+
+    .page-hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:60px; background:var(--bg-soft); clip-path:ellipse(55% 100% at 50% 100%); z-index:2; }
+    .page-hero-inner { position:relative; z-index:3; text-align:center; color:#fff; }
+    .breadcrumb { display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.85rem; color:rgba(255,255,255,0.6); margin-bottom:16px; }
+    .breadcrumb a { color:rgba(255,255,255,0.7); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--primary); }
+    .page-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; margin-bottom:12px; }
+    .page-hero h1 em { font-style:italic; color:var(--primary); }
+    .page-hero p { font-size:1rem; color:rgba(255,255,255,0.75); max-width:480px; margin:0 auto; }
+    /* Hero stats strip */
+    .hero-stats {
+      display: flex; justify-content: center; gap: 40px; margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center; animation: fadeInUp 0.6s ease both;
+    }
+    .hero-stat:nth-child(1) { animation-delay: 0.1s; }
+    .hero-stat:nth-child(2) { animation-delay: 0.2s; }
+    .hero-stat:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+      color: #fff; line-height: 1;
+    }
+    .hero-stat-num span { color: var(--primary); }
+    .hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* LAYOUT */
+    .booking-layout { padding:50px 0 80px; }
+    .booking-grid { display:grid; grid-template-columns:1.7fr 1fr; gap:32px; align-items:start; }
+
+    /* GUEST CHECKOUT BANNER */
+    .guest-banner {
+      background: linear-gradient(135deg, #fff7ed, #fff);
+      border: 1px solid rgba(255,107,53,0.25);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .guest-banner-left { display:flex; align-items:center; gap:12px; }
+    .guest-banner-left i { font-size:1.6rem; color:var(--primary); }
+    .guest-banner-left h5 { font-size:0.95rem; font-weight:700; color:var(--dark-2); margin-bottom:3px; }
+    .guest-banner-left p { font-size:0.82rem; color:var(--slate); }
+    .guest-banner-actions { display:flex; gap:10px; flex-shrink:0; }
+    .btn-outline-sm { padding:8px 16px; border:1.5px solid var(--primary); color:var(--primary); background:transparent; border-radius:var(--radius-sm); font-size:0.83rem; font-weight:600; cursor:pointer; transition:var(--transition); font-family:'Inter',sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+    .btn-outline-sm:hover { background:var(--primary); color:#fff; }
+    .btn-ghost-sm { padding:8px 16px; border:1.5px solid var(--border); color:var(--slate); background:transparent; border-radius:var(--radius-sm); font-size:0.83rem; font-weight:600; cursor:pointer; transition:var(--transition); font-family:'Inter',sans-serif; }
+    .btn-ghost-sm:hover { border-color:var(--slate); }
+
+    /* MEMBER BENEFITS STRIP */
+    .member-benefits {
+      background: linear-gradient(90deg, #1e293b, #334155);
+      border-radius: var(--radius-sm);
+      padding: 12px 18px;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .member-benefits::-webkit-scrollbar { display:none; }
+    .benefit-chip { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.9); font-size:0.8rem; font-weight:500; white-space:nowrap; }
+    .benefit-chip i { color:#fbbf24; }
+
+    /* PROGRESS */
+    .progress-wrap { background:var(--white); border-radius:var(--radius-lg); padding:28px 35px; margin-bottom:28px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+    .step-track-container { display:flex; justify-content:space-between; position:relative; max-width:500px; margin:0 auto; }
+    .progress-rail { position:absolute; top:20px; left:40px; right:40px; height:3px; background:var(--border); z-index:1; }
+    #progressBarFill { height:100%; width:0%; background:linear-gradient(90deg,var(--primary),#ff8c61); border-radius:2px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .step-node { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px; cursor:default; }
+    .step-bubble { width:40px; height:40px; border-radius:50%; border:3px solid var(--border); background:var(--white); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.9rem; color:var(--slate-light); transition:var(--transition); box-shadow:var(--shadow-sm); }
+    .step-node-label { font-size:0.78rem; font-weight:600; color:var(--slate-light); text-align:center; transition:var(--transition); white-space:nowrap; }
+    .step-node.active .step-bubble { background:var(--primary); border-color:var(--primary); color:#fff; box-shadow:0 4px 14px rgba(255,107,53,0.35); transform:scale(1.08); }
+    .step-node.active .step-node-label { color:var(--primary); }
+    .step-node.completed .step-bubble { background:var(--success); border-color:var(--success); color:#fff; }
+
+    /* STEP PANELS */
+    .step-panel { display:none; background:var(--white); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-sm); border:1px solid var(--border); position: relative; overflow: hidden; }
+    .step-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--primary), #ff8c61, #fbbf24);
+    }
+    .step-panel.active { display:block; animation:panelIn 0.4s cubic-bezier(0.4,0,0.2,1); }
+    @keyframes panelIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .step-heading { font-family:'Playfair Display',serif; font-size:1.35rem; color:var(--dark-2); margin-bottom:24px; padding-bottom:16px; border-bottom:2px solid var(--bg-soft); display:flex; align-items:center; gap:10px; }
+    .step-heading i { width:36px; height:36px; background:var(--primary-light); color:var(--primary); border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+
+    /* TOUR SUMMARY */
+    .tour-summary-card { background:linear-gradient(135deg,#fff5f2 0%,#fff 60%); border:1px solid rgba(255,107,53,0.2); border-left:4px solid var(--primary); border-radius:var(--radius-md); padding:22px; margin-bottom:28px; position:relative; overflow:hidden; }
+    .summary-inner h4 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--dark-2); margin-bottom:14px; }
+    .summary-meta { display:flex; gap:20px; flex-wrap:wrap; }
+    .meta-item { display:flex; align-items:center; gap:8px; font-size:0.9rem; color:var(--slate); }
+    .meta-item i { color:var(--primary); width:16px; text-align:center; }
+    .price-tag { font-weight:700; color:var(--primary); font-size:1rem; }
+    .no-tour-alert { text-align:center; padding:24px; color:var(--slate-light); }
+    .no-tour-alert i { font-size:2.5rem; color:#eab308; display:block; margin-bottom:10px; }
+
+    /* SMART CALENDAR */
+    .calendar-section { margin-bottom: 22px; }
+    .calendar-section label { display:block; font-weight:600; font-size:0.87rem; color:var(--dark-2); margin-bottom:8px; }
+    .calendar-section label i { color:var(--primary); margin-right:5px; }
+    .mini-calendar { border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .cal-header { background: var(--primary); color: #fff; display:flex; align-items:center; justify-content:space-between; padding: 12px 16px; }
+    .cal-header button { background:none; border:none; color:#fff; cursor:pointer; font-size:1rem; padding:4px 8px; border-radius:4px; transition:var(--transition); }
+    .cal-header button:hover { background:rgba(255,255,255,0.2); }
+    .cal-header span { font-weight:700; font-size:0.95rem; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+    .cal-day-name { text-align:center; padding:8px 4px; font-size:0.72rem; font-weight:700; color:var(--slate-light); background:#f8fafc; border-bottom:1px solid var(--border); }
+    .cal-day { text-align:center; padding:8px 4px; font-size:0.82rem; cursor:pointer; transition:var(--transition); border:1px solid transparent; min-height:38px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
+    .cal-day:hover:not(.empty):not(.past):not(.full) { background:var(--primary-light); color:var(--primary); border-color:rgba(255,107,53,0.2); }
+    .cal-day.selected { background:var(--primary); color:#fff !important; border-radius:6px; font-weight:700; }
+    .cal-day.past { color:#cbd5e1; cursor:not-allowed; }
+    .cal-day.full { color:#cbd5e1; cursor:not-allowed; text-decoration:line-through; }
+    .cal-day.weekend { color:#e55a2b; }
+    .cal-day.weekend.selected { color:#fff !important; }
+    .cal-day .day-price { font-size:0.6rem; color:var(--success); font-weight:600; line-height:1; }
+    .cal-day.selected .day-price { color:rgba(255,255,255,0.85); }
+    .cal-day.past .day-price, .cal-day.full .day-price { display:none; }
+    .cal-day.weekend .day-price { color:#e55a2b; }
+    .cal-day.selected.weekend .day-price { color:rgba(255,255,255,0.85); }
+    .cal-legend { display:flex; gap:16px; padding:10px 14px; background:#f8fafc; border-top:1px solid var(--border); flex-wrap:wrap; }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:0.72rem; color:var(--slate-light); }
+    .legend-dot { width:10px; height:10px; border-radius:50%; }
+
+    /* FORM */
+    .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label { display:block; font-weight:600; font-size:0.87rem; color:var(--dark-2); margin-bottom:8px; }
+    .form-group label i { color:var(--primary); margin-right:5px; width:14px; }
+    .form-control { width:100%; padding:11px 15px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'Inter',sans-serif; font-size:0.93rem; color:var(--dark-2); background:#fff; outline:none; transition:var(--transition); }
+    .form-control:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(255,107,53,0.1); }
+    textarea.form-control { resize:vertical; min-height:110px; }
+
+    /* ITINERARY INCLUDED */
+    .itinerary-tabs { display:flex; border-bottom:2px solid var(--border); margin-bottom:16px; }
+    .itinerary-tab { padding:10px 18px; font-size:0.85rem; font-weight:600; color:var(--slate-light); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:var(--transition); }
+    .itinerary-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+    .itinerary-panel { display:none; }
+    .itinerary-panel.active { display:block; animation:panelIn 0.3s ease; }
+    .include-list { list-style:none; }
+    .include-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:0.88rem; color:var(--slate); border-bottom:1px dashed #f1f5f9; }
+    .include-list li:last-child { border:none; }
+    .include-list .inc-icon { color:var(--success); margin-top:1px; font-size:0.9rem; flex-shrink:0; }
+    .include-list .exc-icon { color:#f87171; margin-top:1px; font-size:0.9rem; flex-shrink:0; }
+
+    /* CANCELLATION POLICY */
+    .cancellation-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid var(--success);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .cancellation-box h6 { font-size:0.9rem; font-weight:700; color:#065f46; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+    .policy-list { list-style:none; }
+    .policy-list li { display:flex; align-items:flex-start; gap:10px; padding:5px 0; font-size:0.83rem; color:#047857; }
+    .policy-list li i { margin-top:2px; flex-shrink:0; }
+
+    /* REVIEWS */
+    .reviews-section { margin-bottom: 24px; }
+    .reviews-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .reviews-header h6 { font-size:0.95rem; font-weight:700; color:var(--dark-2); }
+    .rating-summary { display:flex; align-items:center; gap:8px; }
+    .rating-big { font-size:1.5rem; font-weight:800; color:var(--dark-2); }
+    .stars { color:#f59e0b; font-size:0.85rem; }
+    .review-count { font-size:0.78rem; color:var(--slate-light); }
+    .review-cards { display:flex; gap:14px; overflow-x:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; padding-bottom:8px; }
+    .review-card { background:var(--bg-soft); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px 16px; min-width:240px; flex-shrink:0; }
+    .review-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .reviewer { display:flex; align-items:center; gap:9px; }
+    .reviewer-avatar { width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0; }
+    .reviewer-name { font-size:0.83rem; font-weight:600; color:var(--dark-2); }
+    .reviewer-date { font-size:0.72rem; color:var(--slate-light); }
+    .review-stars { color:#f59e0b; font-size:0.75rem; }
+    .review-text { font-size:0.82rem; color:var(--slate); line-height:1.5; }
+    .review-img { width:100%; height:70px; object-fit:cover; border-radius:6px; margin-top:10px; }
+
+    /* AI SUGGESTION */
+    .ai-card { background:linear-gradient(135deg,#f0f9ff 0%,#fff 80%); border:1px solid #bae6fd; border-left:4px solid var(--ai-blue); border-radius:var(--radius-md); padding:20px; margin-top:22px; display:none; animation:slideInAI 0.4s ease; }
+    @keyframes slideInAI { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .ai-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; padding-bottom:14px; border-bottom:1px dashed #e0f2fe; }
+    .ai-avatar { position:relative; width:44px; height:44px; background:linear-gradient(135deg,var(--ai-blue),#0284c7); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.1rem; flex-shrink:0; }
+    .ai-online { position:absolute; bottom:0; right:0; width:12px; height:12px; background:var(--success); border:2px solid #fff; border-radius:50%; }
+    .ai-online::after { content:''; position:absolute; inset:0; background:var(--success); border-radius:50%; animation:ripple 2s infinite; }
+    @keyframes ripple { 0%{transform:scale(1);opacity:0.8} 100%{transform:scale(2.5);opacity:0} }
+    .ai-meta h5 { font-size:0.95rem; color:var(--dark-2); font-weight:600; margin-bottom:3px; }
+    .ai-status { font-size:0.77rem; color:var(--success); font-weight:500; display:flex; align-items:center; gap:4px; }
+    .ai-body { font-size:0.9rem; color:var(--slate); line-height:1.7; margin-bottom:14px; }
+    .ai-tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .ai-tag { background:#e0f2fe; color:#0369a1; font-size:0.78rem; font-weight:500; padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:5px; }
+
+    /* TRUST BADGES */
+    .trust-badges { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); }
+    .badge { display:flex; align-items:flex-start; gap:12px; background:var(--bg-soft); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; transition:var(--transition); }
+    .badge:hover { border-color:rgba(255,107,53,0.3); background:var(--primary-light); }
+    .badge-ico { color:var(--primary); font-size:1.3rem; margin-top:2px; flex-shrink:0; }
+    .badge-text h6 { font-size:0.85rem; font-weight:700; color:var(--dark-2); margin-bottom:3px; }
+    .badge-text p { font-size:0.75rem; color:var(--slate-light); line-height:1.4; }
+
+    /* PAYMENT METHODS */
+    .payment-section { margin-bottom: 24px; }
+    .payment-section label { display:block; font-weight:600; font-size:0.87rem; color:var(--dark-2); margin-bottom:12px; }
+    .payment-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+    .payment-option { position:relative; }
+    .payment-option input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
+    .payment-label {
+      display:flex; align-items:center; gap:10px; padding:12px 16px;
+      border:2px solid var(--border); border-radius:var(--radius-sm); cursor:pointer;
+      transition:var(--transition); font-size:0.85rem; font-weight:500; color:var(--dark-2);
+    }
+    .payment-label:hover { border-color:rgba(255,107,53,0.4); background:var(--primary-light); }
+    .payment-option input:checked + .payment-label { border-color:var(--primary); background:var(--primary-light); color:var(--primary); }
+    .payment-label i { font-size:1.1rem; width:20px; text-align:center; }
+    .payment-label .pay-icon { width:32px; height:20px; object-fit:contain; }
+
+    /* WIZARD BUTTONS */
+    .wizard-nav { display:flex; justify-content:space-between; align-items:center; margin-top:28px; padding-top:22px; border-top:1px solid var(--border); }
+    .btn-wiz { padding:12px 26px; border:none; border-radius:var(--radius-sm); font-size:0.92rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:var(--transition); }
+    .btn-primary { background:var(--primary); color:#fff; box-shadow:0 4px 14px rgba(255,107,53,0.25); }
+    .btn-primary:hover { background:var(--primary-hover); transform:translateY(-1px); box-shadow:0 6px 18px rgba(255,107,53,0.35); }
+    .btn-secondary { background:var(--bg-soft); color:var(--slate); border:1px solid var(--border); }
+    .btn-secondary:hover { background:var(--border); }
+
+    /* CONFIRMATION */
+    .confirmation-wrap { text-align:center; padding:30px 20px 10px; }
+    .check-circle { width:90px; height:90px; background:linear-gradient(135deg,#d1fae5,#6ee7b7); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:2.5rem; color:var(--success); animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+    @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+    .confirmation-wrap h2 { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--dark-2); margin-bottom:10px; }
+    .confirmation-wrap > p { color:var(--slate); margin-bottom:24px; }
+    .code-box { display:inline-block; background:var(--primary-light); border:2px dashed var(--primary); border-radius:var(--radius-md); padding:18px 36px; margin-bottom:20px; }
+    .code-box span { font-size:0.82rem; color:var(--slate-light); display:block; margin-bottom:6px; }
+    #finalBookingCode { font-size:1.7rem; font-weight:800; color:var(--primary); letter-spacing:3px; }
+    .confirm-note { font-size:0.88rem; color:var(--slate-light); max-width:400px; margin:0 auto 24px; line-height:1.6; }
+    .confirm-details { background:var(--bg-soft); border:1px solid var(--border); border-radius:var(--radius-md); padding:18px; text-align:left; margin-bottom:24px; }
+    .confirm-row { display:flex; justify-content:space-between; padding:7px 0; font-size:0.85rem; border-bottom:1px dashed var(--border); }
+    .confirm-row:last-child { border:none; }
+    .confirm-row .cl { color:var(--slate); }
+    .confirm-row .cr { font-weight:600; color:var(--dark-2); text-align:right; }
+    /* Post-booking account promo */
+    .account-promo {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 24px;
+      color: #fff;
+      text-align: left;
+    }
+    .account-promo h6 { font-size:0.95rem; font-weight:700; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+    .account-promo h6 i { color:#fbbf24; }
+    .account-promo p { font-size:0.82rem; color:rgba(255,255,255,0.75); margin-bottom:14px; }
+    .account-promo .benefits { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+    .account-promo .b-chip { background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.9); font-size:0.75rem; padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:5px; }
+    .account-promo .b-chip i { color:#34d399; }
+
+    /* SIDEBAR */
+    .booking-sidebar { position:sticky; top:96px; }
+    .price-card { background:var(--white); border-radius:var(--radius-lg); padding:28px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+    .price-card-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--dark-2); margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+    .price-card-title i { color:var(--primary); }
+    .price-divider { border:none; border-top:1px solid var(--border); margin-bottom:18px; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px dashed var(--border); font-size:0.88rem; }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-row .label { color:var(--slate); }
+    .breakdown-row .value { font-weight:600; color:var(--dark-2); text-align:right; }
+    .breakdown-row .value.green { color:var(--success); }
+    .total-row { margin-top:8px; padding-top:16px; border-top:2px solid var(--border); }
+    .total-row .label { font-weight:700; color:var(--dark-2); font-size:0.95rem; }
+    .total-row .value { font-size:1.5rem; color:var(--primary); font-weight:800; text-shadow: 0 2px 8px rgba(255,107,53,0.25); }
+    .price-note { font-size:0.75rem; color:var(--slate-light); text-align:right; margin-top:4px; }
+    .price-guarantee { margin-top:16px; background:var(--bg-soft); border-radius:var(--radius-sm); padding:12px; font-size:0.78rem; color:var(--slate-light); text-align:center; display:flex; align-items:center; justify-content:center; gap:6px; }
+    .price-guarantee i { color:var(--primary); }
+    .help-card { background:linear-gradient(135deg,var(--dark-2),#334155); border-radius:var(--radius-md); padding:22px; margin-top:18px; color:#fff; }
+    .help-card h5 { font-size:0.95rem; font-weight:700; margin-bottom:8px; }
+    .help-card p { font-size:0.82rem; color:rgba(255,255,255,0.7); margin-bottom:14px; }
+    .help-card a { display:inline-flex; align-items:center; gap:6px; background:var(--primary); color:#fff; text-decoration:none; padding:8px 16px; border-radius:var(--radius-sm); font-size:0.83rem; font-weight:600; transition:var(--transition); }
+    .help-card a:hover { background:var(--primary-hover); }
+    .security-badges { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    .sec-badge { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:6px; padding:8px 12px; display:flex; align-items:center; gap:6px; font-size:0.72rem; color:rgba(255,255,255,0.8); flex:1; justify-content:center; }
+    .sec-badge i { font-size:1rem; }
+
+    /* FOOTER */
+    .footer { background:var(--dark); color:rgba(255,255,255,0.75); padding:60px 0 0; }
+    .footer-grid { display:grid; grid-template-columns:1.8fr 1fr 1fr 1.2fr; gap:40px; padding-bottom:40px; }
+    .footer .logo { color:#fff; margin-bottom:14px; display:inline-flex; }
+    .footer-brand p { font-size:0.88rem; line-height:1.7; margin-bottom:18px; }
+    .social-links { display:flex; gap:10px; }
+    .social-links a { width:36px; height:36px; background:rgba(255,255,255,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.85rem; transition:var(--transition); }
+    .social-links a:hover { background:var(--primary); color:#fff; }
+    .footer-col h4 { font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:16px; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:8px; }
+    .footer-col ul li a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:0.87rem; transition:var(--transition); }
+    .footer-col ul li a:hover { color:var(--primary); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.1); padding:20px 0; display:flex; justify-content:space-between; align-items:center; font-size:0.82rem; color:rgba(255,255,255,0.4); }
+
+    /* SKELETON */
+    .skeleton { background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:6px; height:16px; }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+    /* RESPONSIVE */
+    @media(max-width:992px){.booking-grid{grid-template-columns:1fr} .booking-sidebar{position:static} .footer-grid{grid-template-columns:1fr 1fr;gap:28px}}
+    @media(max-width:768px){.nav-links{display:none} .hamburger{display:flex} .form-row-2{grid-template-columns:1fr} .trust-badges{grid-template-columns:1fr} .step-panel{padding:24px 20px} .progress-wrap{padding:20px} .footer-grid{grid-template-columns:1fr} .footer-bottom{flex-direction:column;gap:8px;text-align:center} .payment-grid{grid-template-columns:1fr}}
+    @media(max-width:576px){.step-node-label{font-size:0.7rem} .trust-badges{display:none} .guest-banner{flex-direction:column;align-items:flex-start} .guest-banner-actions{width:100%;justify-content:flex-start}}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="../index.html" class="logo">
+          <span class="logo-icon"><i class="fas fa-compass"></i></span>
+          <span>Avi<span>vu</span></span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+          <li><a href="tours.html" class="nav-link">Tours</a></li>
+          <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
+          <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="login.html" class="btn-login" id="loginBtn">
+            <i class="fas fa-user"></i> <span id="loginBtnText">Đăng nhập</span>
+          </a>
+          <button class="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
     </div>
-  </div></div></nav>
-  <div style="padding:160px 0 80px;text-align:center;">
-    <h2>🚧 Trang Đặt Tour (Thành viên D)</h2><p>Multi-step form: Tóm tắt → Thông tin → Xác nhận</p>
-    <a href="tours.html" style="color:#FF6B35;">← Chọn tour khác</a>
-  </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <!-- Animated background layers -->
+    <div class="hero-bg-anim"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-grid-lines"></div>
+
+    <!-- Twinkling stars -->
+    <div class="hero-stars" id="heroStars"></div>
+
+    <!-- Floating destination mini-cards -->
+    <div class="hero-floats">
+      <div class="hero-float-card" style="top:15%;left:6%;animation-duration:6s;">
+        <span class="card-icon">🏖️</span>
+        <div><div>Phú Quốc</div><div class="card-sub">★ 4.9 • 1,240 đánh giá</div></div>
+      </div>
+      <div class="hero-float-card" style="top:25%;right:7%;animation-duration:8s;animation-delay:1s;">
+        <span class="card-icon">⛵</span>
+        <div><div>Vịnh Hạ Long</div><div class="card-sub">★ 4.8 • Di sản UNESCO</div></div>
+      </div>
+      <div class="hero-float-card" style="top:60%;left:4%;animation-duration:7s;animation-delay:2s;">
+        <span class="card-icon">🌸</span>
+        <div><div>Sa Pa • Mùa hoa</div><div class="card-sub">Tháng 9–11 đẹp nhất</div></div>
+      </div>
+      <div class="hero-float-card" style="top:55%;right:5%;animation-duration:9s;animation-delay:0.5s;">
+        <span class="card-icon">🏮</span>
+        <div><div>Hội An Phố Cổ</div><div class="card-sub">★ 4.9 • Đêm hoa đăng</div></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="../index.html">Trang chủ</a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="tours.html">Tours</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>Đặt Tour</span>
+        </nav>
+        <h1>Đặt Chỗ <em>Hành Trình Mơ Ước</em></h1>
+        <p>Hoàn tất thủ tục đặt tour chỉ trong 3 bước — không cần tài khoản, xác nhận ngay tức thì</p>
+
+        <!-- Stats strip -->
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">50<span>+</span></div>
+            <div class="hero-stat-label">Điểm đến</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">12<span>K</span></div>
+            <div class="hero-stat-label">Khách hàng</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">4.9<span>★</span></div>
+            <div class="hero-stat-label">Đánh giá</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">3<span> phút</span></div>
+            <div class="hero-stat-label">Đặt xong ngay</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING LAYOUT -->
+  <main class="booking-layout">
+    <div class="container">
+
+      <!-- GUEST CHECKOUT BANNER (ẩn khi đã đăng nhập) -->
+      <div class="guest-banner" id="guestBanner">
+        <div class="guest-banner-left">
+          <i class="fas fa-bolt"></i>
+          <div>
+            <h5>Đặt tour ngay — không cần tài khoản!</h5>
+            <p>Điền thông tin bên dưới và nhận xác nhận tức thì. Bạn có thể tạo tài khoản sau để theo dõi lịch trình.</p>
+          </div>
+        </div>
+        <div class="guest-banner-actions">
+          <a href="login.html" class="btn-outline-sm"><i class="fas fa-user"></i> Đăng nhập</a>
+          <button class="btn-ghost-sm" onclick="document.getElementById('guestBanner').style.display='none'">Tiếp tục không cần TK</button>
+        </div>
+      </div>
+
+      <!-- MEMBER BENEFITS STRIP -->
+      <div class="member-benefits">
+        <div class="benefit-chip"><i class="fas fa-star"></i> Thành viên: Giảm 5% ngay hôm nay</div>
+        <div class="benefit-chip"><i class="fas fa-coins"></i> Tích điểm đổi quà mỗi chuyến đi</div>
+        <div class="benefit-chip"><i class="fas fa-history"></i> Theo dõi lịch trình dễ dàng</div>
+        <div class="benefit-chip"><i class="fas fa-bell"></i> Nhận ưu đãi flash sale độc quyền</div>
+        <div class="benefit-chip"><i class="fas fa-undo"></i> Hủy linh hoạt cho thành viên VIP</div>
+      </div>
+
+      <div class="booking-grid">
+        <!-- LEFT: Main Content -->
+        <div class="booking-main">
+
+          <!-- Progress Bar -->
+          <div class="progress-wrap">
+            <div class="step-track-container">
+              <div class="progress-rail">
+                <div id="progressBarFill"></div>
+              </div>
+              <div class="step-node active" data-step="1">
+                <div class="step-bubble">1</div>
+                <span class="step-node-label">Hành trình</span>
+              </div>
+              <div class="step-node" data-step="2">
+                <div class="step-bubble">2</div>
+                <span class="step-node-label">Thông tin</span>
+              </div>
+              <div class="step-node" data-step="3">
+                <div class="step-bubble"><i class="fas fa-check" style="font-size:0.75rem;"></i></div>
+                <span class="step-node-label">Xác nhận</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1: Hành trình -->
+          <div id="step-1" class="step-panel active">
+            <h3 class="step-heading">
+              <i class="fas fa-suitcase-rolling"></i>
+              Bước 1 — Kiểm tra hành trình & chọn ngày khởi hành
+            </h3>
+
+            <!-- Tour Summary -->
+            <div id="tourSummaryCard" class="tour-summary-card">
+              <div class="skeleton" style="width:60%;height:20px;margin-bottom:14px;"></div>
+              <div class="skeleton" style="width:40%;height:14px;margin-bottom:8px;"></div>
+              <div class="skeleton" style="width:50%;height:14px;"></div>
+            </div>
+
+            <!-- Itinerary: Included / Not Included -->
+            <div id="tourItinerary" style="display:none; margin-bottom:24px;">
+              <div class="itinerary-tabs">
+                <div class="itinerary-tab active" onclick="switchItineraryTab('included', this)">✅ Đã bao gồm</div>
+                <div class="itinerary-tab" onclick="switchItineraryTab('excluded', this)">❌ Chưa bao gồm</div>
+                <div class="itinerary-tab" onclick="switchItineraryTab('cancel', this)">📋 Điều khoản hủy</div>
+              </div>
+              <div id="tab-included" class="itinerary-panel active">
+                <ul class="include-list">
+                  <li><i class="fas fa-check-circle inc-icon"></i> Vé máy bay/xe khứ hồi</li>
+                  <li><i class="fas fa-check-circle inc-icon"></i> Khách sạn tiêu chuẩn 3-4 sao (phòng đôi/twin)</li>
+                  <li><i class="fas fa-check-circle inc-icon"></i> Các bữa ăn theo lịch trình (sáng, trưa)</li>
+                  <li><i class="fas fa-check-circle inc-icon"></i> Vé tham quan tất cả điểm trong lịch</li>
+                  <li><i class="fas fa-check-circle inc-icon"></i> Hướng dẫn viên tiếng Việt suốt tour</li>
+                  <li><i class="fas fa-check-circle inc-icon"></i> Bảo hiểm du lịch toàn trình</li>
+                </ul>
+              </div>
+              <div id="tab-excluded" class="itinerary-panel">
+                <ul class="include-list">
+                  <li><i class="fas fa-times-circle exc-icon"></i> Chi phí cá nhân, mua sắm, giặt là</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Tiền tip hướng dẫn viên & tài xế (tự nguyện)</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Bữa tối và nước uống cá nhân</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Thuế xuất cảnh (nếu đi nước ngoài)</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Chi phí phát sinh ngoài chương trình</li>
+                </ul>
+              </div>
+              <div id="tab-cancel" class="itinerary-panel">
+                <div class="cancellation-box" style="margin:0;border-left-color:#0ea5e9;background:#f0f9ff;border-color:#bae6fd;">
+                  <h6 style="color:#0369a1;"><i class="fas fa-calendar-times"></i> Chính sách hủy / đổi ngày đơn giản</h6>
+                  <ul class="policy-list" style="color:#0369a1;">
+                    <li><i class="fas fa-check" style="color:#0ea5e9;"></i> <strong>Trên 15 ngày trước tour:</strong> Hoàn 100% tiền cọc, đổi ngày miễn phí.</li>
+                    <li><i class="fas fa-check" style="color:#0ea5e9;"></i> <strong>Từ 8–14 ngày trước tour:</strong> Hoàn 70%, đổi ngày phụ thu 200.000 ₫.</li>
+                    <li><i class="fas fa-check" style="color:#0ea5e9;"></i> <strong>Từ 4–7 ngày trước tour:</strong> Hoàn 50%, không hỗ trợ đổi ngày.</li>
+                    <li><i class="fas fa-times" style="color:#f87171;"></i> <strong>Dưới 3 ngày hoặc no-show:</strong> Không hoàn tiền.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Smart Calendar -->
+            <div class="calendar-section">
+              <label><i class="fas fa-calendar-day"></i> Chọn ngày khởi hành *</label>
+              <div class="mini-calendar">
+                <div class="cal-header">
+                  <button onclick="changeCalMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                  <span id="calMonthLabel">Tháng 6, 2026</span>
+                  <button onclick="changeCalMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="cal-grid" id="calGrid">
+                  <!-- Days rendered by JS -->
+                </div>
+                <div class="cal-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:#FF6B35;"></div> Đã chọn</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#e2e8f0;"></div> Hết chỗ</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#fef9c3;border:1px solid #fde68a;"></div> Cuối tuần / Lễ</div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#d1fae5;"></div> Còn nhiều chỗ</div>
+                </div>
+              </div>
+              <input type="hidden" id="bookingDate" />
+              <div id="selectedDateDisplay" style="margin-top:10px;font-size:0.85rem;color:var(--primary);font-weight:600;display:none;">
+                <i class="fas fa-check-circle"></i> Đã chọn: <span id="selectedDateText"></span>
+              </div>
+            </div>
+
+            <!-- Guests -->
+            <div class="form-group">
+              <label for="bookingGuests">
+                <i class="fas fa-users"></i> Số lượng khách *
+              </label>
+              <input type="number" id="bookingGuests" class="form-control" min="1" value="1"
+                     oninput="calculatePrice(); triggerAISuggestion()">
+            </div>
+
+            <!-- AI Suggestion -->
+            <div id="aiSuggestionBox" class="ai-card">
+              <div class="ai-header">
+                <div class="ai-avatar">
+                  <i class="fas fa-robot"></i>
+                  <span class="ai-online"></span>
+                </div>
+                <div class="ai-meta">
+                  <h5>AVIVU AI — Trợ lý Du lịch Thông minh</h5>
+                  <span class="ai-status">
+                    <i class="fas fa-circle" style="font-size:0.5rem;"></i>
+                    Đang trực tuyến tư vấn
+                  </span>
+                </div>
+              </div>
+              <div class="ai-body" id="aiSuggestionText"></div>
+              <div class="ai-tags">
+                <span class="ai-tag"><i class="fas fa-bolt"></i> Gợi ý theo mùa</span>
+                <span class="ai-tag"><i class="fas fa-shield-halved"></i> Tối ưu chi phí</span>
+                <span class="ai-tag"><i class="fas fa-star"></i> Cá nhân hóa</span>
+              </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+              <div class="badge">
+                <div class="badge-ico"><i class="fas fa-shield-halved"></i></div>
+                <div class="badge-text"><h6>Bảo mật SSL</h6><p>Thông tin mã hóa toàn phần</p></div>
+              </div>
+              <div class="badge">
+                <div class="badge-ico"><i class="fas fa-bolt"></i></div>
+                <div class="badge-text"><h6>Xác nhận 15 phút</h6><p>Chuyên viên phản hồi siêu nhanh</p></div>
+              </div>
+              <div class="badge">
+                <div class="badge-ico"><i class="fas fa-headset"></i></div>
+                <div class="badge-text"><h6>Hỗ trợ 24/7</h6><p>Đồng hành mọi chặng hành trình</p></div>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <div></div>
+              <button class="btn-wiz btn-primary" onclick="nextStep()">
+                Tiếp theo <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: Thông tin khách hàng + Thanh toán -->
+          <div id="step-2" class="step-panel">
+            <h3 class="step-heading">
+              <i class="fas fa-user-edit"></i>
+              Bước 2 — Thông tin liên hệ & Phương thức thanh toán
+            </h3>
+
+            <div class="form-group">
+              <label for="cusName"><i class="fas fa-user"></i> Họ và tên đầy đủ *</label>
+              <input type="text" id="cusName" class="form-control" placeholder="Ví dụ: Nguyễn Văn An" required />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="cusPhone"><i class="fas fa-phone"></i> Số điện thoại *</label>
+                <input type="tel" id="cusPhone" class="form-control" placeholder="Nhập đúng 10 chữ số" required />
+              </div>
+              <div class="form-group">
+                <label for="cusEmail"><i class="fas fa-envelope"></i> Email nhận vé *</label>
+                <input type="email" id="cusEmail" class="form-control" placeholder="example@gmail.com" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cusNote"><i class="fas fa-sticky-note"></i> Ghi chú dịch vụ bổ sung</label>
+              <textarea id="cusNote" class="form-control" placeholder="Yêu cầu đặc biệt: phòng đơn, chế độ ăn chay, hướng dẫn viên ngoại ngữ, honeymoon setup, trẻ em, người cao tuổi..."></textarea>
+            </div>
+
+            <!-- PAYMENT METHODS -->
+            <div class="payment-section">
+              <label><i class="fas fa-credit-card" style="color:var(--primary);margin-right:5px;"></i> Phương thức thanh toán *</label>
+              <div class="payment-grid">
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-card" value="card" checked>
+                  <label class="payment-label" for="pay-card">
+                    <i class="fas fa-credit-card" style="color:#1d4ed8;"></i> Thẻ tín dụng / ghi nợ
+                  </label>
+                </div>
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-qr" value="qr">
+                  <label class="payment-label" for="pay-qr">
+                    <i class="fas fa-qrcode" style="color:#065f46;"></i> Chuyển khoản QR Bank
+                  </label>
+                </div>
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-momo" value="momo">
+                  <label class="payment-label" for="pay-momo">
+                    <i class="fas fa-wallet" style="color:#a21caf;"></i> Ví MoMo
+                  </label>
+                </div>
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-zalopay" value="zalopay">
+                  <label class="payment-label" for="pay-zalopay">
+                    <i class="fas fa-mobile-alt" style="color:#0369a1;"></i> ZaloPay / VNPay
+                  </label>
+                </div>
+              </div>
+              <p style="font-size:0.78rem;color:var(--slate-light);margin-top:10px;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-lock" style="color:var(--success);"></i>
+                Tất cả giao dịch được mã hóa SSL 256-bit. Thông tin thẻ của bạn được bảo vệ tuyệt đối.
+              </p>
+            </div>
+
+            <!-- Cancellation Policy -->
+            <div class="cancellation-box">
+              <h6><i class="fas fa-undo-alt"></i> Chính sách hủy / đổi ngày minh bạch</h6>
+              <ul class="policy-list">
+                <li><i class="fas fa-check"></i> Hủy trên 15 ngày: Hoàn 100% — không phát sinh phí ẩn.</li>
+                <li><i class="fas fa-check"></i> Hủy 8–14 ngày: Hoàn 70%, đổi ngày chỉ phụ thu 200k.</li>
+                <li><i class="fas fa-check"></i> Đổi ngày miễn phí lần đầu (trước 15 ngày).</li>
+              </ul>
+            </div>
+
+            <!-- Customer Reviews -->
+            <div class="reviews-section">
+              <div class="reviews-header">
+                <h6><i class="fas fa-comments" style="color:var(--primary);margin-right:6px;"></i> Khách hàng nói gì về tour này?</h6>
+                <div class="rating-summary">
+                  <span class="rating-big">4.8</span>
+                  <div>
+                    <div class="stars">★★★★★</div>
+                    <div class="review-count">238 đánh giá</div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-cards">
+                <div class="review-card">
+                  <div class="review-top">
+                    <div class="reviewer">
+                      <div class="reviewer-avatar">H</div>
+                      <div><div class="reviewer-name">Hoàng Minh Tuấn</div><div class="reviewer-date">05/2025</div></div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                  </div>
+                  <div class="review-text">"Tour tuyệt vời, hướng dẫn viên nhiệt tình, khách sạn sạch sẽ. Sẽ đặt lại lần nữa!"</div>
+                </div>
+                <div class="review-card">
+                  <div class="review-top">
+                    <div class="reviewer">
+                      <div class="reviewer-avatar" style="background:#0ea5e9;">L</div>
+                      <div><div class="reviewer-name">Linh Phương</div><div class="reviewer-date">04/2025</div></div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                  </div>
+                  <div class="review-text">"Đặt tour cho gia đình 5 người rất thuận tiện, giá rõ ràng không phụ phí bất ngờ."</div>
+                </div>
+                <div class="review-card">
+                  <div class="review-top">
+                    <div class="reviewer">
+                      <div class="reviewer-avatar" style="background:#10b981;">D</div>
+                      <div><div class="reviewer-name">Đức Anh</div><div class="reviewer-date">03/2025</div></div>
+                    </div>
+                    <div class="review-stars">★★★★☆</div>
+                  </div>
+                  <div class="review-text">"Trải nghiệm tốt, cảnh đẹp ngoài mong đợi. Team hỗ trợ qua hotline rất nhanh."</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <button class="btn-wiz btn-secondary" onclick="prevStep()">
+                <i class="fas fa-arrow-left"></i> Quay lại
+              </button>
+              <button class="btn-wiz btn-primary" onclick="nextStep()">
+                Xác nhận đặt tour <i class="fas fa-check"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Xác nhận -->
+          <div id="step-3" class="step-panel">
+            <div class="confirmation-wrap">
+              <div class="check-circle">
+                <i class="fas fa-check"></i>
+              </div>
+              <h2>Đặt Tour Thành Công! 🎉</h2>
+              <p>AVIVU đã ghi nhận yêu cầu. Xác nhận đang được gửi qua Email & SMS.</p>
+
+              <div class="code-box">
+                <span>Mã tra cứu đặt chỗ của bạn:</span>
+                <div id="finalBookingCode">AVI-XXXXXX</div>
+              </div>
+
+              <!-- Booking Details Summary -->
+              <div class="confirm-details" id="confirmDetails" style="text-align:left;">
+                <div class="confirm-row"><span class="cl">Tour:</span><span class="cr" id="cfTourName">—</span></div>
+                <div class="confirm-row"><span class="cl">Ngày khởi hành:</span><span class="cr" id="cfDate">—</span></div>
+                <div class="confirm-row"><span class="cl">Số khách:</span><span class="cr" id="cfGuests">—</span></div>
+                <div class="confirm-row"><span class="cl">Khách hàng:</span><span class="cr" id="cfName">—</span></div>
+                <div class="confirm-row"><span class="cl">Liên hệ:</span><span class="cr" id="cfContact">—</span></div>
+                <div class="confirm-row"><span class="cl">Thanh toán:</span><span class="cr" id="cfPayMethod">—</span></div>
+                <div class="confirm-row"><span class="cl" style="font-weight:700;">Tổng tiền:</span><span class="cr" id="cfTotal" style="color:var(--primary);font-size:1.1rem;">—</span></div>
+              </div>
+
+              <p class="confirm-note">
+                Chuyên viên sẽ liên hệ qua SĐT & Email trong vòng <strong>15 phút</strong> để xác nhận và hướng dẫn thanh toán.
+              </p>
+
+              <!-- Post-booking Account Promo -->
+              <div class="account-promo" id="accountPromo">
+                <h6><i class="fas fa-gift"></i> Tạo tài khoản để theo dõi & tích điểm!</h6>
+                <p>Đặt tour thành công rồi! Hãy tạo tài khoản trong 1 phút để theo dõi lịch trình, tích điểm cho chuyến tiếp và nhận ưu đãi độc quyền.</p>
+                <div class="benefits">
+                  <div class="b-chip"><i class="fas fa-check"></i> Giảm 5% đặt lần sau</div>
+                  <div class="b-chip"><i class="fas fa-check"></i> Xem lịch sử đặt tour</div>
+                  <div class="b-chip"><i class="fas fa-check"></i> Flash sale thành viên</div>
+                </div>
+                <a href="login.html?tab=register" class="btn-outline-sm" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.4);color:#fff;">
+                  <i class="fas fa-user-plus"></i> Đăng ký ngay (miễn phí)
+                </a>
+              </div>
+
+              <div class="wizard-nav" style="justify-content:center;gap:12px;flex-wrap:wrap;">
+                <a href="tours.html" class="btn-wiz btn-secondary" style="text-decoration:none;">
+                  <i class="fas fa-compass"></i> Khám phá tour khác
+                </a>
+                <button class="btn-wiz btn-primary" onclick="window.print()">
+                  <i class="fas fa-print"></i> In xác nhận
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /booking-main -->
+
+        <!-- RIGHT: Sidebar -->
+        <div class="booking-sidebar">
+          <div class="price-card">
+            <div class="price-card-title">
+              <i class="fas fa-receipt"></i> Chi tiết thanh toán
+            </div>
+            <hr class="price-divider">
+            <div class="breakdown-row">
+              <span class="label">Tour đã chọn:</span>
+              <span class="value" id="breakdownTourName" style="font-size:0.82rem;max-width:140px;text-align:right;">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="label">Đơn giá / khách:</span>
+              <span class="value" id="breakdownBasePrice">0 ₫</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="label">Số khách:</span>
+              <span class="value" id="breakdownGuests">1 người</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="label">Phí dịch vụ & VAT:</span>
+              <span class="value green">Đã bao gồm <i class="fas fa-check-circle" style="font-size:0.75rem;"></i></span>
+            </div>
+            <div class="breakdown-row">
+              <span class="label">Ưu đãi thành viên:</span>
+              <span class="value" id="discountRow" style="color:#94a3b8;font-weight:400;font-size:0.82rem;">Đăng nhập để áp dụng</span>
+            </div>
+            <div class="breakdown-row total-row">
+              <span class="label">Tổng cộng:</span>
+              <span class="value" id="breakdownTotalPrice">0 ₫</span>
+            </div>
+            <p class="price-note">*Giá cuối đã bao gồm tất cả thuế phí. Không phát sinh thêm.</p>
+            <div class="price-guarantee">
+              <i class="fas fa-shield-alt"></i>
+              Cam kết giá tốt nhất — hoàn tiền nếu tìm được rẻ hơn
+            </div>
+          </div>
+
+          <!-- Security & Help -->
+          <div class="help-card">
+            <h5><i class="fas fa-headset"></i> Cần tư vấn trực tiếp?</h5>
+            <p>Gọi hotline để chuyên viên hỗ trợ chọn tour phù hợp nhất.</p>
+            <a href="tel:19001234"><i class="fas fa-phone"></i> 1900 1234</a>
+            <div class="security-badges">
+              <div class="sec-badge"><i class="fas fa-lock" style="color:#34d399;"></i> SSL 256-bit</div>
+              <div class="sec-badge"><i class="fas fa-shield-alt" style="color:#60a5fa;"></i> Bảo mật PCI DSS</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo" style="margin-bottom:12px;">
+            <span class="logo-icon"><i class="fas fa-compass"></i></span>
+            <span style="color:#fff;">Avi<span>vu</span></span>
+          </a>
+          <p>Chúng tôi mang đến những hành trình khám phá Việt Nam tuyệt vời nhất — từ biển đảo xanh ngát đến núi rừng hùng vĩ.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Liên kết nhanh</h4>
+          <ul>
+            <li><a href="../index.html">Trang chủ</a></li>
+            <li><a href="tours.html">Danh sách tour</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Danh mục tour</h4>
+          <ul>
+            <li><a href="tours.html?cat=bien-dao">🏖️ Biển & Đảo</a></li>
+            <li><a href="tours.html?cat=nui-trekking">🏔️ Núi & Trekking</a></li>
+            <li><a href="tours.html?cat=van-hoa">🏛️ Văn Hóa & Di Sản</a></li>
+            <li><a href="tours.html?cat=sinh-thai">🌿 Sinh Thái</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Liên hệ</h4>
+          <ul>
+            <li style="display:flex;gap:8px;margin-bottom:10px;font-size:0.85rem;"><i class="fas fa-map-marker-alt" style="color:var(--primary);margin-top:3px;"></i><span>123 Nguyễn Huệ, Q.1, TP.HCM</span></li>
+            <li style="display:flex;gap:8px;margin-bottom:10px;font-size:0.85rem;"><i class="fas fa-phone" style="color:var(--primary);"></i><span>1900 1234</span></li>
+            <li style="display:flex;gap:8px;margin-bottom:10px;font-size:0.85rem;"><i class="fas fa-envelope" style="color:var(--primary);"></i><span>hello@avivu.vn</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 AVIVU. Tất cả quyền được bảo lưu.</span>
+        <span>Thiết kế bởi Nhóm 4 — Học phần Thiết kế Web</span>
+      </div>
+    </div>
+  </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../js/data/tours-data.js"></script><script src="../js/booking.js"></script><script src="../js/main.js"></script>
-</body></html>
+  <script>
+    /* ============================================================
+       AVIVU booking.js — Tối ưu hóa đầy đủ
+       ============================================================ */
+    let currentStep = 1;
+    let selectedTourPrice = 0;
+    let selectedTourName = "Chưa chọn tour";
+    let selectedDate = null;
+
+    // ---- CALENDAR ----
+    const FULL_DAYS = [3, 7, 14, 21]; // ngày hết chỗ (giả lập)
+    let calYear, calMonth;
+
+    function initCalendar() {
+      const today = new Date();
+      calYear = today.getFullYear();
+      calMonth = today.getMonth();
+      renderCalendar();
+    }
+
+    function changeCalMonth(delta) {
+      calMonth += delta;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const monthNames = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6",
+                          "Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
+      document.getElementById('calMonthLabel').textContent = `${monthNames[calMonth]}, ${calYear}`;
+
+      const grid = document.getElementById('calGrid');
+      grid.innerHTML = '';
+
+      // Day names
+      ['CN','T2','T3','T4','T5','T6','T7'].forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'cal-day-name';
+        el.textContent = d;
+        grid.appendChild(el);
+      });
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+      // Empty cells
+      for (let i = 0; i < firstDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+      }
+
+      // Day cells
+      for (let d = 1; d <= daysInMonth; d++) {
+        const el = document.createElement('div');
+        const thisDate = new Date(calYear, calMonth, d);
+        const isWeekend = thisDate.getDay() === 0 || thisDate.getDay() === 6;
+        const isPast = thisDate < today;
+        const isFull = FULL_DAYS.includes(d);
+        const isSelected = selectedDate && selectedDate.getTime() === thisDate.getTime();
+
+        let cls = 'cal-day';
+        if (isPast) cls += ' past';
+        else if (isFull) cls += ' full';
+        else if (isWeekend) cls += ' weekend';
+        if (isSelected) cls += ' selected';
+
+        el.className = cls;
+
+        const numSpan = document.createElement('span');
+        numSpan.textContent = d;
+        el.appendChild(numSpan);
+
+        if (!isPast && !isFull) {
+          const priceSpan = document.createElement('span');
+          priceSpan.className = 'day-price';
+          priceSpan.textContent = isWeekend ? '+10%' : 'Còn';
+          el.appendChild(priceSpan);
+        }
+
+        if (!isPast && !isFull) {
+          el.addEventListener('click', () => selectCalDate(thisDate));
+        }
+
+        grid.appendChild(el);
+      }
+    }
+
+    function selectCalDate(date) {
+      selectedDate = date;
+      const iso = date.toISOString().split('T')[0];
+      document.getElementById('bookingDate').value = iso;
+
+      const display = document.getElementById('selectedDateDisplay');
+      const text = document.getElementById('selectedDateText');
+      const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+      text.textContent = date.toLocaleDateString('vi-VN', opts);
+      display.style.display = 'flex';
+      display.style.alignItems = 'center';
+      display.style.gap = '8px';
+
+      renderCalendar(); // re-render to show selected
+      calculatePrice();
+      triggerAISuggestion();
+    }
+
+    // ---- ITINERARY TABS ----
+    function switchItineraryTab(id, el) {
+      document.querySelectorAll('.itinerary-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.itinerary-panel').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+    }
+
+    // ---- INIT ----
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check logged in user
+      const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (user) {
+        document.getElementById('loginBtnText').textContent = user.name.split(' ').slice(-1)[0];
+        document.getElementById('guestBanner').style.display = 'none';
+        // Pre-fill name/email if stored
+        const nameEl = document.getElementById('cusName');
+        const emailEl = document.getElementById('cusEmail');
+        if (nameEl) nameEl.value = user.name || '';
+        if (emailEl) emailEl.value = user.email || '';
+        // Show discount
+        document.getElementById('discountRow').textContent = '− 5% thành viên';
+        document.getElementById('discountRow').style.color = 'var(--success)';
+      }
+
+      initCalendar();
+      initTourData();
+      showStep(1);
+    });
+
+    // ---- INIT TOUR DATA ----
+    function initTourData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tourId = urlParams.get('id');
+      let activeTour = null;
+
+      if (typeof toursData !== 'undefined' && Array.isArray(toursData)) {
+        activeTour = toursData.find(t => String(t.id) === String(tourId) || t.slug === tourId);
+      }
+
+      const fallback = {
+        'halong':   { name: 'Vịnh Hạ Long Huyền Diệu', duration: '3N2Đ', price: 2500000 },
+        'phuquoc':  { name: 'Đảo Ngọc Phú Quốc Cát Trắng', duration: '4N3Đ', price: 4200000 },
+        'sapa':     { name: 'Thị Trấn Sương Mù Sa Pa', duration: '3N2Đ', price: 2900000 },
+        'danang':   { name: 'Đà Nẵng - Hội An Cổ Kính', duration: '4N3Đ', price: 3200000 },
+        'dalat':    { name: 'Đà Lạt Thành Phố Ngàn Hoa', duration: '3N2Đ', price: 1900000 },
+      };
+
+      if (!activeTour && tourId && fallback[tourId]) activeTour = fallback[tourId];
+
+      // Demo: if no id, load a sample tour
+      if (!activeTour && !tourId) {
+        activeTour = { name: 'Vịnh Hạ Long Huyền Diệu', duration: '3N2Đ', price: 2500000 };
+      }
+
+      const card = document.getElementById('tourSummaryCard');
+      if (!card) return;
+
+      if (activeTour) {
+        selectedTourName = activeTour.name || activeTour.title || 'Tour Du Lịch';
+        selectedTourPrice = activeTour.price || 0;
+        card.innerHTML = `
+          <div class="summary-inner">
+            <h4>${selectedTourName}</h4>
+            <div class="summary-meta">
+              ${activeTour.duration ? `<div class="meta-item"><i class="far fa-clock"></i> <span>${activeTour.duration}</span></div>` : ''}
+              <div class="meta-item"><i class="fas fa-tag"></i> Đơn giá: <span class="price-tag">${selectedTourPrice.toLocaleString('vi-VN')} ₫</span> / khách</div>
+            </div>
+          </div>
+        `;
+        document.getElementById('tourItinerary').style.display = 'block';
+      } else {
+        card.innerHTML = `<div class="no-tour-alert"><i class="fas fa-exclamation-triangle"></i><p>Bạn chưa chọn tour. Vui lòng <a href="tours.html" style="color:var(--primary);">quay lại danh sách</a>.</p></div>`;
+      }
+
+      calculatePrice();
+    }
+
+    // ---- CALCULATE PRICE ----
+    function calculatePrice() {
+      let n = parseInt(document.getElementById('bookingGuests')?.value) || 1;
+      if (n < 1) n = 1;
+      
+      const isWeekend = selectedDate && (selectedDate.getDay() === 0 || selectedDate.getDay() === 6);
+      const unitPrice = isWeekend ? Math.round(selectedTourPrice * 1.1) : selectedTourPrice;
+      const total = unitPrice * n;
+
+      document.getElementById('breakdownTourName').textContent = selectedTourName;
+      document.getElementById('breakdownBasePrice').textContent = unitPrice.toLocaleString('vi-VN') + ' ₫' + (isWeekend ? ' (+10% cuối tuần)' : '');
+      document.getElementById('breakdownGuests').textContent = n + ' người';
+      document.getElementById('breakdownTotalPrice').textContent = total.toLocaleString('vi-VN') + ' ₫';
+    }
+
+    // ---- WIZARD ----
+    function showStep(n) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('step-' + n);
+      if (panel) panel.classList.add('active');
+      currentStep = n;
+      updateProgress(n);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextStep() {
+      if (currentStep === 1) {
+        if (selectedTourPrice === 0) {
+          Swal.fire({ title: 'Chưa chọn tour!', text: 'Vui lòng chọn tour hợp lệ.', icon: 'warning', confirmButtonColor: '#FF6B35' });
+          return;
+        }
+        if (!document.getElementById('bookingDate').value) {
+          Swal.fire({ title: 'Chưa chọn ngày!', text: 'Vui lòng chọn ngày khởi hành trên lịch.', icon: 'warning', confirmButtonColor: '#FF6B35' });
+          return;
+        }
+        const n = parseInt(document.getElementById('bookingGuests')?.value);
+        if (!n || n < 1) {
+          Swal.fire({ title: 'Lỗi số lượng', text: 'Vui lòng nhập số lượng khách hợp lệ.', icon: 'error', confirmButtonColor: '#FF6B35' });
+          return;
+        }
+        showStep(2);
+      } else if (currentStep === 2) {
+        if (validateForm()) processBooking();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) showStep(currentStep - 1);
+    }
+
+    function updateProgress(step) {
+      const fill = document.getElementById('progressBarFill');
+      if (fill) fill.style.width = ((step - 1) / 2 * 100) + '%';
+      document.querySelectorAll('.step-node').forEach(node => {
+        const s = parseInt(node.dataset.step);
+        node.classList.remove('active', 'completed');
+        if (s < step) node.classList.add('completed');
+        else if (s === step) node.classList.add('active');
+      });
+    }
+
+    // ---- VALIDATION ----
+    function validateForm() {
+      const name = document.getElementById('cusName').value.trim();
+      const phone = document.getElementById('cusPhone').value.trim();
+      const email = document.getElementById('cusEmail').value.trim();
+      const cfg = { confirmButtonColor: '#FF6B35' };
+
+      if (!name) { Swal.fire({ title: 'Thiếu họ tên', text: 'Vui lòng nhập đầy đủ họ và tên!', icon: 'error', ...cfg }); return false; }
+      if (!/^[0-9]{10}$/.test(phone)) { Swal.fire({ title: 'SĐT không hợp lệ', text: 'Số điện thoại phải đúng 10 chữ số!', icon: 'error', ...cfg }); return false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { Swal.fire({ title: 'Email không hợp lệ', text: 'Vui lòng nhập đúng định dạng email!', icon: 'error', ...cfg }); return false; }
+      return true;
+    }
+
+    // ---- PROCESS BOOKING ----
+    function processBooking() {
+      const code = 'AVI-' + Math.floor(100000 + Math.random() * 900000);
+      let n = parseInt(document.getElementById('bookingGuests')?.value) || 1;
+      const payMethodMap = { card: 'Thẻ tín dụng / ghi nợ', qr: 'Chuyển khoản QR Bank', momo: 'Ví MoMo', zalopay: 'ZaloPay / VNPay' };
+      const payMethod = document.querySelector('input[name="payMethod"]:checked')?.value || 'card';
+      const dateVal = document.getElementById('bookingDate').value;
+      const isWeekend = selectedDate && (selectedDate.getDay() === 0 || selectedDate.getDay() === 6);
+      const unitPrice = isWeekend ? Math.round(selectedTourPrice * 1.1) : selectedTourPrice;
+      const total = unitPrice * n;
+      const cusName = document.getElementById('cusName').value.trim();
+      const cusPhone = document.getElementById('cusPhone').value.trim();
+      const cusEmail = document.getElementById('cusEmail').value.trim();
+
+      const data = {
+        bookingCode: code, tourName: selectedTourName, travelDate: dateVal, guestsCount: n,
+        totalPayable: total, paymentMethod: payMethod,
+        customerName: cusName, customerPhone: cusPhone, customerEmail: cusEmail,
+        customerNote: document.getElementById('cusNote').value.trim(), timestamp: new Date().toISOString()
+      };
+
+      const bookings = JSON.parse(localStorage.getItem('avivu_bookings') || '[]');
+      bookings.push(data);
+      localStorage.setItem('avivu_bookings', JSON.stringify(bookings));
+
+      // Populate confirmation screen
+      document.getElementById('finalBookingCode').textContent = code;
+      document.getElementById('cfTourName').textContent = selectedTourName;
+      document.getElementById('cfDate').textContent = dateVal;
+      document.getElementById('cfGuests').textContent = n + ' người';
+      document.getElementById('cfName').textContent = cusName;
+      document.getElementById('cfContact').textContent = cusPhone + ' | ' + cusEmail;
+      document.getElementById('cfPayMethod').textContent = payMethodMap[payMethod] || payMethod;
+      document.getElementById('cfTotal').textContent = total.toLocaleString('vi-VN') + ' ₫';
+
+      // Hide account promo if already logged in
+      const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (user) document.getElementById('accountPromo').style.display = 'none';
+
+      Swal.fire({
+        title: '🎉 Đặt Chỗ Hoàn Tất!',
+        html: `Hành trình <strong>${selectedTourName}</strong> đã được ghi nhận.<br><br>
+               Mã đặt chỗ: <strong style="color:#FF6B35;">${code}</strong><br><br>
+               <small style="color:#64748b;">Email xác nhận đang được gửi tới <strong>${cusEmail}</strong></small>`,
+        icon: 'success',
+        confirmButtonColor: '#FF6B35',
+        confirmButtonText: 'Xem xác nhận đầy đủ'
+      }).then(() => showStep(3));
+    }
+
+    // ---- AI SUGGESTION ----
+    function triggerAISuggestion() {
+      const dateVal = document.getElementById('bookingDate')?.value;
+      const guests = parseInt(document.getElementById('bookingGuests')?.value) || 1;
+      const box = document.getElementById('aiSuggestionBox');
+      const text = document.getElementById('aiSuggestionText');
+      if (!dateVal || !box || !text) return;
+
+      const month = new Date(dateVal).getMonth() + 1;
+      let msg = '';
+
+      if (month >= 5 && month <= 8) {
+        msg += `☀️ <strong>Mùa hè tháng ${month}</strong> — Lý tưởng cho các tour biển đảo: <em>Vịnh Hạ Long, Phú Quốc, Đà Nẵng - Hội An</em>. `;
+      } else if (month >= 10 || month <= 2) {
+        msg += `❄️ <strong>Mùa đông tháng ${month}</strong> — Tiết trời se lạnh thơ mộng: <em>Sa Pa săn mây, Hà Giang hoa tam giác mạch</em>. `;
+      } else {
+        msg += `🌸 <strong>Giao mùa tháng ${month}</strong> — Khí hậu dịu mát cho di sản: <em>Hội An phố cổ, Huế cố đô, Ninh Bình Tràng An</em>. `;
+      }
+
+      if (guests >= 10) msg += `👥 Đoàn <strong>${guests} người</strong> — Nên yêu cầu <em>Tour Đoàn Riêng / Teambuilding</em> để được giá chiết khấu đặc biệt!`;
+      else if (guests >= 4) msg += `🚐 Nhóm <strong>${guests} người</strong> — Gói xe du lịch riêng hoặc Villa nguyên căn thoải mái và kinh tế nhất.`;
+      else if (guests === 2) msg += `💑 <strong>2 người</strong> — Để lại ghi chú nếu đang đi tuần trăng mật để khách sạn chuẩn bị set-up đặc biệt nhé!`;
+      else msg += `🎒 <strong>Solo Travel</strong> — Tour ghép: tiết kiệm chi phí và dễ kết bạn cùng chí hướng!`;
+
+      text.innerHTML = msg;
+      box.style.display = 'block';
+    }
+
+    // ---- HERO STARS ----
+    const starsContainer = document.getElementById('heroStars');
+    if (starsContainer) {
+      for (let i = 0; i < 60; i++) {
+        const star = document.createElement('div');
+        star.className = 'hero-star';
+        const size = 1 + Math.random() * 2.5;
+        star.style.cssText = `
+          width: ${size}px; height: ${size}px;
+          top: ${Math.random() * 90}%;
+          left: ${Math.random() * 100}%;
+          animation-duration: ${1.5 + Math.random() * 3}s;
+          animation-delay: ${Math.random() * 4}s;
+        `;
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // ---- NAVBAR SCROLL ----
+    window.addEventListener('scroll', () => {
+      const nb = document.querySelector('.navbar');
+      if (nb) nb.style.boxShadow = window.scrollY > 20 ? '0 4px 20px rgba(0,0,0,0.1)' : '';
+    });
+  </script>
+</body>
+</html>

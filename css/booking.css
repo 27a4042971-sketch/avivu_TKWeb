@@ -11,3 +11,563 @@
    - [ ] Login / Register tabs
    - [ ] Confirmation screen
    ============================================= */
+   /* =============================================
+   AVIVU — booking.css
+   ============================================= */
+
+/* =============================================
+   AVIVU — booking.css (Bản tối ưu hóa tương tác)
+   ============================================= */
+
+/* =============================================
+   AVIVU — booking.css
+   Tác giả: Thành viên D
+   ============================================= */
+
+/* - [x] Progress bar (3 bước) & Step indicator */
+/* =============================================
+   AVIVU — booking.css
+   Tác giả: Thành viên D (Bản tối ưu hóa tương tác cao)
+   ============================================= */
+
+/* Cấu trúc Grid Layout 2 Cột chính cho trang Đặt Tour */
+.booking-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .booking-grid {
+        grid-template-columns: 1fr; /* Thu về 1 cột trên iPad & Điện thoại */
+        gap: 30px;
+    }
+}
+
+/* - [x] Progress bar (3 bước) & Step indicator */
+.booking-progress-bar-wrap {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    max-width: 550px;
+    margin: 0 auto 45px;
+}
+
+.progress-line-track {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #e2e8f0;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+#progressBarFill {
+    width: 0%;
+    height: 100%;
+    background-color: #FF6B35;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-indicator-item {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 3px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.step-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: color 0.3s ease;
+}
+
+/* Kích hoạt trạng thái sáng màu cam khi bước chạy qua */
+.step-indicator-item.active .step-number {
+    background-color: #FF6B35;
+    border-color: #FF6B35;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+}
+
+.step-indicator-item.active .step-label {
+    color: #FF6B35;
+}
+
+/* Định hình form các phân vùng bước ẩn/hiện mượt mà */
+.step-panel {
+    display: none;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+}
+
+.step-panel.active {
+    display: block;
+    animation: fadeInPanel 0.4s ease;
+}
+
+@keyframes fadeInPanel {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #1e293b;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.step-title i {
+    color: #FF6B35;
+    margin-right: 8px;
+}
+
+/* - [x] Form inputs, selects */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 576px) {
+    .form-row-2 { grid-template-columns: 1fr; gap: 0; }
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: #1e293b;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #FF6B35;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* - [x] Tour summary card */
+.tour-summary-card {
+    background: linear-gradient(to right, #fff5f2, #ffffff);
+    border-left: 5px solid #FF6B35;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.tour-summary-card h4 {
+    margin: 0 0 12px 0;
+    font-size: 1.25rem;
+    color: #1e293b;
+}
+
+.tour-summary-card p {
+    margin: 6px 0;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.price-highlight {
+    color: #FF6B35;
+    font-weight: 700;
+}
+
+.no-tour-alert {
+    text-align: center;
+    color: #94a3b8;
+    padding: 15px 0;
+}
+
+.no-tour-alert i {
+    font-size: 2rem;
+    color: #eab308;
+    margin-bottom: 8px;
+}
+
+/* - [x] Price breakdown table (Sidebar tính tiền) */
+.price-breakdown-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f1f5f9;
+    position: sticky;
+    top: 130px;
+}
+
+.price-breakdown-card h3 {
+    margin-top: 0;
+    font-size: 1.15rem;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price-breakdown-card h3 i { color: #FF6B35; }
+
+.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.breakdown-table td {
+    padding: 12px 0;
+    font-size: 0.9rem;
+    color: #475569;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.text-right { text-align: right; }
+.text-bold { font-weight: 600; color: #1e293b !important; }
+.text-green { color: #10b981 !important; font-weight: 600; }
+
+.breakdown-table .total-row td {
+    border-bottom: none;
+    padding-top: 20px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.breakdown-table td.total-price {
+    font-size: 1.4rem;
+    color: #FF6B35;
+}
+
+.sidebar-guarantee {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-align: center;
+}
+
+/* - [x] Login / Register tabs (Dùng cho cả file login.html) */
+.auth-tabs-navigation {
+    display: flex;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 25px;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.3s;
+}
+
+.auth-tab-btn.active {
+    color: #FF6B35;
+    border-bottom: 2px solid #FF6B35;
+    margin-bottom: -2px;
+}
+
+/* - [x] Confirmation screen */
+.confirmation-screen {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.success-icon-wrap {
+    font-size: 4.5rem;
+    color: #10b981;
+    margin-bottom: 15px;
+    animation: scaleInIcon 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleInIcon {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+.booking-code-box {
+    background: rgba(255, 107, 53, 0.06);
+    border: 2px dashed #FF6B35;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.booking-code-box span {
+    font-size: 0.85rem;
+    color: #64748b;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#finalBookingCode {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FF6B35;
+    letter-spacing: 2px;
+}
+
+.sub-alert {
+    font-size: 0.9rem;
+    color: #64748b;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/* Hệ thống các Button điều hướng trong form */
+.wizard-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 20px;
+}
+
+.btn-wizard {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-next {
+    background-color: #FF6B35;
+    color: #ffffff;
+}
+
+.btn-next:hover {
+    background-color: #e55a2b;
+    transform: translateY(-1px);
+}
+
+.btn-prev {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.btn-prev:hover {
+    background-color: #e2e8f0;
+}
+/* ==========================================================================
+   GIAO DIỆN NÂNG CẤP: AI SMART CARD & TRUST BADGES BY AVIVU
+   ========================================================================== */
+
+/* 1. Thẻ Trợ Lý AI Thiết Kế Hiện Đại */
+.ai-enhanced-card {
+    background: #ffffff;
+    border: 1px solid #e0f2fe;
+    border-left: 4px solid #0ea5e9;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.06);
+    transition: all 0.3s ease;
+}
+
+.ai-enhanced-card:hover {
+    box-shadow: 0 6px 24px rgba(14, 165, 233, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Header Thẻ AI: Avatar & Tên gọi */
+.ai-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.ai-avatar-container {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+/* Hiệu ứng chấm xanh nhấp nháy phát sáng báo trực tuyến */
+.ai-pulse-signal {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 11px;
+    height: 11px;
+    background-color: #22c55e;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
+
+.ai-pulse-signal::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #22c55e;
+    border-radius: 50%;
+    animation: pulseGlow 1.8s infinite ease-in-out;
+    top: 0;
+    left: 0;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+.ai-identity h5 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.ai-status-tag {
+    font-size: 0.78rem;
+    color: #22c55e;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+}
+
+/* Nội dung tư vấn của AI */
+.ai-card-body p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    text-align: justify;
+}
+
+/* Footer Thẻ AI: Các thẻ Tag nhỏ đính kèm */
+.ai-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 10px;
+}
+
+.footer-tag {
+    background: #f0f9ff;
+    color: #0369a1;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* 2. Hệ Thống Khối Cam Kết Chất Lượng (Trust Badges) */
+.booking-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 35px 0 20px 0;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 25px;
+}
+
+.badge-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.badge-icon {
+    color: #ff6b35; /* Đồng bộ tông cam thương hiệu của bạn nếu có */
+    font-size: 1.3rem;
+    margin-top: 2px;
+}
+
+.badge-content h6 {
+    margin: 0 0 4px 0;
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.badge-content p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+/* Responsive cho khối Trust Badges trên Mobile */
+@media (max-width: 768px) {
+    .booking-trust-badges {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
