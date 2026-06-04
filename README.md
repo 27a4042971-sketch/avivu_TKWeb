@@ -6,10 +6,10 @@ Website booking tour du lịch Việt Nam — Học phần Thiết kế Web.
 
 | Thành viên | Vai trò | Phụ trách |
 |---|---|---|
-| A (Trưởng nhóm) | UI Foundation | `index.html`, `global.css`, `components.css` |
-| B | Tour Explorer | `pages/tours.html`, `js/tours.js` |
-| C | Detail & UX | `pages/tour-detail.html`, `css/responsive.css` |
-| D | Conversion | `pages/booking.html`, `pages/login.html` |
+| Hà Bảo Nhi (Leader) | UI Foundation | `index.html`, `global.css`, `components.css` |
+| Ngô Thị Huyền Diệu | Tour Explorer | `pages/tours.html`, `js/tours.js` |
+| Đỗ Phương Nam  | Detail & UX | `pages/tour-detail.html`, `css/responsive.css` |
+| Nguyễn Hoàng Anh | Conversion | `pages/booking.html`, `pages/login.html` |
 
 ## 📁 Cấu trúc
 
