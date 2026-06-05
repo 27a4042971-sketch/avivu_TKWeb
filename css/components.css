@@ -8,18 +8,23 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 200;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
   padding: 18px 0;
-  transition: var(--t);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    padding 0.3s ease,
+    backdrop-filter 0.3s ease;
 }
 
 .navbar.scrolled {
-  background: rgba(13, 27, 42, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(13, 27, 42, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 12px 0;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
 }
 
 .navbar-inner {

@@ -1,1415 +1,236 @@
 ﻿<!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập & Đăng ký — avivu</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <style>
-      :root {
-        --primary: #ff6b35;
-        --primary-hover: #e55a2b;
-        --dark: #1a1a1a;
-        --success: #10b981;
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập & Đăng ký — avivu</title>
 
-      /* ANIMATED BACKGROUND */
-      #bg-slideshow {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-      }
-      .bg-slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1.8s ease-in-out;
-        transform: scale(1.08);
-        animation: kenBurns 8s ease-out forwards;
-      }
-      .bg-slide.active {
-        opacity: 1;
-      }
-      @keyframes kenBurns {
-        0% {
-          transform: scale(1.08);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-      .bg-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        background: linear-gradient(
-          135deg,
-          rgba(10, 10, 30, 0.65) 0%,
-          rgba(20, 10, 5, 0.55) 50%,
-          rgba(0, 0, 0, 0.6) 100%
-        );
-      }
-      /* Floating particles canvas */
-      #particles-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-      }
-      /* Animated light streaks */
-      .light-streaks {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-        overflow: hidden;
-      }
-      .streak {
-        position: absolute;
-        width: 2px;
-        height: 120px;
-        background: linear-gradient(
-          to bottom,
-          transparent,
-          rgba(255, 107, 53, 0.4),
-          transparent
-        );
-        border-radius: 50%;
-        animation: streakFall linear infinite;
-      }
-      @keyframes streakFall {
-        0% {
-          transform: translateY(-150px) rotate(15deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        90% {
-          opacity: 0.6;
-        }
-        100% {
-          transform: translateY(110vh) rotate(15deg);
-          opacity: 0;
-        }
-      }
-      /* Floating destination tags */
-      .floating-tags {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        pointer-events: none;
-        overflow: hidden;
-      }
-      .float-tag {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: rgba(255, 255, 255, 0.85);
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 20px;
-        white-space: nowrap;
-        animation: floatAround linear infinite;
-      }
-      @keyframes floatAround {
-        0% {
-          transform: translateY(0px) translateX(0px);
-          opacity: 0.7;
-        }
-        25% {
-          transform: translateY(-20px) translateX(10px);
-          opacity: 1;
-        }
-        50% {
-          transform: translateY(-10px) translateX(-8px);
-          opacity: 0.8;
-        }
-        75% {
-          transform: translateY(-25px) translateX(5px);
-          opacity: 0.9;
-        }
-        100% {
-          transform: translateY(0px) translateX(0px);
-          opacity: 0.7;
-        }
-      }
-      /* Slideshow dots indicator */
-      .slide-indicator {
-        position: fixed;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
-        display: flex;
-        gap: 8px;
-      }
-      .slide-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.4);
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 0;
-      }
-      .slide-dot.active {
-        background: var(--primary);
-        width: 24px;
-        border-radius: 4px;
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
 
-      body {
-        font-family: "Inter", sans-serif;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        overflow-x: hidden;
-        position: relative;
-      }
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
 
-      .auth-card {
-        width: 100%;
-        max-width: 460px;
-        background: rgba(255, 255, 255, 0.94);
-        padding: 38px 40px;
-        border-radius: 24px;
-        box-shadow:
-          0 24px 60px rgba(0, 0, 0, 0.45),
-          0 0 0 1px rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        animation: scaleUp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-        z-index: 10;
-      }
-      @keyframes scaleUp {
-        from {
-          opacity: 0;
-          transform: scale(0.88);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
+<body>
+  <main class="auth-page">
+    <a href="../index.html" class="auth-home-link">
+      <i class="fas fa-arrow-left"></i>
+      Về trang chủ
+    </a>
 
-      /* LOGO */
-      .auth-logo {
-        text-align: center;
-        margin-bottom: 22px;
-      }
-      .auth-logo i {
-        color: var(--primary);
-        font-size: 2.2rem;
-        display: block;
-        margin-bottom: 8px;
-        animation: pulse 2s infinite;
-      }
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.08);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-      .auth-logo h2 {
-        font-family: "Playfair Display", serif;
-        font-size: 1.7rem;
-        font-weight: 700;
-        color: var(--dark);
-      }
-
-      /* MEMBER BENEFITS STRIP */
-      .benefit-strip {
-        background: linear-gradient(135deg, #fff7ed, #fef3c7);
-        border: 1px solid #fed7aa;
-        border-radius: 10px;
-        padding: 12px 16px;
-        margin-bottom: 22px;
-        display: flex;
-        gap: 14px;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-      .benefit-strip::-webkit-scrollbar {
-        display: none;
-      }
-      .bchip {
-        font-size: 0.78rem;
-        color: #92400e;
-        font-weight: 600;
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-      .bchip i {
-        color: #f59e0b;
-      }
-
-      /* TABS */
-      .auth-tabs {
-        display: flex;
-        gap: 4px;
-        margin-bottom: 22px;
-        background: #f8fafc;
-        border-radius: 10px;
-        padding: 4px;
-      }
-      .tab-btn {
-        flex: 1;
-        background: none;
-        border: none;
-        padding: 10px 0;
-        font-size: 0.93rem;
-        font-weight: 600;
-        color: #8e9aa8;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: all 0.25s ease;
-        font-family: "Inter", sans-serif;
-      }
-      .tab-btn.active {
-        background: #fff;
-        color: var(--primary);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      /* SOCIAL LOGIN */
-      .social-login {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      .btn-social {
-        width: 100%;
-        padding: 11px 18px;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        transition: all 0.25s ease;
-        font-family: "Inter", sans-serif;
-        border: 1.5px solid #e2e8f0;
-        background: #fff;
-        color: #374151;
-      }
-      .btn-social:hover {
-        border-color: #d1d5db;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
-      }
-      .btn-social.google .ico {
-        color: #ea4335;
-      }
-      .btn-social.facebook {
-        background: #1877f2;
-        color: #fff;
-        border-color: #1877f2;
-      }
-      .btn-social.facebook:hover {
-        background: #166fe5;
-      }
-      .btn-social.apple {
-        background: #000;
-        color: #fff;
-        border-color: #000;
-      }
-      .btn-social.apple:hover {
-        background: #1a1a1a;
-      }
-      .btn-social .ico {
-        font-size: 1.1rem;
-      }
-
-      /* DIVIDER */
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 18px 0;
-        color: #94a3b8;
-        font-size: 0.82rem;
-      }
-      .divider::before,
-      .divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: #e2e8f0;
-      }
-
-      /* FORM */
-      .auth-form {
-        display: none;
-      }
-      .auth-form.active {
-        display: block;
-        animation: slideUp 0.35s ease forwards;
-      }
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .form-group {
-        margin-bottom: 16px;
-        position: relative;
-      }
-      label {
-        display: block;
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #4a5568;
-        margin-bottom: 6px;
-      }
-      input {
-        width: 100%;
-        padding: 12px 16px;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 10px;
-        font-size: 0.93rem;
-        font-family: inherit;
-        transition: all 0.25s;
-        background: rgba(255, 255, 255, 0.85);
-        color: #1e293b;
-      }
-      input:focus {
-        border-color: var(--primary);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
-        background: #fff;
-      }
-
-      .input-with-icon {
-        position: relative;
-      }
-      .input-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #94a3b8;
-        font-size: 0.9rem;
-        pointer-events: none;
-      }
-      .input-with-icon input {
-        padding-left: 40px;
-      }
-
-      .password-wrapper {
-        position: relative;
-      }
-      .toggle-pass {
-        position: absolute;
-        right: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #64748b;
-        transition: color 0.2s;
-        background: none;
-        border: none;
-      }
-      .toggle-pass:hover {
-        color: var(--primary);
-      }
-
-      /* FORGOT PASSWORD */
-      .forgot-link {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: -8px;
-        margin-bottom: 14px;
-      }
-      .forgot-link a {
-        font-size: 0.8rem;
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-      }
-      .forgot-link a:hover {
-        text-decoration: underline;
-      }
-
-      /* SUBMIT BTN */
-      .btn-auth {
-        width: 100%;
-        padding: 13px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 0.98rem;
-        cursor: pointer;
-        margin-top: 6px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 14px rgba(255, 107, 53, 0.28);
-        font-family: "Inter", sans-serif;
-      }
-      .btn-auth:hover {
-        background: var(--primary-hover);
-        transform: translateY(-1px);
-        box-shadow: 0 6px 18px rgba(255, 107, 53, 0.38);
-      }
-
-      /* TERMS */
-      .terms-note {
-        font-size: 0.75rem;
-        color: #94a3b8;
-        text-align: center;
-        margin-top: 12px;
-        line-height: 1.5;
-      }
-      .terms-note a {
-        color: var(--primary);
-        text-decoration: none;
-      }
-
-      /* FORGOT PASSWORD MODAL */
-      .forgot-panel {
-        display: none;
-        animation: slideUp 0.35s ease forwards;
-      }
-      .forgot-panel.active {
-        display: block;
-      }
-      .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.83rem;
-        color: var(--primary);
-        cursor: pointer;
-        margin-bottom: 18px;
-        font-weight: 600;
-        background: none;
-        border: none;
-        font-family: "Inter", sans-serif;
-      }
-      .otp-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-      .otp-input {
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        padding: 10px 4px;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 8px;
-      }
-      .otp-input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
-        outline: none;
-      }
-      .resend-otp {
-        font-size: 0.8rem;
-        color: #94a3b8;
-        text-align: center;
-        margin-top: 4px;
-      }
-      .resend-otp button {
-        background: none;
-        border: none;
-        color: var(--primary);
-        cursor: pointer;
-        font-weight: 600;
-        font-family: "Inter", sans-serif;
-        font-size: 0.8rem;
-      }
-
-      /* GUEST CHECKOUT CTA */
-      .guest-cta {
-        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-        border: 1px solid #bae6fd;
-        border-radius: 10px;
-        padding: 14px 18px;
-        margin-top: 20px;
-        text-align: center;
-      }
-      .guest-cta p {
-        font-size: 0.82rem;
-        color: #0369a1;
-        margin-bottom: 10px;
-        line-height: 1.5;
-      }
-      .guest-cta a {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: #0ea5e9;
-        color: #fff;
-        text-decoration: none;
-        padding: 9px 20px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        transition: all 0.2s;
-      }
-      .guest-cta a:hover {
-        background: #0284c7;
-        transform: translateY(-1px);
-      }
-
-      /* SUCCESS STATE */
-      .success-state {
-        text-align: center;
-        display: none;
-      }
-      .success-state .s-icon {
-        font-size: 3.5rem;
-        color: var(--success);
-        margin-bottom: 12px;
-        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      @keyframes popIn {
-        from {
-          transform: scale(0);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- ANIMATED BACKGROUND SLIDESHOW -->
-    <div id="bg-slideshow">
-      <div
-        class="bg-slide active"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1557750255-c76072a7aad1?w=1920&q=80&quot;);
-        "
-      ></div>
-      <div
-        class="bg-slide"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=80&quot;);
-        "
-      ></div>
-      <div
-        class="bg-slide"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=1920&q=80&quot;);
-        "
-      ></div>
-      <div
-        class="bg-slide"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80&quot;);
-        "
-      ></div>
-      <div
-        class="bg-slide"
-        style="
-          background-image: url(&quot;https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=1920&q=80&quot;);
-        "
-      ></div>
-    </div>
-    <div class="bg-overlay"></div>
-
-    <!-- PARTICLES -->
-    <canvas id="particles-canvas"></canvas>
-
-    <!-- LIGHT STREAKS -->
-    <div class="light-streaks" id="lightStreaks"></div>
-
-    <!-- FLOATING DESTINATION TAGS -->
-    <div class="floating-tags">
-      <div
-        class="float-tag"
-        style="top: 12%; left: 5%; animation-duration: 7s; animation-delay: 0s"
-      >
-        <i
-          class="fas fa-map-marker-alt"
-          style="color: #ff6b35; margin-right: 5px"
-        ></i
-        >Vịnh Hạ Long
-      </div>
-      <div
-        class="float-tag"
-        style="
-          top: 25%;
-          right: 4%;
-          animation-duration: 9s;
-          animation-delay: 1.5s;
-        "
-      >
-        <i class="fas fa-star" style="color: #fbbf24; margin-right: 5px"></i>Phú
-        Quốc 4.9★
-      </div>
-      <div
-        class="float-tag"
-        style="top: 65%; left: 3%; animation-duration: 8s; animation-delay: 3s"
-      >
-        <i class="fas fa-camera" style="color: #a78bfa; margin-right: 5px"></i
-        >Hội An
-      </div>
-      <div
-        class="float-tag"
-        style="
-          top: 75%;
-          right: 5%;
-          animation-duration: 10s;
-          animation-delay: 0.8s;
-        "
-      >
-        <i class="fas fa-mountain" style="color: #34d399; margin-right: 5px"></i
-        >Sa Pa
-      </div>
-      <div
-        class="float-tag"
-        style="top: 45%; left: 2%; animation-duration: 6s; animation-delay: 2s"
-      >
-        <i
-          class="fas fa-umbrella-beach"
-          style="color: #60a5fa; margin-right: 5px"
-        ></i
-        >Đà Nẵng
-      </div>
-      <div
-        class="float-tag"
-        style="
-          top: 18%;
-          right: 8%;
-          animation-duration: 11s;
-          animation-delay: 4s;
-        "
-      >
-        <i class="fas fa-pagoda" style="color: #f87171; margin-right: 5px"></i
-        >Huế Cổ Đô
-      </div>
-    </div>
-
-    <!-- SLIDE INDICATOR -->
-    <div class="slide-indicator" id="slideIndicator">
-      <button class="slide-dot active" onclick="goSlide(0)"></button>
-      <button class="slide-dot" onclick="goSlide(1)"></button>
-      <button class="slide-dot" onclick="goSlide(2)"></button>
-      <button class="slide-dot" onclick="goSlide(3)"></button>
-      <button class="slide-dot" onclick="goSlide(4)"></button>
-    </div>
-
-    <div class="auth-card">
-      <!-- LOGO -->
-      <div class="auth-logo">
-        <i class="fas fa-paper-plane"></i>
-        <h2>avivu</h2>
-      </div>
-
-      <!-- MEMBER BENEFITS STRIP -->
-      <div class="benefit-strip">
-        <div class="bchip">
-          <i class="fas fa-star"></i> Giảm 5% thành viên mới
+    <section class="auth-shell" id="authShell">
+      <div class="auth-info-panel">
+        <div class="brand-mark">
+          <span><i class="fas fa-compass"></i></span>
+          <strong>avivu</strong>
         </div>
-        <div class="bchip"><i class="fas fa-coins"></i> Tích điểm đổi quà</div>
-        <div class="bchip">
-          <i class="fas fa-bell"></i> Flash sale độc quyền
-        </div>
-        <div class="bchip"><i class="fas fa-undo"></i> Hủy linh hoạt VIP</div>
-      </div>
 
-      <!-- TABS -->
-      <div class="auth-tabs" id="authTabs">
-        <button class="tab-btn active" onclick="switchTab('login', this)">
-          Đăng Nhập
-        </button>
-        <button class="tab-btn" onclick="switchTab('register', this)">
-          Đăng Ký
-        </button>
-      </div>
-
-      <!-- FORGOT PASSWORD PANEL -->
-      <div id="forgotPanel" class="forgot-panel">
-        <button class="back-link" onclick="showForgot(false)">
-          <i class="fas fa-arrow-left"></i> Quay lại đăng nhập
-        </button>
-        <h4
-          style="
-            font-family: &quot;Playfair Display&quot;, serif;
-            margin-bottom: 6px;
-            color: #1e293b;
-          "
-        >
-          Khôi phục mật khẩu
-        </h4>
-        <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 18px">
-          Nhập số điện thoại hoặc email để nhận mã OTP.
-        </p>
-
-        <div id="forgotStep1">
-          <div class="form-group input-with-icon">
-            <label
-              ><i
-                class="fas fa-phone"
-                style="color: var(--primary); margin-right: 4px"
-              ></i>
-              Số điện thoại hoặc Email</label
-            >
-            <i class="fas fa-user input-icon"></i>
-            <input
-              type="text"
-              id="forgotIdentifier"
-              placeholder="SĐT hoặc email đã đăng ký"
-            />
-          </div>
-          <button class="btn-auth" onclick="sendOTP()">
-            <i class="fas fa-paper-plane"></i> Gửi mã OTP
+        <div class="info-copy login-copy">
+          <span class="eyebrow">Khám phá Việt Nam</span>
+          <h1>Chào mừng bạn quay lại</h1>
+          <p>Đăng nhập để đặt tour, lưu hành trình yêu thích và theo dõi các đơn đặt tour của bạn.</p>
+          <button type="button" class="ghost-switch-btn" data-switch="register">
+            Chưa có tài khoản? Đăng ký
           </button>
         </div>
 
-        <div id="forgotStep2" style="display: none">
-          <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 12px">
-            Mã OTP 6 chữ số đã được gửi. Nhập vào bên dưới:
-          </p>
-          <div class="otp-grid">
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 0)"
-            />
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 1)"
-            />
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 2)"
-            />
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 3)"
-            />
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 4)"
-            />
-            <input
-              class="otp-input form-control"
-              type="text"
-              maxlength="1"
-              oninput="otpNext(this, 5)"
-            />
-          </div>
-          <div class="resend-otp">
-            Không nhận được? <button onclick="resendOTP()">Gửi lại</button>
-          </div>
-          <div class="form-group" style="margin-top: 16px">
-            <label
-              ><i
-                class="fas fa-lock"
-                style="color: var(--primary); margin-right: 4px"
-              ></i>
-              Mật khẩu mới</label
-            >
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="newPassword"
-                placeholder="Tối thiểu 6 ký tự"
-              />
-              <button
-                class="toggle-pass"
-                type="button"
-                onclick="togglePassword('newPassword', this)"
-              >
-                <i class="fas fa-eye"></i>
-              </button>
+        <div class="info-copy register-copy">
+          <span class="eyebrow">avivu's Team</span>
+          <h1>Bắt đầu hành trình mới</h1>
+          <p>Tạo tài khoản miễn phí để nhận ưu đãi thành viên và đặt tour nhanh hơn.</p>
+          <button type="button" class="ghost-switch-btn" data-switch="login">
+            Đã có tài khoản? Đăng nhập
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-form-panel">
+        <div class="redirect-notice" id="redirectNotice" style="display:none;">
+          <i class="fas fa-lock"></i>
+          <span>Bạn cần đăng nhập để tiếp tục đặt tour.</span>
+        </div>
+
+        <div class="form-track" id="formTrack">
+          <form class="auth-form login-form" id="loginForm">
+            <div class="form-heading">
+              <h2>Đăng nhập</h2>
+              <p>Tiếp tục hành trình cùng avivu.</p>
             </div>
-          </div>
-          <button class="btn-auth" onclick="confirmOTP()">
-            <i class="fas fa-check"></i> Đặt lại mật khẩu
-          </button>
-        </div>
-      </div>
 
-      <!-- LOGIN FORM -->
-      <div id="loginForm" class="auth-form active">
-        <!-- Social Login -->
-        <div class="social-login">
-          <button class="btn-social google" onclick="socialLogin('Google')">
-            <span class="ico"><i class="fab fa-google"></i></span> Tiếp tục với
-            Google
-          </button>
-          <div style="display: flex; gap: 10px">
-            <button
-              class="btn-social facebook"
-              style="flex: 1"
-              onclick="socialLogin('Facebook')"
-            >
-              <span class="ico"><i class="fab fa-facebook-f"></i></span>
-              Facebook
+            <button type="button" class="social-btn" data-provider="Google">
+              <i class="fab fa-google"></i>
+              Tiếp tục với Google
             </button>
-            <button
-              class="btn-social apple"
-              style="flex: 1"
-              onclick="socialLogin('Apple')"
-            >
-              <span class="ico"><i class="fab fa-apple"></i></span> Apple
+
+            <div class="divider"><span>hoặc đăng nhập bằng email</span></div>
+
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <div class="input-wrap">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="loginEmail" placeholder="name@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="loginPass">Mật khẩu</label>
+              <div class="input-wrap">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPass" placeholder="••••••••" required />
+                <button class="toggle-pass" type="button" data-target="loginPass">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember-check">
+                <input type="checkbox" id="rememberMe" />
+                <span>Ghi nhớ đăng nhập</span>
+              </label>
+
+              <button type="button" class="text-btn" id="showForgotBtn">Quên mật khẩu?</button>
+            </div>
+
+            <button class="btn-auth" type="submit">
+              <i class="fas fa-sign-in-alt"></i>
+              Đăng nhập
+            </button>
+
+            <p class="mobile-switch">
+              Chưa có tài khoản?
+              <button type="button" data-switch="register">Đăng ký ngay</button>
+            </p>
+          </form>
+
+          <form class="auth-form register-form" id="registerForm">
+            <div class="form-heading">
+              <h2>Đăng ký</h2>
+              <p>Tạo tài khoản để đặt tour và nhận ưu đãi.</p>
+            </div>
+
+            <button type="button" class="social-btn" data-provider="Google">
+              <i class="fab fa-google"></i>
+              Đăng ký nhanh với Google
+            </button>
+
+            <div class="divider"><span>hoặc điền thông tin</span></div>
+
+            <div class="form-group">
+              <label for="regName">Họ và tên</label>
+              <div class="input-wrap">
+                <i class="fas fa-user"></i>
+                <input type="text" id="regName" placeholder="Nguyễn Văn A" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <div class="input-wrap">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="regEmail" placeholder="name@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regPhone">Số điện thoại</label>
+              <div class="input-wrap">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="regPhone" placeholder="0912345678" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regPass">Mật khẩu</label>
+              <div class="input-wrap">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="regPass" placeholder="Tối thiểu 6 ký tự" required />
+                <button class="toggle-pass" type="button" data-target="regPass">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <button class="btn-auth" type="submit">
+              <i class="fas fa-user-plus"></i>
+              Tạo tài khoản
+            </button>
+
+            <p class="terms-note">
+              Bằng cách đăng ký, bạn đồng ý với Điều khoản sử dụng và Chính sách bảo mật của avivu.
+            </p>
+
+            <p class="mobile-switch">
+              Đã có tài khoản?
+              <button type="button" data-switch="login">Đăng nhập</button>
+            </p>
+          </form>
+        </div>
+
+        <form class="forgot-form" id="forgotForm">
+          <button type="button" class="back-login-btn" id="backLoginBtn">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại đăng nhập
+          </button>
+
+          <div class="form-heading">
+            <h2>Khôi phục mật khẩu</h2>
+            <p>Nhập email hoặc số điện thoại để nhận OTP demo.</p>
+          </div>
+
+          <div id="forgotStep1">
+            <div class="form-group">
+              <label for="forgotIdentifier">Email hoặc số điện thoại</label>
+              <div class="input-wrap">
+                <i class="fas fa-user"></i>
+                <input type="text" id="forgotIdentifier" placeholder="Email hoặc SĐT đã đăng ký" />
+              </div>
+            </div>
+
+            <button class="btn-auth" type="button" id="sendOtpBtn">
+              <i class="fas fa-paper-plane"></i>
+              Gửi mã OTP
             </button>
           </div>
-        </div>
 
-        <div class="divider">hoặc đăng nhập bằng email</div>
+          <div id="forgotStep2" style="display:none;">
+            <div class="otp-grid">
+              <input class="otp-input" maxlength="1" />
+              <input class="otp-input" maxlength="1" />
+              <input class="otp-input" maxlength="1" />
+              <input class="otp-input" maxlength="1" />
+              <input class="otp-input" maxlength="1" />
+              <input class="otp-input" maxlength="1" />
+            </div>
 
-        <div class="form-group input-with-icon">
-          <label
-            ><i
-              class="fas fa-envelope"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Email</label
-          >
-          <i class="fas fa-envelope input-icon"></i>
-          <input
-            type="email"
-            id="loginEmail"
-            placeholder="name@example.com"
-            required
-          />
-        </div>
-        <div class="form-group password-wrapper">
-          <label
-            ><i
-              class="fas fa-lock"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Mật Khẩu</label
-          >
-          <input
-            type="password"
-            id="loginPass"
-            placeholder="••••••••"
-            required
-            style="padding-right: 44px"
-          />
-          <button
-            class="toggle-pass"
-            type="button"
-            onclick="togglePassword('loginPass', this)"
-          >
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-        <div class="forgot-link">
-          <a
-            href="#"
-            onclick="
-              showForgot(true);
-              return false;
-            "
-            >Quên mật khẩu?</a
-          >
-        </div>
-        <button type="button" class="btn-auth" onclick="handleLogin()">
-          <i class="fas fa-sign-in-alt"></i> Đăng Nhập
-        </button>
+            <div class="form-group">
+              <label for="newPassword">Mật khẩu mới</label>
+              <div class="input-wrap">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="newPassword" placeholder="Tối thiểu 6 ký tự" />
+                <button class="toggle-pass" type="button" data-target="newPassword">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
 
-        <div class="guest-cta">
-          <p>
-            <strong>Bạn cần đăng nhập để đặt tour.</strong><br />
-            Sau khi đăng nhập thành công, avivu sẽ tự đưa bạn quay lại trang đặt
-            tour.
-          </p>
-        </div>
+            <button class="btn-auth" type="button" id="confirmOtpBtn">
+              <i class="fas fa-check"></i>
+              Đặt lại mật khẩu
+            </button>
+
+            <button class="resend-btn" type="button" id="resendOtpBtn">Gửi lại OTP</button>
+          </div>
+        </form>
       </div>
+    </section>
+  </main>
 
-      <!-- REGISTER FORM -->
-      <div id="registerForm" class="auth-form">
-        <!-- Social Register -->
-        <div class="social-login">
-          <button class="btn-social google" onclick="socialLogin('Google')">
-            <span class="ico"><i class="fab fa-google"></i></span> Đăng ký nhanh
-            với Google
-          </button>
-        </div>
-
-        <div class="divider">hoặc điền thông tin</div>
-
-        <div class="form-group input-with-icon">
-          <label
-            ><i
-              class="fas fa-user"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Họ và Tên *</label
-          >
-          <i class="fas fa-user input-icon"></i>
-          <input type="text" id="regName" placeholder="Nguyễn Văn A" required />
-        </div>
-        <div class="form-group input-with-icon">
-          <label
-            ><i
-              class="fas fa-envelope"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Email *</label
-          >
-          <i class="fas fa-envelope input-icon"></i>
-          <input
-            type="email"
-            id="regEmail"
-            placeholder="name@example.com"
-            required
-          />
-        </div>
-        <div class="form-group input-with-icon">
-          <label
-            ><i
-              class="fas fa-phone"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Số điện thoại *</label
-          >
-          <i class="fas fa-phone input-icon"></i>
-          <input
-            type="tel"
-            id="regPhone"
-            placeholder="Nhập đúng 10 chữ số"
-            required
-          />
-        </div>
-        <div class="form-group password-wrapper">
-          <label
-            ><i
-              class="fas fa-lock"
-              style="color: var(--primary); margin-right: 4px"
-            ></i>
-            Mật Khẩu (tối thiểu 6 ký tự) *</label
-          >
-          <input
-            type="password"
-            id="regPass"
-            placeholder="Tạo mật khẩu mạnh"
-            required
-            style="padding-right: 44px"
-          />
-          <button
-            class="toggle-pass"
-            type="button"
-            onclick="togglePassword('regPass', this)"
-          >
-            <i class="fas fa-eye"></i>
-          </button>
-        </div>
-        <button type="button" class="btn-auth" onclick="handleRegister()">
-          <i class="fas fa-user-plus"></i> Tạo Tài Khoản Miễn Phí
-        </button>
-        <p class="terms-note">
-          Bằng cách đăng ký, bạn đồng ý với <a href="#">Điều khoản sử dụng</a> &
-          <a href="#">Chính sách bảo mật</a> của avivu.
-        </p>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      // ---- TAB SWITCHING ----
-      function switchTab(tabId, el) {
-        document
-          .querySelectorAll(".tab-btn")
-          .forEach((b) => b.classList.remove("active"));
-        document
-          .querySelectorAll(".auth-form")
-          .forEach((f) => f.classList.remove("active"));
-        el.classList.add("active");
-        document.getElementById(tabId + "Form").classList.add("active");
-        document.getElementById("forgotPanel").classList.remove("active");
-        document.getElementById("authTabs").style.display = "flex";
-      }
-
-      // ---- FORGOT PASSWORD ----
-      function showForgot(show) {
-        const tabs = document.getElementById("authTabs");
-        const forgot = document.getElementById("forgotPanel");
-        const login = document.getElementById("loginForm");
-        if (show) {
-          tabs.style.display = "none";
-          login.classList.remove("active");
-          forgot.classList.add("active");
-        } else {
-          tabs.style.display = "flex";
-          forgot.classList.remove("active");
-          login.classList.add("active");
-        }
-      }
-
-      function sendOTP() {
-        const id = document.getElementById("forgotIdentifier").value.trim();
-        if (!id) {
-          return Swal.fire(
-            "Thiếu thông tin",
-            "Vui lòng nhập SĐT hoặc email.",
-            "warning",
-          );
-        }
-        // Simulate OTP send
-        document.getElementById("forgotStep1").style.display = "none";
-        document.getElementById("forgotStep2").style.display = "block";
-        Swal.fire({
-          title: "Đã gửi OTP!",
-          text: `Mã OTP 6 chữ số đã được gửi tới ${id}. (Demo: dùng bất kỳ 6 số)`,
-          icon: "success",
-          confirmButtonColor: "#FF6B35",
-          timer: 3000,
-          timerProgressBar: true,
-        });
-      }
-
-      function resendOTP() {
-        Swal.fire({
-          title: "Đã gửi lại OTP!",
-          text: "Mã OTP mới đã được gửi.",
-          icon: "info",
-          confirmButtonColor: "#FF6B35",
-          timer: 2000,
-          timerProgressBar: true,
-        });
-      }
-
-      function otpNext(el, idx) {
-        if (el.value.length === 1) {
-          const inputs = document.querySelectorAll(".otp-input");
-          if (idx < 5) inputs[idx + 1].focus();
-        }
-      }
-
-      function confirmOTP() {
-        const inputs = document.querySelectorAll(".otp-input");
-        const otp = Array.from(inputs)
-          .map((i) => i.value)
-          .join("");
-        const newPass = document.getElementById("newPassword").value;
-        if (otp.length < 6) {
-          return Swal.fire("Lỗi", "Vui lòng nhập đủ 6 chữ số OTP.", "error");
-        }
-        if (newPass.length < 6) {
-          return Swal.fire("Lỗi", "Mật khẩu tối thiểu 6 ký tự.", "error");
-        }
-        Swal.fire({
-          title: "Thành công!",
-          text: "Mật khẩu đã được đặt lại. Vui lòng đăng nhập lại.",
-          icon: "success",
-          confirmButtonColor: "#FF6B35",
-        }).then(() => showForgot(false));
-      }
-
-      // ---- SOCIAL LOGIN (Demo) ----
-      function socialLogin(provider) {
-        Swal.fire({
-          title: `Đăng nhập với ${provider}`,
-          html: `<p style="color:#475569;font-size:0.9rem;">Tính năng đăng nhập ${provider} đang được tích hợp.<br>Hiện tại sử dụng đăng nhập email.</p>`,
-          icon: "info",
-          confirmButtonColor: "#FF6B35",
-          confirmButtonText: "Đã hiểu",
-        });
-      }
-
-      // ---- TOGGLE PASSWORD ----
-      function togglePassword(id, btn) {
-        const input = document.getElementById(id);
-        const icon = btn.querySelector("i");
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.replace("fa-eye", "fa-eye-slash");
-        } else {
-          input.type = "password";
-          icon.classList.replace("fa-eye-slash", "fa-eye");
-        }
-      }
-
-      // ---- HASH PASSWORD ----
-      async function hashPassword(password) {
-        const msgBuffer = new TextEncoder().encode(password);
-        const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-        return Array.from(new Uint8Array(hashBuffer))
-          .map((b) => b.toString(16).padStart(2, "0"))
-          .join("");
-      }
-
-      // ---- REGISTER ----
-      async function handleRegister() {
-        const name = document.getElementById("regName").value.trim();
-        const email = document.getElementById("regEmail").value.trim();
-        const phone = document.getElementById("regPhone").value.trim();
-        const pass = document.getElementById("regPass").value;
-
-        if (!name || !email || !phone || !pass)
-          return Swal.fire(
-            "Thiếu thông tin",
-            "Vui lòng điền đầy đủ các trường bắt buộc!",
-            "warning",
-          );
-        if (!/^[0-9]{10}$/.test(phone))
-          return Swal.fire(
-            "SĐT không hợp lệ",
-            "Số điện thoại phải đúng 10 chữ số!",
-            "error",
-          );
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-          return Swal.fire(
-            "Email không hợp lệ",
-            "Vui lòng nhập đúng định dạng email!",
-            "error",
-          );
-        if (pass.length < 6)
-          return Swal.fire(
-            "Mật khẩu yếu",
-            "Mật khẩu phải từ 6 ký tự trở lên!",
-            "error",
-          );
-
-        let users = JSON.parse(localStorage.getItem("avivu_users") || "[]");
-        if (users.some((u) => u.email === email))
-          return Swal.fire(
-            "Email đã tồn tại",
-            "Email này đã được đăng ký. Hãy đăng nhập!",
-            "error",
-          );
-
-        const hashedPassword = await hashPassword(pass);
-        users.push({
-          name,
-          email,
-          phone,
-          password: hashedPassword,
-          joinDate: new Date().toISOString(),
-          points: 0,
-        });
-        localStorage.setItem("avivu_users", JSON.stringify(users));
-
-        Swal.fire({
-          title: "🎉 Đăng ký thành công!",
-          html: `Chào mừng <strong>${name}</strong>!<br>Bạn được tặng <strong style="color:#FF6B35;">5% giảm giá</strong> cho lần đặt tour đầu tiên.`,
-          icon: "success",
-          confirmButtonColor: "#FF6B35",
-          confirmButtonText: "Đăng nhập ngay",
-        }).then(() => {
-          document.getElementById("registerForm").reset();
-          // Auto switch to login tab
-          const loginTab = document.querySelector(".tab-btn");
-          switchTab("login", loginTab);
-        });
-      }
-
-      // ---- LOGIN ----
-      async function handleLogin() {
-        const email = document.getElementById("loginEmail").value.trim();
-        const pass = document.getElementById("loginPass").value;
-
-        if (!email || !pass)
-          return Swal.fire(
-            "Thiếu thông tin",
-            "Vui lòng nhập Email và Mật khẩu!",
-            "warning",
-          );
-
-        let users = JSON.parse(localStorage.getItem("avivu_users") || "[]");
-        const user = users.find((u) => u.email === email);
-
-        if (!user) {
-          return Swal.fire({
-            title: "Tài khoản chưa tồn tại!",
-            text: "Email này chưa được đăng ký. Hãy tạo tài khoản để nhận ưu đãi 5% ngay!",
-            icon: "error",
-            showCancelButton: true,
-            confirmButtonText: "Đăng ký ngay",
-            cancelButtonText: "Thử lại",
-            confirmButtonColor: "#FF6B35",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              const regTab = document.querySelectorAll(".tab-btn")[1];
-              switchTab("register", regTab);
-            }
-          });
-        }
-
-        const inputHash = await hashPassword(pass);
-        if (user.password !== inputHash)
-          return Swal.fire(
-            "Sai mật khẩu",
-            'Mật khẩu không chính xác. Dùng "Quên mật khẩu?" nếu cần hỗ trợ.',
-            "error",
-          );
-
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-          }),
-        );
-
-        // Check redirect (e.g. from booking page)
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get("redirect") || "../index.html";
-
-        Swal.fire({
-          title: `Chào mừng trở lại, ${user.name.split(" ").slice(-1)[0]}! 👋`,
-          text: "Đăng nhập thành công. Hành trình mới đang chờ bạn!",
-          icon: "success",
-          confirmButtonColor: "#FF6B35",
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        }).then(() => (window.location.href = redirect));
-      }
-
-      // ---- BACKGROUND SLIDESHOW ----
-      let currentSlide = 0;
-      const slides = document.querySelectorAll(".bg-slide");
-      const dots = document.querySelectorAll(".slide-dot");
-
-      function goSlide(idx) {
-        slides[currentSlide].classList.remove("active");
-        dots[currentSlide].classList.remove("active");
-        // Reset ken burns
-        slides[currentSlide].style.animation = "none";
-        currentSlide = idx;
-        slides[currentSlide].classList.add("active");
-        dots[currentSlide].classList.add("active");
-        // Re-trigger ken burns
-        slides[currentSlide].style.animation = "";
-        void slides[currentSlide].offsetWidth;
-        slides[currentSlide].style.animation = "kenBurns 8s ease-out forwards";
-      }
-      setInterval(() => goSlide((currentSlide + 1) % slides.length), 5500);
-
-      // ---- LIGHT STREAKS ----
-      const streakContainer = document.getElementById("lightStreaks");
-      for (let i = 0; i < 12; i++) {
-        const s = document.createElement("div");
-        s.className = "streak";
-        s.style.left = Math.random() * 100 + "%";
-        s.style.animationDuration = 4 + Math.random() * 8 + "s";
-        s.style.animationDelay = Math.random() * 10 + "s";
-        s.style.opacity = 0.3 + Math.random() * 0.5;
-        if (Math.random() > 0.6) {
-          s.style.background =
-            "linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent)";
-        }
-        streakContainer.appendChild(s);
-      }
-
-      // ---- CANVAS PARTICLES ----
-      const canvas = document.getElementById("particles-canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
-
-      const particles = [];
-      for (let i = 0; i < 55; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: 1 + Math.random() * 2.5,
-          dx: (Math.random() - 0.5) * 0.5,
-          dy: -0.2 - Math.random() * 0.4,
-          alpha: 0.2 + Math.random() * 0.5,
-          color: Math.random() > 0.5 ? "255,107,53" : "255,255,255",
-        });
-      }
-
-      function animParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p) => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
-          ctx.fill();
-          p.x += p.dx;
-          p.y += p.dy;
-          if (p.y < -10) {
-            p.y = canvas.height + 10;
-            p.x = Math.random() * canvas.width;
-          }
-          if (p.x < -10) p.x = canvas.width + 10;
-          if (p.x > canvas.width + 10) p.x = -10;
-        });
-        requestAnimationFrame(animParticles);
-      }
-      animParticles();
-      document.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get("tab") === "register") {
-          const regTab = document.querySelectorAll(".tab-btn")[1];
-          switchTab("register", regTab);
-        }
-      });
-    </script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/login.js"></script>
+</body>
 </html>

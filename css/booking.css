@@ -3,12 +3,6 @@
    Trang đặt tour
    ============================================= */
 
-.navbar {
-  background: rgba(13, 27, 42, 0.95);
-  color: #fff;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-}
-
 .booking-hero {
   position: relative;
   padding: 130px 0 80px;

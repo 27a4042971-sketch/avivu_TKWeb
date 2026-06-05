@@ -5,19 +5,28 @@
  */
 
 // ── KHỞI TẠO AOS ───────────────────────────────────────────────
-AOS.init({ duration: 700, once: true, offset: 60 });
+if (window.AOS) {
+  AOS.init({ duration: 700, once: true, offset: 60 });
+}
 
 // Đóng menu khi click link
-navLinks.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navLinks.classList.remove('open');
+const navLinks = document.getElementById('navLinks');
+const hamburger = document.getElementById('hamburger');
+
+if (navLinks && hamburger) {
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
   });
-});
+}
 
 // ── BACK TO TOP ─────────────────────────────────────────────────
 const backToTop = document.getElementById('backToTop');
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+if (backToTop) {
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 
 // ── COUNTER ANIMATION ───────────────────────────────────────────
 function animateCounter(el) {
@@ -129,7 +138,9 @@ function renderFeaturedTours() {
   }).join('');
 
   // Re-trigger AOS cho card mới
-  AOS.refresh();
+  if (window.AOS) {
+    AOS.refresh();
+  }
 }
 
 // Wishlist toggle
@@ -177,6 +188,7 @@ function renderUserNav() {
 
   const basePath = getBasePath();
   const user = getCurrentUser();
+  const accountPath = `${basePath}account.html`;
 
   if (!user) {
     navActions.innerHTML = `
@@ -202,7 +214,7 @@ function renderUserNav() {
     : 'Tài khoản';
 
   navActions.innerHTML = `
-    <a href="#" class="nav-icon-btn" id="favoriteBtn">
+    <a href="${accountPath}#favorites" class="nav-icon-btn" id="favoriteBtn">
       <i class="fas fa-heart"></i>
       <span>Yêu thích</span>
     </a>
@@ -215,17 +227,17 @@ function renderUserNav() {
       </button>
 
       <div class="account-dropdown" id="accountDropdown">
-        <a href="#">
+        <a href="${accountPath}">
           <i class="fas fa-user"></i>
           Thông tin tài khoản
         </a>
 
-        <a href="#">
+        <a href="${accountPath}#bookings">
           <i class="fas fa-ticket-alt"></i>
           Đơn đặt tour
         </a>
 
-        <a href="#" id="favoriteMenuBtn">
+        <a href="${accountPath}#favorites" id="favoriteMenuBtn">
           <i class="fas fa-heart"></i>
           Mục yêu thích
         </a>

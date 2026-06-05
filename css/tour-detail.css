@@ -8,12 +8,6 @@
 
 /* ── FIX NAVBAR CHO TRANG CON nền tối ───────── */
 /* Đồng bộ với màu header trang chủ và giữ thanh menu giống trang chủ */
-.navbar {
-    background: rgba(13, 27, 42, 0.95);
-    color: #fff;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-}
-
 .navbar .logo,
 .navbar .nav-link,
 .navbar .nav-actions a {
@@ -29,10 +23,6 @@
 .navbar .nav-actions a.btn-primary {
     background: var(--primary);
     color: #fff;
-}
-
-.navbar.scrolled {
-    background: rgba(13, 27, 42, 0.98);
 }
 
 
