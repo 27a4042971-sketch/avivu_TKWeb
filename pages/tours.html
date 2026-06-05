@@ -1,278 +1,432 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danh Sách Tour — AVIVU</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <link rel="stylesheet" href="../css/global.css" /><link rel="stylesheet" href="../css/components.css" /><link rel="stylesheet" href="../css/tours.css" /><link rel="stylesheet" href="../css/responsive.css" />
-</head>
-<body>
-  <!-- Navbar (copy từ index.html, sửa href thành ../) -->
-  <nav class="navbar" id="navbar"><div class="container"><div class="navbar-inner">
-    <a href="../index.html" class="logo"><span class="logo-icon"><i class="fas fa-compass"></i></span><span class="logo-text">Avi<span>vu</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
-      <li><a href="tours.html" class="nav-link active">Tours</a></li>
-      <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-      <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
-    </ul>
-    <div class="nav-actions"><a href="login.html" class="btn-login"><i class="fas fa-user"></i> Đăng nhập</a>
-      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
-    </div>
-  </div></div></nav>
-
-<main class="tours-page">
- <section class="tours-search-header">
-  <div class="container">
-    <div class="search-header-content">
-      <div class="search-header-text">
-        <span class="page-label">
-          <i class="fas fa-suitcase-rolling"></i>
-          Tour Marketplace
-        </span>
-
-        <h1>Tìm tour phù hợp với bạn</h1>
-
-        <p>
-          Lọc nhanh theo điểm đến, ngân sách, thời gian chuyến đi và phong cách du lịch.
-        </p>
-      </div>
-
-      <div class="search-header-stats">
-        <div>
-          <strong>29+</strong>
-          <span>Tour đang mở</span>
-        </div>
-
-        <div>
-          <strong>7</strong>
-          <span>Danh mục</span>
-        </div>
-
-        <div>
-          <strong>4.8</strong>
-          <span>Rating trung bình</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tour-search-panel">
-      <div class="search-field main-search-field">
-        <label>Bạn muốn đi đâu?</label>
-        <div>
-          <i class="fas fa-search"></i>
-          <input
-            type="text"
-            id="heroSearchInput"
-            placeholder="Nhập tên tour, địa điểm..."
-          />
-        </div>
-      </div>
-
-      <div class="search-field">
-        <label>Khởi hành</label>
-        <div>
-          <i class="fas fa-map-marker-alt"></i>
-          <select id="heroDepartureFilter">
-            <option value="">Tất cả</option>
-            <option value="TP.HCM">TP.HCM</option>
-            <option value="Hà Nội">Hà Nội</option>
-            <option value="Đà Nẵng">Đà Nẵng</option>
-            <option value="Nha Trang">Nha Trang</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="search-field">
-        <label>Thời gian</label>
-        <div>
-          <i class="fas fa-calendar-alt"></i>
-          <select id="heroDurationFilter">
-            <option value="">Tất cả</option>
-            <option value="1">1 ngày</option>
-            <option value="2-3">2 - 3 ngày</option>
-            <option value="4-5">4 - 5 ngày</option>
-            <option value="6">Từ 6 ngày</option>
-          </select>
-        </div>
-      </div>
-
-      <button type="button" id="heroSearchBtn" class="tour-search-btn">
-        <i class="fas fa-magnifying-glass"></i>
-        Tìm tour
-      </button>
-    </div>
-
-    <div class="tour-quick-filter">
-      <span>Gợi ý nhanh:</span>
-
-      <button type="button" class="quick-filter-chip" data-category="bien-dao">
-        Biển đảo
-      </button>
-
-      <button type="button" class="quick-filter-chip" data-category="nui-trekking">
-        Trekking
-      </button>
-
-      <button type="button" class="quick-filter-chip" data-category="gia-dinh">
-        Gia đình
-      </button>
-
-      <button type="button" class="quick-filter-chip" data-price="3000000">
-        Dưới 3 triệu
-      </button>
-
-      <button type="button" class="quick-filter-chip" data-sort="rating-desc">
-        Rating cao
-      </button>
-    </div>
-  </div>
-</section>
-
-  <section class="tours-section">
-    <div class="container tours-layout">
-
-      <!-- FILTER SIDEBAR -->
-      <aside class="filter-sidebar">
-        <div class="filter-header">
-          <h3><i class="fas fa-filter"></i> Bộ lọc</h3>
-          <button id="btnResetFilter" class="reset-filter">Xóa lọc</button>
-        </div>
-
-        <div class="filter-group">
-          <h4>Danh mục tour</h4>
-
-          <label><input type="checkbox" name="category" value="bien-dao"> Biển & Đảo</label>
-          <label><input type="checkbox" name="category" value="nui-trekking"> Núi & Trekking</label>
-          <label><input type="checkbox" name="category" value="van-hoa"> Văn hóa & Di sản</label>
-          <label><input type="checkbox" name="category" value="sinh-thai"> Sinh thái</label>
-          <label><input type="checkbox" name="category" value="le-hoi"> Lễ hội</label>
-          <label><input type="checkbox" name="category" value="gia-dinh"> Gia đình</label>
-          <label><input type="checkbox" name="category" value="phuot"> Phượt & Mạo hiểm</label>
-        </div>
-
-        <div class="filter-group">
-          <h4>Khoảng giá</h4>
-          <input type="range" id="priceRange" min="0" max="10000000" step="500000" value="10000000">
-          <p class="price-value">Tối đa: <span id="priceValue">10.000.000đ</span></p>
-        </div>
-
-        <div class="filter-group">
-          <h4>Thời gian chuyến đi</h4>
-          <select id="durationFilter">
-            <option value="">Tất cả</option>
-            <option value="1">1 ngày</option>
-            <option value="2-3">2 - 3 ngày</option>
-            <option value="4-5">4 - 5 ngày</option>
-            <option value="6">Từ 6 ngày</option>
-          </select>
-        </div>
-
-        <div class="filter-group">
-          <h4>Điểm khởi hành</h4>
-          <select id="departureFilter">
-            <option value="">Tất cả</option>
-            <option value="TP.HCM">TP.HCM</option>
-            <option value="Hà Nội">Hà Nội</option>
-            <option value="Đà Nẵng">Đà Nẵng</option>
-            <option value="Nha Trang">Nha Trang</option>
-          </select>
-        </div>
-      </aside>
-
-      <!-- TOUR CONTENT -->
-      <div class="tours-content">
-        <div class="tours-toolbar">
-          <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Tìm kiếm tour, địa điểm...">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách tour — avivu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/tours.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body>
+    <!-- Navbar (copy từ index.html, sửa href thành ../) -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="navbar-inner">
+          <a href="../index.html" class="logo" aria-label="avivu - Trang chủ"
+            ><span class="logo-icon"><i class="fas fa-compass"></i></span
+            ><span class="logo-text">avivu</span></a
+          >
+          <ul class="nav-links" id="navLinks">
+            <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+            <li><a href="tours.html" class="nav-link active">Tours</a></li>
+            <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
+            <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+          </ul>
+          <div class="nav-actions">
+            <a href="login.html" class="btn-login"
+              ><i class="fas fa-user"></i> Đăng nhập</a
+            >
+            <button class="hamburger" id="hamburger" aria-label="Mở menu">
+              <span></span><span></span><span></span>
+            </button>
           </div>
+        </div>
+      </div>
+    </nav>
 
-          <div class="toolbar-actions">
-            <select id="sortSelect">
-              <option value="newest">Mới nhất</option>
-              <option value="price-asc">Giá tăng dần</option>
-              <option value="price-desc">Giá giảm dần</option>
-              <option value="rating-desc">Rating cao nhất</option>
-            </select>
+    <main class="tours-page">
+      <section class="tours-search-header">
+        <div class="container">
+          <div class="search-header-content">
+            <div class="search-header-text">
+              <span class="page-label">
+                <i class="fas fa-suitcase-rolling"></i>
+                Tour marketplace
+              </span>
 
-            <div class="view-toggle">
-              <button id="gridViewBtn" class="active" title="Grid view">
-                <i class="fas fa-th-large"></i>
-              </button>
-              <button id="listViewBtn" title="List view">
-                <i class="fas fa-list"></i>
-              </button>
+              <h1>Tìm tour phù hợp với bạn</h1>
+
+              <p>
+                Lọc nhanh theo điểm đến, ngân sách, thời gian chuyến đi và phong
+                cách du lịch.
+              </p>
+            </div>
+
+            <div class="search-header-stats">
+              <div>
+                <strong>29+</strong>
+                <span>Tour đang mở</span>
+              </div>
+
+              <div>
+                <strong>7</strong>
+                <span>Danh mục</span>
+              </div>
+
+              <div>
+                <strong>4.8</strong>
+                <span>Rating trung bình</span>
+              </div>
             </div>
           </div>
+
+          <div class="tour-search-panel">
+            <div class="search-field main-search-field">
+              <label>Bạn muốn đi đâu?</label>
+              <div>
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="heroSearchInput"
+                  placeholder="Nhập tên tour, địa điểm..."
+                />
+              </div>
+            </div>
+
+            <div class="search-field">
+              <label>Khởi hành</label>
+              <div>
+                <i class="fas fa-map-marker-alt"></i>
+                <select id="heroDepartureFilter">
+                  <option value="">Tất cả</option>
+                  <option value="TP.HCM">TP.HCM</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Nha Trang">Nha Trang</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="search-field">
+              <label>Thời gian</label>
+              <div>
+                <i class="fas fa-calendar-alt"></i>
+                <select id="heroDurationFilter">
+                  <option value="">Tất cả</option>
+                  <option value="1">1 ngày</option>
+                  <option value="2-3">2 - 3 ngày</option>
+                  <option value="4-5">4 - 5 ngày</option>
+                  <option value="6">Từ 6 ngày</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="button" id="heroSearchBtn" class="tour-search-btn">
+              <i class="fas fa-magnifying-glass"></i>
+              Tìm tour
+            </button>
+          </div>
+
+          <div class="tour-quick-filter">
+            <span>Gợi ý nhanh:</span>
+
+            <button
+              type="button"
+              class="quick-filter-chip"
+              data-category="bien-dao"
+            >
+              Biển đảo
+            </button>
+
+            <button
+              type="button"
+              class="quick-filter-chip"
+              data-category="nui-trekking"
+            >
+              Trekking
+            </button>
+
+            <button
+              type="button"
+              class="quick-filter-chip"
+              data-category="gia-dinh"
+            >
+              Gia đình
+            </button>
+
+            <button
+              type="button"
+              class="quick-filter-chip"
+              data-price="3000000"
+            >
+              Dưới 3 triệu
+            </button>
+
+            <button
+              type="button"
+              class="quick-filter-chip"
+              data-sort="rating-desc"
+            >
+              Rating cao
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="tours-section">
+        <div class="container tours-layout">
+          <!-- FILTER SIDEBAR -->
+          <aside class="filter-sidebar">
+            <div class="filter-header">
+              <h3><i class="fas fa-filter"></i> Bộ lọc</h3>
+              <button id="btnResetFilter" class="reset-filter">Xóa lọc</button>
+            </div>
+
+            <div class="filter-group">
+              <h4>Danh mục tour</h4>
+
+              <label
+                ><input type="checkbox" name="category" value="bien-dao" /> Biển
+                & Đảo</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="nui-trekking" />
+                Núi & Trekking</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="van-hoa" /> Văn
+                hóa & Di sản</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="sinh-thai" />
+                Sinh thái</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="le-hoi" /> Lễ
+                hội</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="gia-dinh" /> Gia
+                đình</label
+              >
+              <label
+                ><input type="checkbox" name="category" value="phuot" /> Phượt &
+                Mạo hiểm</label
+              >
+            </div>
+
+            <div class="filter-group">
+              <h4>Khoảng giá</h4>
+              <input
+                type="range"
+                id="priceRange"
+                min="0"
+                max="10000000"
+                step="500000"
+                value="10000000"
+              />
+              <p class="price-value">
+                Tối đa: <span id="priceValue">10.000.000đ</span>
+              </p>
+            </div>
+
+            <div class="filter-group">
+              <h4>Thời gian chuyến đi</h4>
+              <select id="durationFilter">
+                <option value="">Tất cả</option>
+                <option value="1">1 ngày</option>
+                <option value="2-3">2 - 3 ngày</option>
+                <option value="4-5">4 - 5 ngày</option>
+                <option value="6">Từ 6 ngày</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <h4>Điểm khởi hành</h4>
+              <select id="departureFilter">
+                <option value="">Tất cả</option>
+                <option value="TP.HCM">TP.HCM</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Nha Trang">Nha Trang</option>
+              </select>
+            </div>
+          </aside>
+
+          <!-- TOUR CONTENT -->
+          <div class="tours-content">
+            <div class="tours-toolbar">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Tìm kiếm tour, địa điểm..."
+                />
+              </div>
+
+              <div class="toolbar-actions">
+                <select id="sortSelect">
+                  <option value="newest">Mới nhất</option>
+                  <option value="price-asc">Giá tăng dần</option>
+                  <option value="price-desc">Giá giảm dần</option>
+                  <option value="rating-desc">Rating cao nhất</option>
+                </select>
+
+                <div class="view-toggle">
+                  <button id="gridViewBtn" class="active" title="Grid view">
+                    <i class="fas fa-th-large"></i>
+                  </button>
+                  <button id="listViewBtn" title="List view">
+                    <i class="fas fa-list"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-header">
+              <h2>Tour phù hợp</h2>
+              <p id="resultCount">Đang tải...</p>
+            </div>
+            <div id="activeFilters" class="active-filters"></div>
+            <div id="resultSummaryBar" class="result-summary-bar">
+              <div class="summary-item">
+                <span class="summary-icon">
+                  <i class="fas fa-suitcase-rolling"></i>
+                </span>
+                <div>
+                  <strong id="summaryTotal">0</strong>
+                  <small>Tour phù hợp</small>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-icon">
+                  <i class="fas fa-tags"></i>
+                </span>
+                <div>
+                  <strong id="summaryMinPrice">0đ</strong>
+                  <small>Giá thấp nhất</small>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-icon">
+                  <i class="fas fa-star"></i>
+                </span>
+                <div>
+                  <strong id="summaryBestRating">0</strong>
+                  <small>Rating cao nhất</small>
+                </div>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-icon">
+                  <i class="fas fa-table-cells-large"></i>
+                </span>
+                <div>
+                  <strong id="summaryViewMode">Grid</strong>
+                  <small>Kiểu hiển thị</small>
+                </div>
+              </div>
+            </div>
+
+            <div id="toursGrid" class="tours-grid-page"></div>
+
+            <div id="emptyState" class="empty-state" style="display: none">
+              <i class="fas fa-map-marked-alt"></i>
+              <h3>Không tìm thấy tour phù hợp</h3>
+              <p>Hãy thử đổi từ khóa hoặc xóa bớt bộ lọc.</p>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="../index.html" class="logo">
+              <span class="logo-icon"><i class="fas fa-compass"></i></span>
+              <span class="logo-text">avivu</span>
+            </a>
+            <p>
+              Chúng tôi mang đến những hành trình khám phá Việt Nam tuyệt vời
+              nhất — từ biển đảo xanh ngát đến núi rừng hùng vĩ.
+            </p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+              <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Liên kết nhanh</h4>
+            <ul>
+              <li><a href="../index.html">Trang chủ</a></li>
+              <li><a href="tours.html">Danh sách tour</a></li>
+              <li><a href="about.html">Về chúng tôi</a></li>
+              <li><a href="contact.html">Liên hệ</a></li>
+              <li><a href="login.html">Đăng nhập</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Danh mục tour</h4>
+            <ul>
+              <li><a href="tours.html?cat=bien-dao">🏖️ Biển & Đảo</a></li>
+              <li>
+                <a href="tours.html?cat=nui-trekking">🏔️ Núi & Trekking</a>
+              </li>
+              <li><a href="tours.html?cat=van-hoa">🏛️ Văn Hóa & Di Sản</a></li>
+              <li><a href="tours.html?cat=sinh-thai">🌿 Sinh Thái</a></li>
+              <li><a href="tours.html?cat=phuot">🎒 Phượt & Mạo Hiểm</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Liên hệ</h4>
+            <ul class="footer-contact">
+              <li>
+                <i class="fas fa-map-marker-alt"></i
+                ><span>12 Chùa Bộc, P. Kim Liên, TP Hà Nội</span>
+              </li>
+              <li><i class="fas fa-phone"></i><span>1900 1234</span></li>
+              <li>
+                <i class="fas fa-envelope"></i><span>hello@avivu.vn</span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i
+                ><span>Thứ 2 – Chủ nhật: 8:00 – 20:00</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="result-header">
-          <h2>Tour phù hợp</h2>
-          <p id="resultCount">Đang tải...</p>
+        <div class="footer-bottom">
+          <span>© 2026 avivu. Tất cả quyền được bảo lưu.</span>
+          <span>Thiết kế bởi Nhóm 4 — Học phần Thiết kế Web</span>
         </div>
-        <div id="activeFilters" class="active-filters"></div>
-        <div id="resultSummaryBar" class="result-summary-bar">
-  <div class="summary-item">
-    <span class="summary-icon">
-      <i class="fas fa-suitcase-rolling"></i>
-    </span>
-    <div>
-      <strong id="summaryTotal">0</strong>
-      <small>Tour phù hợp</small>
-    </div>
-  </div>
-
-  <div class="summary-item">
-    <span class="summary-icon">
-      <i class="fas fa-tags"></i>
-    </span>
-    <div>
-      <strong id="summaryMinPrice">0đ</strong>
-      <small>Giá thấp nhất</small>
-    </div>
-  </div>
-
-  <div class="summary-item">
-    <span class="summary-icon">
-      <i class="fas fa-star"></i>
-    </span>
-    <div>
-      <strong id="summaryBestRating">0</strong>
-      <small>Rating cao nhất</small>
-    </div>
-  </div>
-
-  <div class="summary-item">
-    <span class="summary-icon">
-      <i class="fas fa-table-cells-large"></i>
-    </span>
-    <div>
-      <strong id="summaryViewMode">Grid</strong>
-      <small>Kiểu hiển thị</small>
-    </div>
-  </div>
-</div>
-
-        <div id="toursGrid" class="tours-grid-page"></div>
-
-        <div id="emptyState" class="empty-state" style="display:none;">
-          <i class="fas fa-map-marked-alt"></i>
-          <h3>Không tìm thấy tour phù hợp</h3>
-          <p>Hãy thử đổi từ khóa hoặc xóa bớt bộ lọc.</p>
-        </div>
-
-        <div class="pagination" id="pagination"></div>
       </div>
+    </footer>
 
-    </div>
-  </section>
-</main>
-
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script src="../js/data/tours-data.js"></script>
-  <script src="../js/tours.js"></script>
-  <script src="../js/main.js"></script>
-</body></html>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="../js/data/tours-data.js"></script>
+    <script src="../js/tours.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
