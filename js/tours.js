@@ -1,5 +1,5 @@
 ﻿/**
- * AVIVU — tours.js
+ * avivu — tours.js
  * Trang danh sách tour
  */
 
@@ -14,6 +14,7 @@ const tourPageState = {
   currentPage: 1,
   itemsPerPage: 6
 };
+
 const tourCategoryNames = {
   'bien-dao': 'Biển đảo',
   'nui-trekking': 'Trekking',
@@ -31,13 +32,20 @@ const tourSortNames = {
   'rating-desc': 'Rating cao'
 };
 
+const tourDurationNames = {
+  '1': '1 ngày',
+  '2-3': '2 - 3 ngày',
+  '4-5': '4 - 5 ngày',
+  '6': 'Từ 6 ngày'
+};
+
 function formatTourPrice(price) {
-  return price.toLocaleString('vi-VN') + 'đ';
+  return Number(price).toLocaleString('vi-VN') + 'đ';
 }
 
 function getDurationDays(durationText) {
-  const match = durationText.match(/\d+/);
-  return match ? parseInt(match[0]) : 0;
+  const match = String(durationText).match(/\d+/);
+  return match ? parseInt(match[0], 10) : 0;
 }
 
 function matchDuration(tour) {
@@ -51,6 +59,91 @@ function matchDuration(tour) {
   if (tourPageState.duration === '6') return days >= 6;
 
   return true;
+}
+
+function initTourStateFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  const category = params.get('cat') || params.get('category');
+  const search = params.get('q') || params.get('search');
+  const departure = params.get('departure');
+  const duration = params.get('duration');
+  const sort = params.get('sort');
+  const price = params.get('price');
+
+  if (category && tourCategoryNames[category]) {
+    tourPageState.categories = [category];
+  }
+
+  if (search) {
+    tourPageState.search = search.trim();
+  }
+
+  if (departure) {
+    tourPageState.departure = departure;
+  }
+
+  if (duration && tourDurationNames[duration]) {
+    tourPageState.duration = duration;
+  }
+
+  if (sort && tourSortNames[sort]) {
+    tourPageState.sort = sort;
+  }
+
+  if (price && !Number.isNaN(parseInt(price, 10))) {
+    tourPageState.maxPrice = parseInt(price, 10);
+  }
+}
+
+function syncControlsFromState() {
+  const searchInput = document.getElementById('searchInput');
+  const heroSearchInput = document.getElementById('heroSearchInput');
+  const priceRange = document.getElementById('priceRange');
+  const priceValue = document.getElementById('priceValue');
+  const durationFilter = document.getElementById('durationFilter');
+  const heroDurationFilter = document.getElementById('heroDurationFilter');
+  const departureFilter = document.getElementById('departureFilter');
+  const heroDepartureFilter = document.getElementById('heroDepartureFilter');
+  const sortSelect = document.getElementById('sortSelect');
+  const gridViewBtn = document.getElementById('gridViewBtn');
+  const listViewBtn = document.getElementById('listViewBtn');
+
+  if (searchInput) searchInput.value = tourPageState.search;
+  if (heroSearchInput) heroSearchInput.value = tourPageState.search;
+
+  document.querySelectorAll('input[name="category"]').forEach(cb => {
+    cb.checked = tourPageState.categories.includes(cb.value);
+  });
+
+  document.querySelectorAll('.quick-filter-chip').forEach(chip => {
+    const category = chip.dataset.category;
+    const price = chip.dataset.price;
+    const sort = chip.dataset.sort;
+
+    chip.classList.toggle(
+      'active',
+      (category && tourPageState.categories.includes(category)) ||
+      (price && tourPageState.maxPrice === parseInt(price, 10)) ||
+      (sort && tourPageState.sort === sort)
+    );
+  });
+
+  if (priceRange) priceRange.value = tourPageState.maxPrice;
+  if (priceValue) priceValue.textContent = formatTourPrice(tourPageState.maxPrice);
+
+  if (durationFilter) durationFilter.value = tourPageState.duration;
+  if (heroDurationFilter) heroDurationFilter.value = tourPageState.duration;
+
+  if (departureFilter) departureFilter.value = tourPageState.departure;
+  if (heroDepartureFilter) heroDepartureFilter.value = tourPageState.departure;
+
+  if (sortSelect) sortSelect.value = tourPageState.sort;
+
+  if (gridViewBtn && listViewBtn) {
+    gridViewBtn.classList.toggle('active', tourPageState.view === 'grid');
+    listViewBtn.classList.toggle('active', tourPageState.view === 'list');
+  }
 }
 
 function getFilteredTours() {
@@ -178,6 +271,7 @@ function renderPagination(totalPages) {
 
   pagination.innerHTML = html;
 }
+
 function renderResultSummary(filteredTours) {
   const summaryTotal = document.getElementById('summaryTotal');
   const summaryMinPrice = document.getElementById('summaryMinPrice');
@@ -203,6 +297,81 @@ function renderResultSummary(filteredTours) {
   summaryMinPrice.textContent = formatTourPrice(minPrice);
   summaryBestRating.textContent = bestRating.toFixed(1);
   summaryViewMode.textContent = tourPageState.view === 'list' ? 'List' : 'Grid';
+}
+
+function renderActiveFilters() {
+  const activeFilters = document.getElementById('activeFilters');
+  if (!activeFilters) return;
+
+  const tags = [];
+
+  if (tourPageState.search.trim()) {
+    tags.push(`
+      <span class="active-filter-tag">
+        Từ khóa: <strong>${tourPageState.search}</strong>
+        <button type="button" data-filter-type="search" aria-label="Xóa từ khóa">
+          ×
+        </button>
+      </span>
+    `);
+  }
+
+  tourPageState.categories.forEach(category => {
+    tags.push(`
+      <span class="active-filter-tag">
+        Danh mục: <strong>${tourCategoryNames[category] || category}</strong>
+        <button type="button" data-filter-type="category" data-filter-value="${category}" aria-label="Xóa danh mục">
+          ×
+        </button>
+      </span>
+    `);
+  });
+
+  if (tourPageState.maxPrice < 10000000) {
+    tags.push(`
+      <span class="active-filter-tag">
+        Giá tối đa: <strong>${formatTourPrice(tourPageState.maxPrice)}</strong>
+        <button type="button" data-filter-type="price" aria-label="Xóa lọc giá">
+          ×
+        </button>
+      </span>
+    `);
+  }
+
+  if (tourPageState.duration) {
+    tags.push(`
+      <span class="active-filter-tag">
+        Thời gian: <strong>${tourDurationNames[tourPageState.duration]}</strong>
+        <button type="button" data-filter-type="duration" aria-label="Xóa thời gian">
+          ×
+        </button>
+      </span>
+    `);
+  }
+
+  if (tourPageState.departure) {
+    tags.push(`
+      <span class="active-filter-tag">
+        Khởi hành: <strong>${tourPageState.departure}</strong>
+        <button type="button" data-filter-type="departure" aria-label="Xóa điểm khởi hành">
+          ×
+        </button>
+      </span>
+    `);
+  }
+
+  if (tourPageState.sort !== 'newest') {
+    tags.push(`
+      <span class="active-filter-tag">
+        Sắp xếp: <strong>${tourSortNames[tourPageState.sort]}</strong>
+        <button type="button" data-filter-type="sort" aria-label="Xóa sắp xếp">
+          ×
+        </button>
+      </span>
+    `);
+  }
+
+  activeFilters.innerHTML = tags.join('');
 }
 
 function renderTours() {
@@ -237,27 +406,34 @@ function renderTours() {
 
   if (toursToShow.length === 0) {
     grid.innerHTML = '';
-
-    if (emptyState) {
-      emptyState.style.display = 'block';
-    }
+    if (emptyState) emptyState.style.display = 'block';
   } else {
-    if (emptyState) {
-      emptyState.style.display = 'none';
-    }
-
+    if (emptyState) emptyState.style.display = 'none';
     grid.innerHTML = toursToShow.map(renderTourCard).join('');
   }
 
   grid.classList.toggle('list-view', tourPageState.view === 'list');
 
   renderActiveFilters();
-
   renderPagination(totalPages);
 
   if (typeof AOS !== 'undefined') {
     AOS.refresh();
   }
+}
+
+function resetAllFilters() {
+  tourPageState.search = '';
+  tourPageState.categories = [];
+  tourPageState.maxPrice = 10000000;
+  tourPageState.duration = '';
+  tourPageState.departure = '';
+  tourPageState.sort = 'newest';
+  tourPageState.view = 'grid';
+  tourPageState.currentPage = 1;
+
+  syncControlsFromState();
+  renderTours();
 }
 
 function bindTourEvents() {
@@ -283,6 +459,11 @@ function bindTourEvents() {
     searchInput.addEventListener('input', e => {
       tourPageState.search = e.target.value;
       tourPageState.currentPage = 1;
+
+      if (heroSearchInput) {
+        heroSearchInput.value = tourPageState.search;
+      }
+
       renderTours();
     });
   }
@@ -294,13 +475,14 @@ function bindTourEvents() {
         .map(cb => cb.value);
 
       tourPageState.currentPage = 1;
+      syncControlsFromState();
       renderTours();
     });
   });
 
   if (priceRange && priceValue) {
     priceRange.addEventListener('input', e => {
-      tourPageState.maxPrice = parseInt(e.target.value);
+      tourPageState.maxPrice = parseInt(e.target.value, 10);
       priceValue.textContent = formatTourPrice(tourPageState.maxPrice);
       tourPageState.currentPage = 1;
       renderTours();
@@ -311,6 +493,11 @@ function bindTourEvents() {
     durationFilter.addEventListener('change', e => {
       tourPageState.duration = e.target.value;
       tourPageState.currentPage = 1;
+
+      if (heroDurationFilter) {
+        heroDurationFilter.value = tourPageState.duration;
+      }
+
       renderTours();
     });
   }
@@ -319,6 +506,11 @@ function bindTourEvents() {
     departureFilter.addEventListener('change', e => {
       tourPageState.departure = e.target.value;
       tourPageState.currentPage = 1;
+
+      if (heroDepartureFilter) {
+        heroDepartureFilter.value = tourPageState.departure;
+      }
+
       renderTours();
     });
   }
@@ -327,6 +519,7 @@ function bindTourEvents() {
     sortSelect.addEventListener('change', e => {
       tourPageState.sort = e.target.value;
       tourPageState.currentPage = 1;
+      syncControlsFromState();
       renderTours();
     });
   }
@@ -334,231 +527,145 @@ function bindTourEvents() {
   if (gridViewBtn && listViewBtn) {
     gridViewBtn.addEventListener('click', () => {
       tourPageState.view = 'grid';
-      gridViewBtn.classList.add('active');
-      listViewBtn.classList.remove('active');
+      syncControlsFromState();
       renderTours();
     });
 
     listViewBtn.addEventListener('click', () => {
       tourPageState.view = 'list';
-      listViewBtn.classList.add('active');
-      gridViewBtn.classList.remove('active');
+      syncControlsFromState();
       renderTours();
     });
   }
-    quickFilterChips.forEach(chip => {
+
+  quickFilterChips.forEach(chip => {
     chip.addEventListener('click', () => {
-        const category = chip.dataset.category;
-        const price = chip.dataset.price;
-        const sort = chip.dataset.sort;
+      const category = chip.dataset.category;
+      const price = chip.dataset.price;
+      const sort = chip.dataset.sort;
 
-        quickFilterChips.forEach(item => item.classList.remove('active'));
-        chip.classList.add('active');
+      if (category) {
+        if (tourPageState.categories.includes(category)) {
+          tourPageState.categories = [];
+        } else {
+          tourPageState.categories = [category];
+        }
+      }
 
-        if (category) {
-        tourPageState.categories = [category];
+      if (price) {
+        const parsedPrice = parseInt(price, 10);
+        tourPageState.maxPrice = tourPageState.maxPrice === parsedPrice
+          ? 10000000
+          : parsedPrice;
+      }
 
-        categoryCheckboxes.forEach(cb => {
-            cb.checked = cb.value === category;
+      if (sort) {
+        tourPageState.sort = tourPageState.sort === sort
+          ? 'newest'
+          : sort;
+      }
+
+      tourPageState.currentPage = 1;
+      syncControlsFromState();
+      renderTours();
+    });
+  });
+
+  if (heroSearchBtn) {
+    heroSearchBtn.addEventListener('click', () => {
+      if (heroSearchInput) {
+        tourPageState.search = heroSearchInput.value.trim();
+
+        if (searchInput) {
+          searchInput.value = tourPageState.search;
+        }
+      }
+
+      if (heroDepartureFilter) {
+        tourPageState.departure = heroDepartureFilter.value;
+
+        if (departureFilter) {
+          departureFilter.value = tourPageState.departure;
+        }
+      }
+
+      if (heroDurationFilter) {
+        tourPageState.duration = heroDurationFilter.value;
+
+        if (durationFilter) {
+          durationFilter.value = tourPageState.duration;
+        }
+      }
+
+      tourPageState.currentPage = 1;
+      renderTours();
+
+      const toursSection = document.querySelector('.tours-section');
+      if (toursSection) {
+        window.scrollTo({
+          top: toursSection.offsetTop - 90,
+          behavior: 'smooth'
         });
-        }
-
-        if (price) {
-        tourPageState.maxPrice = parseInt(price);
-
-        if (priceRange) {
-            priceRange.value = price;
-        }
-
-        if (priceValue) {
-            priceValue.textContent = formatTourPrice(parseInt(price));
-        }
-        }
-
-        if (sort) {
-        tourPageState.sort = sort;
-
-        if (sortSelect) {
-            sortSelect.value = sort;
-        }
-        }
-
-        tourPageState.currentPage = 1;
-        renderTours();
+      }
     });
+  }
+
+  if (heroSearchInput) {
+    heroSearchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && heroSearchBtn) {
+        heroSearchBtn.click();
+      }
     });
-    if (heroSearchBtn) {
-  heroSearchBtn.addEventListener('click', () => {
-    if (heroSearchInput) {
-      tourPageState.search = heroSearchInput.value.trim();
-
-      if (searchInput) {
-        searchInput.value = tourPageState.search;
-      }
-    }
-
-    if (heroDepartureFilter) {
-      tourPageState.departure = heroDepartureFilter.value;
-
-      if (departureFilter) {
-        departureFilter.value = tourPageState.departure;
-      }
-    }
-
-    if (heroDurationFilter) {
-      tourPageState.duration = heroDurationFilter.value;
-
-      if (durationFilter) {
-        durationFilter.value = tourPageState.duration;
-      }
-    }
-
-    tourPageState.currentPage = 1;
-    renderTours();
-
-    const toursSection = document.querySelector('.tours-section');
-    if (toursSection) {
-      window.scrollTo({
-        top: toursSection.offsetTop - 90,
-        behavior: 'smooth'
-      });
-    }
-  });
-}
-if (heroSearchInput) {
-  heroSearchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && heroSearchBtn) {
-      heroSearchBtn.click();
-    }
-  });
-}
+  }
 
   if (btnResetFilter) {
-    btnResetFilter.addEventListener('click', () => {
-      tourPageState.search = '';
-      tourPageState.categories = [];
-      tourPageState.maxPrice = 10000000;
-      tourPageState.duration = '';
-      tourPageState.departure = '';
-      tourPageState.sort = 'newest';
-      tourPageState.view = 'grid';
-      tourPageState.currentPage = 1;
+    btnResetFilter.addEventListener('click', resetAllFilters);
+  }
 
-      if (searchInput) searchInput.value = '';
-      categoryCheckboxes.forEach(cb => cb.checked = false);
-      if (priceRange) priceRange.value = 10000000;
-      if (priceValue) priceValue.textContent = formatTourPrice(10000000);
-      if (durationFilter) durationFilter.value = '';
-      if (departureFilter) departureFilter.value = '';
-      if (sortSelect) sortSelect.value = 'newest';
-      quickFilterChips.forEach(chip => chip.classList.remove('active'));
+  if (activeFilters) {
+    activeFilters.addEventListener('click', e => {
+      const removeBtn = e.target.closest('button[data-filter-type]');
+      if (!removeBtn) return;
 
-      if (heroSearchInput) heroSearchInput.value = '';
-      if (heroDepartureFilter) heroDepartureFilter.value = '';
-      if (heroDurationFilter) heroDurationFilter.value = '';
+      const type = removeBtn.dataset.filterType;
+      const value = removeBtn.dataset.filterValue;
 
-      if (gridViewBtn && listViewBtn) {
-        gridViewBtn.classList.add('active');
-        listViewBtn.classList.remove('active');
+      if (type === 'search') {
+        tourPageState.search = '';
       }
 
+      if (type === 'category') {
+        tourPageState.categories = tourPageState.categories.filter(item => item !== value);
+      }
+
+      if (type === 'price') {
+        tourPageState.maxPrice = 10000000;
+      }
+
+      if (type === 'duration') {
+        tourPageState.duration = '';
+      }
+
+      if (type === 'departure') {
+        tourPageState.departure = '';
+      }
+
+      if (type === 'sort') {
+        tourPageState.sort = 'newest';
+      }
+
+      tourPageState.currentPage = 1;
+      syncControlsFromState();
       renderTours();
     });
   }
-  if (activeFilters) {
-  activeFilters.addEventListener('click', e => {
-    const removeBtn = e.target.closest('button[data-filter-type]');
-    if (!removeBtn) return;
-
-    const type = removeBtn.dataset.filterType;
-    const value = removeBtn.dataset.filterValue;
-
-    if (type === 'search') {
-      tourPageState.search = '';
-
-      const searchInput = document.getElementById('searchInput');
-      const heroSearchInput = document.getElementById('heroSearchInput');
-
-      if (searchInput) searchInput.value = '';
-      if (heroSearchInput) heroSearchInput.value = '';
-    }
-
-    if (type === 'category') {
-      tourPageState.categories = tourPageState.categories.filter(item => item !== value);
-
-      document.querySelectorAll('input[name="category"]').forEach(cb => {
-        if (cb.value === value) {
-          cb.checked = false;
-        }
-      });
-
-      document.querySelectorAll('.quick-filter-chip').forEach(chip => {
-        if (chip.dataset.category === value) {
-          chip.classList.remove('active');
-        }
-      });
-    }
-
-    if (type === 'price') {
-      tourPageState.maxPrice = 10000000;
-
-      const priceRange = document.getElementById('priceRange');
-      const priceValue = document.getElementById('priceValue');
-
-      if (priceRange) priceRange.value = 10000000;
-      if (priceValue) priceValue.textContent = formatTourPrice(10000000);
-
-      document.querySelectorAll('.quick-filter-chip').forEach(chip => {
-        if (chip.dataset.price) {
-          chip.classList.remove('active');
-        }
-      });
-    }
-
-    if (type === 'duration') {
-      tourPageState.duration = '';
-
-      const durationFilter = document.getElementById('durationFilter');
-      const heroDurationFilter = document.getElementById('heroDurationFilter');
-
-      if (durationFilter) durationFilter.value = '';
-      if (heroDurationFilter) heroDurationFilter.value = '';
-    }
-
-    if (type === 'departure') {
-      tourPageState.departure = '';
-
-      const departureFilter = document.getElementById('departureFilter');
-      const heroDepartureFilter = document.getElementById('heroDepartureFilter');
-
-      if (departureFilter) departureFilter.value = '';
-      if (heroDepartureFilter) heroDepartureFilter.value = '';
-    }
-
-    if (type === 'sort') {
-      tourPageState.sort = 'newest';
-
-      const sortSelect = document.getElementById('sortSelect');
-      if (sortSelect) sortSelect.value = 'newest';
-
-      document.querySelectorAll('.quick-filter-chip').forEach(chip => {
-        if (chip.dataset.sort) {
-          chip.classList.remove('active');
-        }
-      });
-    }
-
-    tourPageState.currentPage = 1;
-    renderTours();
-  });
-}
 
   if (pagination) {
     pagination.addEventListener('click', e => {
       const pageButton = e.target.closest('button[data-page]');
       if (!pageButton) return;
 
-      tourPageState.currentPage = parseInt(pageButton.dataset.page);
+      tourPageState.currentPage = parseInt(pageButton.dataset.page, 10);
       renderTours();
 
       const toursSection = document.querySelector('.tours-section');
@@ -573,6 +680,8 @@ if (heroSearchInput) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initTourStateFromUrl();
   bindTourEvents();
+  syncControlsFromState();
   renderTours();
 });

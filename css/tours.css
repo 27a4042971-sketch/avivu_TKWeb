@@ -325,11 +325,48 @@
    ============================================= */
 
 .tours-search-header {
-  padding: 120px 0 36px;
+  position: relative;
+  padding: 125px 0 42px;
   background:
-    linear-gradient(135deg, rgba(255, 107, 53, 0.10), rgba(255, 255, 255, 0.95)),
-    linear-gradient(180deg, #fff, #f7f8fb);
-  border-bottom: 1px solid var(--border);
+    linear-gradient(135deg, rgba(13, 27, 42, 0.78), rgba(26, 83, 92, 0.58)),
+    url("../assets/images/banners/tours-banner.jpg") center/cover no-repeat;
+  border-bottom: none;
+  color: #fff;
+  overflow: hidden;
+}
+
+.tours-search-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 209, 102, 0.28), transparent 35%);
+  pointer-events: none;
+}
+
+.tours-search-header .container {
+  position: relative;
+  z-index: 1;
+}
+
+.tours-search-header .search-header-text h1,
+.tours-search-header .search-header-text p {
+  color: #fff;
+}
+
+.tours-search-header .page-label {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+.tours-search-header .search-header-stats div {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.tours-search-header .search-header-stats strong,
+.tours-search-header .search-header-stats span {
+  color: #fff;
 }
 
 .search-header-content {
@@ -346,22 +383,24 @@
   gap: 8px;
   padding: 8px 14px;
   border-radius: 999px;
-  background: var(--primary-bg);
-  color: var(--primary);
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
   font-weight: 800;
   margin-bottom: 14px;
+  backdrop-filter: blur(8px);
 }
 
 .search-header-text h1 {
   font-family: var(--font-heading);
   font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 1.1;
-  color: var(--text);
+  color: #fff;
   margin-bottom: 10px;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
 }
 
 .search-header-text p {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.86);
   font-size: 1.02rem;
   max-width: 620px;
 }
@@ -375,9 +414,10 @@
   min-width: 112px;
   padding: 16px 18px;
   border-radius: 18px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(10px);
 }
 
 .search-header-stats strong {
@@ -479,8 +519,7 @@
 }
 
 .tour-quick-filter span {
-  color: var(--text-muted);
-  font-weight: 700;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .quick-filter-chip {
