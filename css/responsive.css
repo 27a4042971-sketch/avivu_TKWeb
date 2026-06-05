@@ -22,6 +22,9 @@
 @media (max-width: 768px) {
   .nav-links        { display: none; }
   .hamburger        { display: flex; }
+  .logo-icon        { width: 36px; height: 36px; border-radius: 10px; }
+  .logo-text        { font-size: 1.45rem; }
+
 
   /* Mobile menu open */
   .nav-links.open {
@@ -58,6 +61,11 @@
 /* ── SMALL MOBILE (≤ 480px) ─────────────────── */
 @media (max-width: 480px) {
   :root { --container-pad: 16px; }
+
+  .logo             { gap: 8px; }
+  .logo-icon        { width: 34px; height: 34px; font-size: 0.95rem; }
+  .logo-text        { font-size: 1.32rem; }
+  .btn-login        { padding: 8px 14px; font-size: 0.82rem; }
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid      { grid-template-columns: 1fr; }
   .section         { padding: var(--sp-12) 0; }
