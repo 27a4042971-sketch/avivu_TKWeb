@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const galleryImages = [
         currentTour.image,
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-        "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80",
-        "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80"
+        `../assets/images/tours/${currentTour.id}/${currentTour.id}.2.jpg`,
+        `../assets/images/tours/${currentTour.id}/${currentTour.id}.3.jpg`,
+        `../assets/images/tours/${currentTour.id}/${currentTour.id}.4.jpg`
     ];
     let activeImgIndex = 0;
 
@@ -84,6 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('sidebar-price-text').innerText = basePrice.toLocaleString('vi-VN') + 'đ';
         document.getElementById('base-price-lbl').innerText = basePrice.toLocaleString('vi-VN') + 'đ';
         document.getElementById('total-price-lbl').innerText = basePrice.toLocaleString('vi-VN') + 'đ';
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                if (window.history.length > 1 && document.referrer.includes(window.location.hostname)) {
+                    window.history.back();
+                } else {
+                    window.location.href = 'tours.html';
+                }
+            });
+        }
 
         // Gallery ảnh
         const mainImgTag = document.getElementById('main-img');

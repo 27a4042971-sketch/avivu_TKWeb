@@ -84,6 +84,20 @@ if (newsletterForm) {
   });
 }
 
+// ── HELPER ĐƯỜNG DẪN ẢNH TOUR ────────────────────────────────────────
+function resolveTourImagePath(imagePath) {
+  if (!imagePath) return '';
+  if (/^(https?:\/\/|\/)/.test(imagePath)) return imagePath;
+
+  // Trang chủ index.html tải tours-data.js từ thư mục gốc,
+  // còn các trang trong pages/ dùng ../assets/... đúng.
+  if (!window.location.pathname.includes('/pages/')) {
+    return imagePath.replace(/^\.\.\//, '');
+  }
+
+  return imagePath;
+}
+
 // ── RENDER FEATURED TOURS ────────────────────────────────────────
 // Lấy 6 tour đầu từ tours-data.js để hiển thị trên trang chủ
 function renderFeaturedTours() {
@@ -91,10 +105,12 @@ function renderFeaturedTours() {
   if (!grid || typeof toursData === 'undefined') return;
 
   const featured = toursData.slice(0, 6);
-  grid.innerHTML = featured.map(tour => `
+  grid.innerHTML = featured.map(tour => {
+    const imageSrc = resolveTourImagePath(tour.image);
+    return `
     <div class="tour-card" data-aos="fade-up">
       <div class="card-img-wrap">
-        <img src="${tour.image}" alt="${tour.name}" loading="lazy" />
+        <img src="${imageSrc}" alt="${tour.name}" loading="lazy" />
         ${tour.badge ? `<span class="card-badge badge badge-${tour.badgeType}">${tour.badge}</span>` : ''}
         <button class="card-wishlist" aria-label="Yêu thích"><i class="far fa-heart"></i></button>
       </div>
@@ -123,7 +139,8 @@ function renderFeaturedTours() {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   // Re-trigger AOS cho card mới
   AOS.refresh();
