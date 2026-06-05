@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết tour — avivu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/tour-detail.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-inner">
+            <a href="../index.html" class="logo" aria-label="avivu - Trang chủ">
+                <span class="logo-icon"><i class="fas fa-compass"></i></span>
+                <span class="logo-text">avivu</span>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="tours.html" class="nav-link active">Tours</a></li>
+                <li><a href="about.html" class="nav-link">Giới thiệu</a></li>
+                <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-primary">
+                    <i class="far fa-user"></i> <span>Đăng nhập</span>
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Mở menu">      
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li><a href="tours.html">Tours</a></li>
+                <li class="active" id="breadcrumb-current">Chi tiết tour</li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="detail-gallery-section">
+        <div class="container">
+            <div class="detail-gallery">
+                <div class="gallery-thumbs" id="thumb-container"></div>
+
+                <div class="gallery-main" id="trigger-lightbox">
+                    <img id="main-img" src="" alt="Tour Image Main">
+                    <span class="gallery-badge">
+                        <i class="fas fa-expand-arrows-alt"></i> Xem toàn màn hình
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container tour-detail-container">
+        <div class="tour-detail-main">
+            <div class="tour-summary-card">
+                <h1 class="detail-title" id="tour-title">Đang tải tên tour...</h1>
+
+                <div class="detail-meta">
+                    <span id="tour-location"><i class="fas fa-map-marker-alt"></i> </span>
+                    <span id="tour-duration"><i class="far fa-clock"></i> </span>
+                    <span id="tour-departure"><i class="fas fa-paper-plane"></i> </span>
+                    <div class="rating" id="tour-rating-top"></div>
+                </div>
+            </div>
+            <div class="tour-about">
+                <h2>Giới thiệu điểm đến</h2>
+                <p id="tour-description">Đang tải thông tin điểm đến...</p>
+            </div>
+
+            <div class="detail-tabs">
+                <div class="tabs-nav">
+                    <button class="tab-btn active" data-tab="tab-overview">Tổng quan</button>
+                    <button class="tab-btn" data-tab="tab-itinerary">Lịch trình</button>
+                    <button class="tab-btn" data-tab="tab-reviews">Đánh giá</button>
+                    <button class="tab-btn" data-tab="tab-policies">Chính sách</button>
+                </div>
+                
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="tab-overview">
+                        <h3 class="tab-heading">Điểm nổi bật của hành trình</h3>
+                        <div id="overview-content"></div>
+                    </div>
+                    
+                    <div class="tab-pane" id="tab-itinerary">
+                        <h3 class="tab-heading">Lịch trình chi tiết</h3>
+                        <div class="itinerary-timeline" id="itinerary-list">
+                            </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="tab-reviews">
+                        <h3 class="tab-heading">Khách hàng đánh giá</h3>
+                        <div class="reviews-summary">
+                            <div class="summary-score" id="summary-score-num">0.0</div>
+                            <div class="summary-info">
+                                <div class="stars" id="summary-stars"></div>
+                                <span id="summary-count">Dựa trên 0 đánh giá</span>
+                            </div>
+                        </div>
+                        <div class="reviews-list" id="comments-list">
+                            </div>
+                    </div>
+                    
+                    <div class="tab-pane" id="tab-policies">
+                        <h3 class="tab-heading">Chính sách & Điều khoản áp dụng</h3>
+                        <div id="policies-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="tour-detail-sidebar">
+            <div class="booking-sticky-card">
+                <div class="sidebar-card-header">
+                    <h3>Đặt tour nhanh</h3>
+                    <p>Chọn ngày, số khách và gói ăn để nhận giá ngay.</p>
+                </div>
+                <div class="sidebar-card-price">
+                    <small>Giá từ</small>
+                    <strong id="sidebar-price-text">0đ</strong>
+                </div>
+                
+                <form id="booking-sidebar-form">
+                    <div class="form-item">
+                        <label for="booking-date"><i class="far fa-calendar-alt"></i> Ngày khởi hành</label>
+                        <input type="text" id="booking-date" placeholder="Chọn ngày đi" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="booking-end-date"><i class="far fa-calendar-alt"></i> Ngày kết thúc</label>
+                        <input type="text" id="booking-end-date" placeholder="Chọn ngày về" required>
+                    </div>
+                    
+                    <div class="form-item">
+                        <label><i class="fas fa-users"></i> Số lượng khách hành</label>
+                        <div class="quantity-control">
+                            <button type="button" class="ctrl-btn" id="minus-user">-</button>
+                            <input type="number" id="qty-count" value="1" min="1" max="20" readonly>
+                            <button type="button" class="ctrl-btn" id="plus-user">+</button>
+                        </div>
+                    </div>
+
+                    <div class="invoice-summary">
+                        <div class="invoice-row">
+                            <span>Giá vé gốc (1 khách)</span>
+                            <span id="base-price-lbl">0đ</span>
+                        </div>
+                        <div class="invoice-row total-row">
+                            <span>Tổng thanh toán</span>
+                            <strong id="total-price-lbl">0đ</strong>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit-booking">
+                        Đặt tour ngay <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </aside>
+    </main>
+
+    <section class="related-section">
+        <div class="container">
+            <div class="section-title text-center">
+                <span class="sub">Gợi ý dành cho bạn</span>
+                <h2>Các Tour Liên Quan Khác</h2>
+            </div>
+            <div class="tour-grid" id="related-tours-container">
+                </div>
+        </div>
+    </section>
+
+    <div class="lightbox-overlay" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <button class="lightbox-arrow arrow-left" id="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+        <img class="lightbox-img" id="lightbox-img-source" src="" alt="Fullscreen image">
+        <button class="lightbox-arrow arrow-right" id="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="../index.html" class="logo" aria-label="avivu - Trang chủ">
+                        <span class="logo-icon"><i class="fas fa-compass"></i></span>
+                        <span class="logo-text">avivu</span>
+                    </a>
+                    <p>Chúng tôi mang đến những hành trình khám phá Việt Nam tuyệt vời nhất — từ biển đảo xanh ngát đến núi rừng hùng vĩ.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Liên kết nhanh</h4>
+                    <ul>
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="tours.html">Danh sách tour</a></li>
+                        <li><a href="about.html">Về chúng tôi</a></li>
+                        <li><a href="contact.html">Liên hệ</a></li>
+                        <li><a href="login.html">Đăng nhập</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Danh mục tour</h4>
+                    <ul>
+                        <li><a href="tours.html?cat=bien-dao">🏖️ Biển & Đảo</a></li>
+                        <li><a href="tours.html?cat=nui-trekking">🏔️ Núi & Trekking</a></li>
+                        <li><a href="tours.html?cat=van-hoa">🏛️ Văn Hóa & Di Sản</a></li>
+                        <li><a href="tours.html?cat=sinh-thai">🌿 Sinh Thái</a></li>
+                        <li><a href="tours.html?cat=phuot">🎒 Phượt & Mạo Hiểm</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Liên hệ</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i><span>123 Nguyễn Huệ, Q.1, TP.HCM</span></li>
+                        <li><i class="fas fa-phone"></i><span>1900 1234</span></li>
+                        <li><i class="fas fa-envelope"></i><span>hello@avivu.vn</span></li>
+                        <li><i class="fas fa-clock"></i><span>Thứ 2 – Thứ 7: 8:00 – 18:00</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 avivu. Tất cả quyền được bảo lưu.</span>
+                <span>Thiết kế bởi Nhóm 4 — Học phần Thiết kế Web</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../js/data/tours-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/tour-detail.js"></script>
+</body>
+</html>

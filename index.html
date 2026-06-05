@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="avivu - Khám phá Việt Nam với những tour du lịch tuyệt vời. Biển đảo, núi rừng, văn hóa, sinh thái và nhiều hơn nữa."
+    />
+    <title>avivu — Khám Phá Việt Nam</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- AOS Scroll Animations -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+
+  <body>
+    <!-- ================================================
+       NAVBAR
+       ================================================ -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="navbar-inner">
+          <a href="index.html" class="logo" aria-label="avivu - Trang chủ">
+            <span class="logo-icon"><i class="fas fa-compass"></i></span>
+            <span class="logo-text">avivu</span>
+          </a>
+
+          <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" class="nav-link active">Trang chủ</a></li>
+            <li><a href="pages/tours.html" class="nav-link">Tours</a></li>
+            <li class="dropdown">
+              <a href="#" class="nav-link"
+                >Điểm đến <i class="fas fa-chevron-down"></i
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="pages/tours.html?region=north">Miền Bắc</a></li>
+                <li>
+                  <a href="pages/tours.html?region=central">Miền Trung</a>
+                </li>
+                <li><a href="pages/tours.html?region=south">Miền Nam</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="pages/about.html" class="nav-link">Về chúng tôi</a>
+            </li>
+            <li><a href="pages/contact.html" class="nav-link">Liên hệ</a></li>
+          </ul>
+
+          <div class="nav-actions">
+            <a href="pages/login.html" class="btn-login" id="loginBtn">
+              <i class="fas fa-user"></i> Đăng nhập
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Mở menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================================================
+       HERO SECTION — Slider 3 slide
+       ================================================ -->
+    <section class="hero" id="hero">
+      <!-- Slide 1: Ha Long -->
+      <div
+        class="hero-slide active"
+        style="
+          background-image: url(&quot;assets/images/hero/hero-ha-long.jpg&quot;);
+        "
+      >
+        <div class="slide-overlay"></div>
+        <div class="slide-content container">
+          <span class="slide-label">Vịnh Hạ Long, Quảng Ninh</span>
+          <h1>Khám Phá <br /><em>Kỳ Quan Thiên Nhiên</em></h1>
+          <p>
+            Hòa mình vào vẻ đẹp hùng vĩ của Di sản Thế giới UNESCO với hơn 1.600
+            hòn đảo đá vôi kỳ bí.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 2: Hoi An -->
+      <div
+        class="hero-slide"
+        style="
+          background-image: url(&quot;assets/images/hero/hero-hoi-an.jpg&quot;);
+        "
+      >
+        <div class="slide-overlay"></div>
+        <div class="slide-content container">
+          <span class="slide-label">Phố Cổ Hội An, Quảng Nam</span>
+          <h1>Đắm Chìm Trong <br /><em>Văn Hóa Cổ Kính</em></h1>
+          <p>
+            Ánh đèn lồng lung linh soi sáng những con phố cổ trầm mặc với hơn
+            400 năm lịch sử.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 3: Sapa -->
+      <div
+        class="hero-slide"
+        style="
+          background-image: url(&quot;assets/images/hero/hero-sapa.jpg&quot;);
+        "
+      >
+        <div class="slide-overlay"></div>
+        <div class="slide-content container">
+          <span class="slide-label">Sa Pa, Lào Cai</span>
+          <h1>Chinh Phục <br /><em>Những Đỉnh Cao</em></h1>
+          <p>
+            Băng qua những thửa ruộng bậc thang xanh mướt, chạm tay vào mây trời
+            ở nơi 3.143 mét.
+          </p>
+        </div>
+      </div>
+
+      <!-- Search Bar (trên tất cả slide) -->
+      <div class="hero-search-wrap">
+        <div class="container">
+          <form class="hero-search" id="heroSearchForm">
+            <div class="search-field">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <label for="searchDest">Điểm đến</label>
+                <select id="searchDest">
+                  <option value="">Chọn điểm đến</option>
+                  <option>Vịnh Hạ Long</option>
+                  <option>Phú Quốc</option>
+                  <option>Đà Nẵng - Hội An</option>
+                  <option>Sa Pa</option>
+                  <option>Côn Đảo</option>
+                  <option>Đà Lạt</option>
+                  <option>Nha Trang</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-field">
+              <i class="fas fa-calendar-alt"></i>
+              <div>
+                <label for="searchDate">Ngày khởi hành</label>
+                <input type="date" id="searchDate" />
+              </div>
+            </div>
+            <div class="search-field">
+              <i class="fas fa-users"></i>
+              <div>
+                <label for="searchGuests">Số người</label>
+                <select id="searchGuests">
+                  <option value="1">1 người</option>
+                  <option value="2" selected>2 người</option>
+                  <option value="3">3 người</option>
+                  <option value="4">4 người</option>
+                  <option value="5">5+ người</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-search">
+              <i class="fas fa-search"></i> Tìm Tour
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="hero-dots" id="heroDots">
+        <button
+          class="hero-dot active"
+          data-index="0"
+          aria-label="Slide 1"
+        ></button>
+        <button class="hero-dot" data-index="1" aria-label="Slide 2"></button>
+        <button class="hero-dot" data-index="2" aria-label="Slide 3"></button>
+      </div>
+
+      <!-- Arrows -->
+      <div class="hero-arrows">
+        <button class="hero-arrow" id="heroPrev" aria-label="Slide trước">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="hero-arrow" id="heroNext" aria-label="Slide sau">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span>Cuộn xuống</span>
+      </div>
+    </section>
+
+    <!-- ================================================
+       DANH MỤC TOUR
+       ================================================ -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-label">Khám phá theo sở thích</span>
+          <h2>Danh Mục Tour Du Lịch</h2>
+          <p>Tìm kiếm hành trình phù hợp với bạn từ 7 danh mục tour đa dạng</p>
+        </div>
+        <div class="categories-grid" data-aos="fade-up" data-aos-delay="100">
+          <div class="category-card" onclick="goToTours('bien-dao')">
+            <div class="category-icon">🏖️</div>
+            <h4>Biển & Đảo</h4>
+            <small>5 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('nui-trekking')">
+            <div class="category-icon">🏔️</div>
+            <h4>Núi & Trekking</h4>
+            <small>4 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('van-hoa')">
+            <div class="category-icon">🏛️</div>
+            <h4>Văn Hóa & Di Sản</h4>
+            <small>5 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('sinh-thai')">
+            <div class="category-icon">🌿</div>
+            <h4>Sinh Thái</h4>
+            <small>4 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('le-hoi')">
+            <div class="category-icon">🎉</div>
+            <h4>Lễ Hội</h4>
+            <small>3 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('gia-dinh')">
+            <div class="category-icon">👨‍👩‍👧</div>
+            <h4>Gia Đình</h4>
+            <small>4 tours</small>
+          </div>
+
+          <div class="category-card" onclick="goToTours('phuot')">
+            <div class="category-icon">🎒</div>
+            <h4>Phượt & Mạo Hiểm</h4>
+            <small>4 tours</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       TOUR NỔI BẬT
+       ================================================ -->
+    <section class="section section-alt" id="featured-tours">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-label">Được yêu thích nhất</span>
+          <h2>Tour Nổi Bật</h2>
+          <p>
+            Những hành trình được hàng nghìn du khách tin chọn và đánh giá cao
+            nhất
+          </p>
+        </div>
+
+        <div class="tours-grid" id="featuredToursGrid">
+          <!-- Tour cards được render bởi JS (main.js) từ tours-data.js -->
+          <!-- Xem js/data/tours-data.js để biết cấu trúc dữ liệu -->
+        </div>
+
+        <div class="view-all-wrap" data-aos="fade-up">
+          <a href="pages/tours.html" class="btn btn-outline">
+            Xem tất cả tours <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       ĐIỂM ĐẾN NỔI BẬT
+       ================================================ -->
+    <section class="section" id="destinations">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-label">Điểm đến hot</span>
+          <h2>Khám Phá Điểm Đến</h2>
+          <p>
+            Những địa danh tuyệt đẹp không thể bỏ qua trên dải đất hình chữ S
+          </p>
+        </div>
+
+        <div class="destinations-grid" data-aos="fade-up" data-aos-delay="100">
+          <div class="dest-card">
+            <img
+              src="assets/images/destinations/ha-long.jpg"
+              alt="Vịnh Hạ Long"
+              loading="lazy"
+            />
+            <div class="dest-overlay"></div>
+            <div class="dest-info">
+              <h3>Vịnh Hạ Long</h3>
+              <span
+                ><i class="fas fa-map-marker-alt"></i> Quảng Ninh · 5
+                tours</span
+              >
+            </div>
+          </div>
+
+          <div class="dest-card">
+            <img
+              src="assets/images/destinations/hoi-an.jpg"
+              alt="Hội An"
+              loading="lazy"
+            />
+            <div class="dest-overlay"></div>
+            <div class="dest-info">
+              <h3>Phố Cổ Hội An</h3>
+              <span
+                ><i class="fas fa-map-marker-alt"></i> Quảng Nam · 3 tours</span
+              >
+            </div>
+          </div>
+
+          <div class="dest-card">
+            <img
+              src="assets/images/destinations/phu-quoc.jpg"
+              alt="Phú Quốc"
+              loading="lazy"
+            />
+            <div class="dest-overlay"></div>
+            <div class="dest-info">
+              <h3>Đảo Phú Quốc</h3>
+              <span
+                ><i class="fas fa-map-marker-alt"></i> Kiên Giang · 4
+                tours</span
+              >
+            </div>
+          </div>
+
+          <div class="dest-card">
+            <img
+              src="assets/images/destinations/sapa.jpg"
+              alt="Sa Pa"
+              loading="lazy"
+            />
+            <div class="dest-overlay"></div>
+            <div class="dest-info">
+              <h3>Sa Pa</h3>
+              <span
+                ><i class="fas fa-map-marker-alt"></i> Lào Cai · 3 tours</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       THỐNG KÊ
+       ================================================ -->
+    <section class="stats-section" id="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+            <span class="stat-number" data-target="29">0</span>
+            <p>Tours đặc sắc</p>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+            <span class="stat-number" data-target="12000">0</span>
+            <p>Khách hàng hài lòng</p>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <span class="stat-number" data-target="45">0</span>
+            <p>Điểm đến</p>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+            <span class="stat-number" data-target="5">0</span>
+            <p>Năm kinh nghiệm</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       TẠI SAO CHỌN AVIVU
+       ================================================ -->
+    <section class="section section-alt" id="why-us">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-label">Lý do tin chọn</span>
+          <h2>Tại Sao Chọn avivu?</h2>
+          <p>Chúng tôi cam kết mang đến hành trình đáng nhớ nhất cho bạn</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Đảm Bảo An Toàn</h4>
+            <p>
+              Đội ngũ hướng dẫn viên chuyên nghiệp, bảo hiểm du lịch toàn diện
+              cho mọi tour.
+            </p>
+          </div>
+
+          <div class="why-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="why-icon"><i class="fas fa-tag"></i></div>
+            <h4>Giá Tốt Nhất</h4>
+            <p>
+              Cam kết giá cạnh tranh, nhiều ưu đãi hấp dẫn và chính sách hoàn
+              tiền minh bạch.
+            </p>
+          </div>
+
+          <div class="why-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="why-icon"><i class="fas fa-headset"></i></div>
+            <h4>Hỗ Trợ 24/7</h4>
+            <p>
+              Đội ngũ tư vấn sẵn sàng hỗ trợ bạn mọi lúc, trước và trong suốt
+              chuyến đi.
+            </p>
+          </div>
+
+          <div class="why-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="why-icon"><i class="fas fa-route"></i></div>
+            <h4>Lịch Trình Linh Hoạt</h4>
+            <p>
+              Tùy chỉnh tour theo nhu cầu, thiết kế hành trình riêng biệt phù
+              hợp với bạn.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       ĐÁNH GIÁ KHÁCH HÀNG
+       ================================================ -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <span class="section-label">Khách hàng nói gì</span>
+          <h2>Đánh Giá Từ Du Khách</h2>
+          <p>
+            Hơn 12.000 khách hàng đã tin tưởng và hài lòng với dịch vụ của avivu
+          </p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testi-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="testi-quote"><i class="fas fa-quote-left"></i></div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <strong>5.0</strong>
+            </div>
+            <p class="testi-text">
+              Tour Hạ Long 3 ngày thực sự tuyệt vời! Hướng dẫn viên nhiệt tình,
+              thuyền sang trọng và đồ ăn ngon. Nhất định sẽ quay lại với avivu!
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/100?img=1"
+                alt="Nguyễn Thị Lan"
+              />
+              <div>
+                <div class="testi-name">Nguyễn Thị Lan</div>
+                <div class="testi-tour">Tour Vịnh Hạ Long 3N2Đ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="testi-quote"><i class="fas fa-quote-left"></i></div>
+            <div class="rating">
+              <span class="stars">★★★★★</span>
+              <strong>5.0</strong>
+            </div>
+            <p class="testi-text">
+              Gia đình tôi đã có một kỳ nghỉ không thể nào quên ở Phú Quốc. Dịch
+              vụ đặt tour dễ dàng, nhanh chóng, giá cả hợp lý. Cảm ơn avivu rất
+              nhiều!
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/100?img=5"
+                alt="Trần Văn Minh"
+              />
+              <div>
+                <div class="testi-name">Trần Văn Minh</div>
+                <div class="testi-tour">Tour Phú Quốc 4N3Đ</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="testi-quote"><i class="fas fa-quote-left"></i></div>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <strong>4.8</strong>
+            </div>
+            <p class="testi-text">
+              Cung đường Tây Bắc 6 ngày đẹp hơn mọi kỳ vọng. Hướng dẫn viên am
+              hiểu văn hóa địa phương, giúp chúng tôi có những trải nghiệm thực
+              sự chân thật.
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/100?img=9"
+                alt="Lê Thị Hương"
+              />
+              <div>
+                <div class="testi-name">Lê Thị Hương</div>
+                <div class="testi-tour">Tour Vòng Cung Tây Bắc</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       NEWSLETTER
+       ================================================ -->
+    <section class="newsletter-section" id="newsletter">
+      <div class="container">
+        <div data-aos="fade-up">
+          <span
+            class="section-label"
+            style="background: rgba(255, 255, 255, 0.2); color: #fff"
+            >Ưu đãi độc quyền</span
+          >
+          <h2>Nhận Ngay Ưu Đãi Du Lịch</h2>
+          <p>
+            Đăng ký nhận bản tin để không bỏ lỡ các tour giảm giá và điểm đến
+            mới hàng tuần
+          </p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input
+              type="email"
+              id="newsletterEmail"
+              placeholder="Nhập địa chỉ email của bạn..."
+              required
+            />
+            <button type="submit">
+              Đăng Ký Ngay <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+       FOOTER
+       ================================================ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Brand -->
+          <div class="footer-brand">
+            <a href="index.html" class="logo" aria-label="avivu - Trang chủ">
+              <span class="logo-icon"><i class="fas fa-compass"></i></span>
+              <span class="logo-text">avivu</span>
+            </a>
+            <p>
+              Chúng tôi mang đến những hành trình khám phá Việt Nam tuyệt vời
+              nhất — từ biển đảo xanh ngát đến núi rừng hùng vĩ.
+            </p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" aria-label="YouTube"
+                ><i class="fab fa-youtube"></i
+              ></a>
+              <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-col">
+            <h4>Liên kết nhanh</h4>
+            <ul>
+              <li><a href="index.html">Trang chủ</a></li>
+              <li><a href="pages/tours.html">Danh sách tour</a></li>
+              <li><a href="pages/about.html">Về chúng tôi</a></li>
+              <li><a href="pages/contact.html">Liên hệ</a></li>
+              <li><a href="pages/login.html">Đăng nhập</a></li>
+            </ul>
+          </div>
+
+          <!-- Danh mục -->
+          <div class="footer-col">
+            <h4>Danh mục tour</h4>
+            <ul>
+              <li><a href="pages/tours.html?cat=bien-dao">🏖️ Biển & Đảo</a></li>
+              <li>
+                <a href="pages/tours.html?cat=nui-trekking"
+                  >🏔️ Núi & Trekking</a
+                >
+              </li>
+              <li>
+                <a href="pages/tours.html?cat=van-hoa">🏛️ Văn Hóa & Di Sản</a>
+              </li>
+              <li><a href="pages/tours.html?cat=sinh-thai">🌿 Sinh Thái</a></li>
+              <li>
+                <a href="pages/tours.html?cat=phuot">🎒 Phượt & Mạo Hiểm</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div class="footer-col">
+            <h4>Liên hệ</h4>
+            <ul class="footer-contact">
+              <li>
+                <i class="fas fa-map-marker-alt"></i
+                ><span>12 Chùa Bộc, phường Kim Liên, TP Hà Nội</span>
+              </li>
+              <li><i class="fas fa-phone"></i><span>1900 1234</span></li>
+              <li>
+                <i class="fas fa-envelope"></i><span>hello@avivu.vn</span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i
+                ><span>Thứ 2 – Chủ nhật: 8:00 – 20:00</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 avivu. Tất cả quyền được bảo lưu.</span>
+          <span>Thiết kế bởi Nhóm 4 — Học phần Thiết kế Web</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" aria-label="Về đầu trang">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ================================================
+       SCRIPTS
+       ================================================ -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="js/data/tours-data.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
