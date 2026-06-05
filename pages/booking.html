@@ -1,26 +1,737 @@
-﻿<!DOCTYPE html><html lang="vi"><head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đặt Tour — AVIVU</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/global.css" /><link rel="stylesheet" href="../css/components.css" /><link rel="stylesheet" href="../css/booking.css" /><link rel="stylesheet" href="../css/responsive.css" />
-</head><body>
-  <nav class="navbar" id="navbar"><div class="container"><div class="navbar-inner">
-    <a href="../index.html" class="logo"><span class="logo-icon"><i class="fas fa-compass"></i></span><span class="logo-text">Avi<span>vu</span></span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
-      <li><a href="tours.html" class="nav-link">Tours</a></li>
-      <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
-      <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
-    </ul>
-    <div class="nav-actions"><a href="login.html" class="btn-login"><i class="fas fa-user"></i> Đăng nhập</a>
-      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Đặt tour — avivu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/booking.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="../index.html" class="logo" aria-label="avivu - Trang chủ">
+          <span class="logo-icon"><i class="fas fa-compass"></i></span>
+          <span class="logo-text">avivu</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html" class="nav-link">Trang chủ</a></li>
+          <li><a href="tours.html" class="nav-link">Tours</a></li>
+          <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
+          <li><a href="contact.html" class="nav-link">Liên hệ</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn-login" id="loginBtn">
+            <i class="fas fa-user"></i>
+            <span id="loginBtnText">Đăng nhập</span>
+          </a>
+
+          <button class="hamburger" id="hamburger" aria-label="Mở menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
     </div>
-  </div></div></nav>
-  <div style="padding:160px 0 80px;text-align:center;">
-    <h2>🚧 Trang Đặt Tour (Thành viên D)</h2><p>Multi-step form: Tóm tắt → Thông tin → Xác nhận</p>
-    <a href="tours.html" style="color:#FF6B35;">← Chọn tour khác</a>
-  </div>
+  </nav>
+
+  <section class="booking-hero">
+    <div class="booking-hero-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-stars" id="heroStars"></div>
+
+    <div class="hero-floats">
+      <div class="hero-float-card float-1">
+        <span class="card-icon">🏖️</span>
+        <div>
+          <div>Phú Quốc</div>
+          <div class="card-sub">★ 4.9 · Biển đảo</div>
+        </div>
+      </div>
+
+      <div class="hero-float-card float-2">
+        <span class="card-icon">⛵</span>
+        <div>
+          <div>Vịnh Hạ Long</div>
+          <div class="card-sub">Di sản UNESCO</div>
+        </div>
+      </div>
+
+      <div class="hero-float-card float-3">
+        <span class="card-icon">🏮</span>
+        <div>
+          <div>Hội An</div>
+          <div class="card-sub">Phố cổ lung linh</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="booking-hero-inner">
+        <nav class="booking-breadcrumb" aria-label="breadcrumb">
+          <a href="../index.html">Trang chủ</a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="tours.html">Tours</a>
+          <i class="fas fa-chevron-right"></i>
+          <span>Đặt tour</span>
+        </nav>
+
+        <h1>Đặt chỗ <em>hành trình mơ ước</em></h1>
+        <p>
+          Hoàn tất đặt tour chỉ trong 3 bước — không cần tài khoản, thông tin rõ ràng,
+          xác nhận nhanh chóng.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">29<span>+</span></div>
+            <div class="hero-stat-label">Tour đặc sắc</div>
+          </div>
+
+          <div class="hero-stat">
+            <div class="hero-stat-num">12K<span>+</span></div>
+            <div class="hero-stat-label">Khách hàng</div>
+          </div>
+
+          <div class="hero-stat">
+            <div class="hero-stat-num">4.9<span>★</span></div>
+            <div class="hero-stat-label">Đánh giá</div>
+          </div>
+
+          <div class="hero-stat">
+            <div class="hero-stat-num">3<span> bước</span></div>
+            <div class="hero-stat-label">Đặt nhanh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="booking-layout">
+    <div class="container">
+      <div class="guest-banner" id="guestBanner">
+        <div class="guest-banner-left">
+          <i class="fas fa-bolt"></i>
+          <div>
+            <h5>Đặt tour ngay — không cần tài khoản!</h5>
+            <p>
+              Điền thông tin bên dưới và nhận mã xác nhận. Bạn có thể tạo tài khoản
+              sau để theo dõi lịch trình.
+            </p>
+          </div>
+        </div>
+
+        <div class="guest-banner-actions">
+          <a href="login.html" class="btn-outline-sm">
+            <i class="fas fa-user"></i> Đăng nhập
+          </a>
+          <button class="btn-ghost-sm" type="button" id="continueAsGuestBtn">
+            Tiếp tục không cần TK
+          </button>
+        </div>
+      </div>
+
+      <div class="member-benefits">
+        <div class="benefit-chip"><i class="fas fa-star"></i> Thành viên giảm 5%</div>
+        <div class="benefit-chip"><i class="fas fa-coins"></i> Tích điểm đổi quà</div>
+        <div class="benefit-chip"><i class="fas fa-history"></i> Theo dõi lịch trình</div>
+        <div class="benefit-chip"><i class="fas fa-bell"></i> Ưu đãi độc quyền</div>
+      </div>
+
+      <div class="booking-grid">
+        <div class="booking-main">
+          <div class="progress-wrap">
+            <div class="step-track-container">
+              <div class="progress-rail">
+                <div id="progressBarFill"></div>
+              </div>
+
+              <div class="step-node active" data-step="1">
+                <div class="step-bubble">1</div>
+                <span class="step-node-label">Hành trình</span>
+              </div>
+
+              <div class="step-node" data-step="2">
+                <div class="step-bubble">2</div>
+                <span class="step-node-label">Thông tin</span>
+              </div>
+
+              <div class="step-node" data-step="3">
+                <div class="step-bubble">
+                  <i class="fas fa-check"></i>
+                </div>
+                <span class="step-node-label">Xác nhận</span>
+              </div>
+            </div>
+          </div>
+
+          <section id="step-1" class="step-panel active">
+            <h3 class="step-heading">
+              <i class="fas fa-suitcase-rolling"></i>
+              Bước 1 — Kiểm tra hành trình & chọn ngày khởi hành
+            </h3>
+
+            <div id="tourSummaryCard" class="tour-summary-card">
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line short"></div>
+            </div>
+
+            <div id="tourItinerary" class="tour-itinerary-box" style="display: none;">
+              <div class="itinerary-tabs">
+                <button type="button" class="itinerary-tab active" data-tab="included">
+                  ✅ Đã bao gồm
+                </button>
+                <button type="button" class="itinerary-tab" data-tab="excluded">
+                  ❌ Chưa bao gồm
+                </button>
+                <button type="button" class="itinerary-tab" data-tab="cancel">
+                  📋 Điều khoản hủy
+                </button>
+              </div>
+
+              <div id="tab-included" class="itinerary-panel active">
+                <ul class="include-list" id="includedList"></ul>
+              </div>
+
+              <div id="tab-excluded" class="itinerary-panel">
+                <ul class="include-list">
+                  <li><i class="fas fa-times-circle exc-icon"></i> Chi phí cá nhân, mua sắm, giặt là.</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Tiền tip hướng dẫn viên và tài xế.</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Các bữa ăn ngoài chương trình.</li>
+                  <li><i class="fas fa-times-circle exc-icon"></i> Chi phí phát sinh ngoài lịch trình.</li>
+                </ul>
+              </div>
+
+              <div id="tab-cancel" class="itinerary-panel">
+                <div class="cancellation-box blue">
+                  <h6><i class="fas fa-calendar-times"></i> Chính sách hủy / đổi ngày</h6>
+                  <ul class="policy-list">
+                    <li><i class="fas fa-check"></i> Trên 15 ngày: hoàn 100% tiền cọc.</li>
+                    <li><i class="fas fa-check"></i> Từ 8–14 ngày: hoàn 70% giá trị tour.</li>
+                    <li><i class="fas fa-check"></i> Từ 4–7 ngày: hoàn 50% giá trị tour.</li>
+                    <li><i class="fas fa-times"></i> Dưới 3 ngày hoặc no-show: không hoàn tiền.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="calendar-section">
+              <label><i class="fas fa-calendar-day"></i> Chọn ngày khởi hành *</label>
+
+              <div class="mini-calendar">
+                <div class="cal-header">
+                  <button type="button" id="prevMonthBtn">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <span id="calMonthLabel">Tháng</span>
+                  <button type="button" id="nextMonthBtn">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+
+                <div class="cal-grid" id="calGrid"></div>
+
+                <div class="cal-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot selected"></div> Đã chọn
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot disabled"></div> Hết chỗ
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot weekend"></div> Cuối tuần
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot available"></div> Còn chỗ
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" id="bookingDate" />
+
+              <div id="selectedDateDisplay" class="selected-date-display" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                Đã chọn: <span id="selectedDateText"></span>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="bookingGuests">
+                  <i class="fas fa-user"></i> Khách người lớn *
+                </label>
+                <input
+                  type="number"
+                  id="bookingGuests"
+                  class="form-control"
+                  min="1"
+                  value="1"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="bookingChildren">
+                  <i class="fas fa-child"></i> Trẻ em dưới 12 tuổi
+                </label>
+                <input
+                  type="number"
+                  id="bookingChildren"
+                  class="form-control"
+                  min="0"
+                  value="0"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mealPlan">
+                <i class="fas fa-utensils"></i> Gói ăn uống
+              </label>
+              <select id="mealPlan" class="form-control">
+                <option value="none">Không bao gồm ăn — 0đ</option>
+                <option value="full">Ăn đủ bữa — +180.000đ/khách</option>
+                <option value="luxury">Ăn sang trọng 5★ — +480.000đ/khách</option>
+              </select>
+              <p class="form-hint" id="mealPlanDesc">
+                Quý khách tự túc ăn uống trong suốt hành trình.
+              </p>
+            </div>
+
+            <div id="aiSuggestionBox" class="ai-card">
+              <div class="ai-header">
+                <div class="ai-avatar">
+                  <i class="fas fa-robot"></i>
+                  <span class="ai-online"></span>
+                </div>
+                <div class="ai-meta">
+                  <h5>avivu AI — Trợ lý du lịch thông minh</h5>
+                  <span><i class="fas fa-circle"></i> Đang tư vấn</span>
+                </div>
+              </div>
+              <div class="ai-body" id="aiSuggestionText"></div>
+              <div class="ai-tags">
+                <span><i class="fas fa-bolt"></i> Gợi ý theo mùa</span>
+                <span><i class="fas fa-shield-halved"></i> Tối ưu chi phí</span>
+                <span><i class="fas fa-star"></i> Cá nhân hóa</span>
+              </div>
+            </div>
+
+            <div class="trust-badges">
+              <div class="trust-badge">
+                <i class="fas fa-shield-halved"></i>
+                <div>
+                  <h6>Bảo mật thông tin</h6>
+                  <p>Dữ liệu đặt tour được lưu an toàn trên trình duyệt.</p>
+                </div>
+              </div>
+
+              <div class="trust-badge">
+                <i class="fas fa-bolt"></i>
+                <div>
+                  <h6>Xác nhận nhanh</h6>
+                  <p>Nhận mã đặt chỗ ngay sau khi hoàn tất.</p>
+                </div>
+              </div>
+
+              <div class="trust-badge">
+                <i class="fas fa-headset"></i>
+                <div>
+                  <h6>Hỗ trợ 24/7</h6>
+                  <p>Đội ngũ tư vấn đồng hành cùng bạn.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <div></div>
+              <button type="button" class="btn-wiz btn-primary" id="nextStep1">
+                Tiếp theo <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </section>
+
+          <section id="step-2" class="step-panel">
+            <h3 class="step-heading">
+              <i class="fas fa-user-edit"></i>
+              Bước 2 — Thông tin liên hệ & phương thức thanh toán
+            </h3>
+
+            <div class="form-group">
+              <label for="cusName"><i class="fas fa-user"></i> Họ và tên đầy đủ *</label>
+              <input
+                type="text"
+                id="cusName"
+                class="form-control"
+                placeholder="Ví dụ: Nguyễn Văn An"
+              />
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="cusPhone"><i class="fas fa-phone"></i> Số điện thoại *</label>
+                <input
+                  type="tel"
+                  id="cusPhone"
+                  class="form-control"
+                  placeholder="Nhập đúng 10 chữ số"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="cusEmail"><i class="fas fa-envelope"></i> Email nhận xác nhận *</label>
+                <input
+                  type="email"
+                  id="cusEmail"
+                  class="form-control"
+                  placeholder="example@gmail.com"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cusNote"><i class="fas fa-sticky-note"></i> Ghi chú dịch vụ bổ sung</label>
+              <textarea
+                id="cusNote"
+                class="form-control"
+                placeholder="Yêu cầu đặc biệt: phòng đơn, ăn chay, trẻ em, người cao tuổi..."
+              ></textarea>
+            </div>
+
+            <div class="payment-section">
+              <label>
+                <i class="fas fa-credit-card"></i> Phương thức thanh toán *
+              </label>
+
+              <div class="payment-grid">
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-card" value="card" checked />
+                  <label for="pay-card">
+                    <i class="fas fa-credit-card"></i>
+                    Thẻ tín dụng / ghi nợ
+                  </label>
+                </div>
+
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-qr" value="qr" />
+                  <label for="pay-qr">
+                    <i class="fas fa-qrcode"></i>
+                    Chuyển khoản QR Bank
+                  </label>
+                </div>
+
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-momo" value="momo" />
+                  <label for="pay-momo">
+                    <i class="fas fa-wallet"></i>
+                    Ví MoMo
+                  </label>
+                </div>
+
+                <div class="payment-option">
+                  <input type="radio" name="payMethod" id="pay-zalopay" value="zalopay" />
+                  <label for="pay-zalopay">
+                    <i class="fas fa-mobile-alt"></i>
+                    ZaloPay / VNPay
+                  </label>
+                </div>
+              </div>
+
+              <p class="payment-note">
+                <i class="fas fa-lock"></i>
+                Đây là mô phỏng đặt tour phục vụ bài tập lớn Thiết kế Web, chưa xử lý thanh toán thật.
+              </p>
+            </div>
+
+            <div class="cancellation-box">
+              <h6><i class="fas fa-undo-alt"></i> Chính sách hủy / đổi ngày minh bạch</h6>
+              <ul class="policy-list">
+                <li><i class="fas fa-check"></i> Hủy trên 15 ngày: hoàn 100%.</li>
+                <li><i class="fas fa-check"></i> Hủy 8–14 ngày: hoàn 70%.</li>
+                <li><i class="fas fa-check"></i> Đổi ngày miễn phí lần đầu nếu báo trước 15 ngày.</li>
+              </ul>
+            </div>
+
+            <div class="reviews-section">
+              <div class="reviews-header">
+                <h6><i class="fas fa-comments"></i> Khách hàng nói gì?</h6>
+                <div class="rating-summary">
+                  <span class="rating-big">4.8</span>
+                  <div>
+                    <div class="stars">★★★★★</div>
+                    <div class="review-count">238 đánh giá</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-cards">
+                <div class="review-card">
+                  <div class="review-top">
+                    <div class="reviewer">
+                      <div class="reviewer-avatar">H</div>
+                      <div>
+                        <div class="reviewer-name">Hoàng Minh Tuấn</div>
+                        <div class="reviewer-date">05/2025</div>
+                      </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                  </div>
+                  <div class="review-text">
+                    Tour tuyệt vời, hướng dẫn viên nhiệt tình, khách sạn sạch sẽ.
+                  </div>
+                </div>
+
+                <div class="review-card">
+                  <div class="review-top">
+                    <div class="reviewer">
+                      <div class="reviewer-avatar blue">L</div>
+                      <div>
+                        <div class="reviewer-name">Linh Phương</div>
+                        <div class="reviewer-date">04/2025</div>
+                      </div>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                  </div>
+                  <div class="review-text">
+                    Đặt tour cho gia đình rất thuận tiện, giá rõ ràng.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="btn-wiz btn-secondary" id="prevStep2">
+                <i class="fas fa-arrow-left"></i> Quay lại
+              </button>
+
+              <button type="button" class="btn-wiz btn-primary" id="confirmBookingBtn">
+                Xác nhận đặt tour <i class="fas fa-check"></i>
+              </button>
+            </div>
+          </section>
+
+          <section id="step-3" class="step-panel">
+            <div class="confirmation-wrap">
+              <div class="check-circle">
+                <i class="fas fa-check"></i>
+              </div>
+
+              <h2>Đặt tour thành công! 🎉</h2>
+              <p>avivu đã ghi nhận yêu cầu đặt tour của bạn.</p>
+
+              <div class="code-box">
+                <span>Mã đặt chỗ của bạn:</span>
+                <div id="finalBookingCode">AVI-XXXXXX</div>
+              </div>
+
+              <div class="confirm-details">
+                <div class="confirm-row"><span>Tour:</span><strong id="cfTourName">—</strong></div>
+                <div class="confirm-row"><span>Ngày khởi hành:</span><strong id="cfDate">—</strong></div>
+                <div class="confirm-row"><span>Ngày kết thúc:</span><strong id="cfEndDate">—</strong></div>
+                <div class="confirm-row"><span>Người lớn:</span><strong id="cfAdults">—</strong></div>
+                <div class="confirm-row"><span>Trẻ em:</span><strong id="cfChildren">—</strong></div>
+                <div class="confirm-row"><span>Khách hàng:</span><strong id="cfName">—</strong></div>
+                <div class="confirm-row"><span>Liên hệ:</span><strong id="cfContact">—</strong></div>
+                <div class="confirm-row"><span>Thanh toán:</span><strong id="cfPayMethod">—</strong></div>
+                <div class="confirm-row total"><span>Tổng tiền:</span><strong id="cfTotal">—</strong></div>
+              </div>
+
+              <p class="confirm-note">
+                Chuyên viên sẽ liên hệ qua số điện thoại và email trong vòng 24h để xác nhận lịch trình.
+              </p>
+
+              <div class="account-promo" id="accountPromo">
+                <h6><i class="fas fa-gift"></i> Tạo tài khoản để theo dõi & tích điểm!</h6>
+                <p>
+                  Tạo tài khoản miễn phí để xem lịch sử đặt tour, nhận ưu đãi thành viên và tích điểm.
+                </p>
+                <div class="benefits">
+                  <span><i class="fas fa-check"></i> Giảm 5% lần sau</span>
+                  <span><i class="fas fa-check"></i> Xem lịch sử đặt tour</span>
+                  <span><i class="fas fa-check"></i> Ưu đãi thành viên</span>
+                </div>
+                <a href="login.html?tab=register" class="btn-outline-sm dark">
+                  <i class="fas fa-user-plus"></i> Đăng ký ngay
+                </a>
+              </div>
+
+              <div class="confirm-actions">
+                <a href="tours.html" class="btn-wiz btn-secondary">
+                  <i class="fas fa-compass"></i> Khám phá tour khác
+                </a>
+
+                <button type="button" class="btn-wiz btn-primary" onclick="window.print()">
+                  <i class="fas fa-print"></i> In xác nhận
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="booking-sidebar">
+          <div class="price-card">
+            <div class="price-card-title">
+              <i class="fas fa-receipt"></i>
+              Chi tiết thanh toán
+            </div>
+
+            <hr class="price-divider" />
+
+            <div class="breakdown-row">
+              <span>Tour đã chọn:</span>
+              <strong id="breakdownTourName">—</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Đơn giá / người lớn:</span>
+              <strong id="breakdownBasePrice">0đ</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Người lớn:</span>
+              <strong id="breakdownAdults">1 người</strong>
+            </div>
+
+            <div class="breakdown-row" id="childrenBreakdownRow">
+              <span>Trẻ em:</span>
+              <strong id="breakdownChildren">0 người</strong>
+            </div>
+
+            <div class="breakdown-row" id="mealBreakdownRow">
+              <span>Gói ăn:</span>
+              <strong id="breakdownMeal">Không bao gồm</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Phí dịch vụ & VAT:</span>
+              <strong class="green">Đã bao gồm</strong>
+            </div>
+
+            <div class="breakdown-row total-row">
+              <span>Tổng cộng:</span>
+              <strong id="breakdownTotalPrice">0đ</strong>
+            </div>
+
+            <p class="price-note">
+              *Giá cuối đã bao gồm thuế phí mô phỏng. Không phát sinh chi phí ẩn.
+            </p>
+
+            <div class="price-guarantee">
+              <i class="fas fa-shield-alt"></i>
+              Cam kết thông tin rõ ràng, hỗ trợ nhanh chóng.
+            </div>
+          </div>
+
+          <div class="help-card">
+            <h5><i class="fas fa-headset"></i> Cần tư vấn?</h5>
+            <p>Gọi hotline để được hỗ trợ chọn tour phù hợp nhất.</p>
+            <a href="tel:19001234">
+              <i class="fas fa-phone"></i> 1900 1234
+            </a>
+
+            <div class="security-badges">
+              <div><i class="fas fa-lock"></i> SSL 256-bit</div>
+              <div><i class="fas fa-shield-alt"></i> Bảo mật</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo" aria-label="avivu - Trang chủ">
+            <span class="logo-icon"><i class="fas fa-compass"></i></span>
+            <span class="logo-text">avivu</span>
+          </a>
+          <p>
+            Chúng tôi mang đến những hành trình khám phá Việt Nam tuyệt vời nhất —
+            từ biển đảo xanh ngát đến núi rừng hùng vĩ.
+          </p>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Liên kết nhanh</h4>
+          <ul>
+            <li><a href="../index.html">Trang chủ</a></li>
+            <li><a href="tours.html">Danh sách tour</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li>
+            <li><a href="contact.html">Liên hệ</a></li>
+            <li><a href="login.html">Đăng nhập</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Danh mục tour</h4>
+          <ul>
+            <li><a href="tours.html?cat=bien-dao">🏖️ Biển & Đảo</a></li>
+            <li><a href="tours.html?cat=nui-trekking">🏔️ Núi & Trekking</a></li>
+            <li><a href="tours.html?cat=van-hoa">🏛️ Văn Hóa & Di Sản</a></li>
+            <li><a href="tours.html?cat=sinh-thai">🌿 Sinh Thái</a></li>
+            <li><a href="tours.html?cat=phuot">🎒 Phượt & Mạo Hiểm</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Liên hệ</h4>
+          <ul class="footer-contact">
+            <li><i class="fas fa-map-marker-alt"></i><span>12 Chùa Bộc, P. Kim Liên, TP Hà Nội</span></li>
+            <li><i class="fas fa-phone"></i><span>1900 1234</span></li>
+            <li><i class="fas fa-envelope"></i><span>hello@avivu.vn</span></li>
+            <li><i class="fas fa-clock"></i><span>Thứ 2 – Chủ nhật: 8:00 – 20:00</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 avivu. Tất cả quyền được bảo lưu.</span>
+        <span>Thiết kế bởi Nhóm 4 — Học phần Thiết kế Web</span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Về đầu trang">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../js/data/tours-data.js"></script><script src="../js/booking.js"></script><script src="../js/main.js"></script>
-</body></html>
+  <script src="../js/data/tours-data.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/booking.js"></script>
+</body>
+</html>

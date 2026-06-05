@@ -462,3 +462,94 @@
   padding: var(--sp-5) 0;
   font-size: 0.82rem;
 }
+.btn-register,
+.nav-icon-btn,
+.account-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 9px 16px;
+  border-radius: var(--r-full);
+  font-weight: 600;
+  font-size: 0.86rem;
+  transition: var(--t);
+  white-space: nowrap;
+}
+
+.btn-register:hover,
+.nav-icon-btn:hover,
+.account-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-register {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.account-menu {
+  position: relative;
+}
+
+.account-btn {
+  border: none;
+  cursor: pointer;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  background: #fff;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  display: none;
+  z-index: 500;
+}
+
+.account-dropdown.show {
+  display: block;
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  transition: var(--t-fast);
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  background: var(--primary-bg);
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .btn-register span,
+  .nav-icon-btn span,
+  .account-btn span {
+    display: none;
+  }
+
+  .btn-register,
+  .nav-icon-btn,
+  .account-btn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+}

@@ -7,20 +7,6 @@
 // ── KHỞI TẠO AOS ───────────────────────────────────────────────
 AOS.init({ duration: 700, once: true, offset: 60 });
 
-// ── NAVBAR SCROLL EFFECT ────────────────────────────────────────
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-  backToTop.classList.toggle('visible', window.scrollY > 400);
-});
-
-// ── HAMBURGER MENU ──────────────────────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navLinks.classList.toggle('open');
-});
 // Đóng menu khi click link
 navLinks.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
@@ -164,11 +150,185 @@ function goToTours(category) {
 
 // Chạy khi DOM sẵn sàng
 document.addEventListener('DOMContentLoaded', () => {
-  renderFeaturedTours();
+  renderUserNav();
+  initNavbar();
+  initHamburger();
+  initAccountDropdown();
+  initActiveNavLink();
 
-  // Navbar active link
-  const currentPage = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href')?.includes(currentPage));
-  });
+  renderFeaturedTours();
 });
+// ── NAVBAR / AUTH UI ───────────────────────────────────────────
+function getBasePath() {
+  return window.location.pathname.includes('/pages/') ? '' : 'pages/';
+}
+
+function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function renderUserNav() {
+  const navActions = document.querySelector('.nav-actions');
+  if (!navActions) return;
+
+  const basePath = getBasePath();
+  const user = getCurrentUser();
+
+  if (!user) {
+    navActions.innerHTML = `
+      <a href="${basePath}login.html?tab=register" class="btn-register">
+        <i class="fas fa-user-plus"></i>
+        <span>Đăng ký</span>
+      </a>
+
+      <a href="${basePath}login.html" class="btn-login" id="loginBtn">
+        <i class="fas fa-user"></i>
+        <span id="loginBtnText">Đăng nhập</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
+    `;
+    return;
+  }
+
+  const displayName = user.name
+    ? user.name.trim().split(' ').slice(-1)[0]
+    : 'Tài khoản';
+
+  navActions.innerHTML = `
+    <a href="#" class="nav-icon-btn" id="favoriteBtn">
+      <i class="fas fa-heart"></i>
+      <span>Yêu thích</span>
+    </a>
+
+    <div class="account-menu">
+      <button class="account-btn" type="button" id="accountBtn">
+        <i class="fas fa-user-circle"></i>
+        <span>${displayName}</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+
+      <div class="account-dropdown" id="accountDropdown">
+        <a href="#">
+          <i class="fas fa-user"></i>
+          Thông tin tài khoản
+        </a>
+
+        <a href="#">
+          <i class="fas fa-ticket-alt"></i>
+          Đơn đặt tour
+        </a>
+
+        <a href="#" id="favoriteMenuBtn">
+          <i class="fas fa-heart"></i>
+          Mục yêu thích
+        </a>
+
+        <button type="button" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+          Đăng xuất
+        </button>
+      </div>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Mở menu">
+      <span></span><span></span><span></span>
+    </button>
+  `;
+}
+
+function initNavbar() {
+  const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('backToTop');
+
+  if (navbar) {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+
+  window.addEventListener('scroll', () => {
+    if (navbar) {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }
+
+    if (backToTop) {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    }
+  });
+}
+
+function initHamburger() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  if (!hamburger || !navLinks) return;
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+
+function initAccountDropdown() {
+  const accountBtn = document.getElementById('accountBtn');
+  const accountDropdown = document.getElementById('accountDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const favoriteBtn = document.getElementById('favoriteBtn');
+  const favoriteMenuBtn = document.getElementById('favoriteMenuBtn');
+
+  accountBtn?.addEventListener('click', e => {
+    e.stopPropagation();
+    accountDropdown?.classList.toggle('show');
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.account-menu')) {
+      accountDropdown?.classList.remove('show');
+    }
+  });
+
+  logoutBtn?.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+
+    const basePath = getBasePath();
+    window.location.href = `${basePath}login.html`;
+  });
+
+  function showFavoriteNotice(e) {
+    e.preventDefault();
+
+    alert('Tính năng Mục yêu thích đang được hoàn thiện. Bạn có thể dùng nút tim trên tour để đánh dấu trước.');
+  }
+
+  favoriteBtn?.addEventListener('click', showFavoriteNotice);
+  favoriteMenuBtn?.addEventListener('click', showFavoriteNotice);
+}
+
+function initActiveNavLink() {
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const href = link.getAttribute('href') || '';
+
+    if (
+      href.includes(currentPage) ||
+      (currentPage === '' && href.includes('index.html'))
+    ) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}

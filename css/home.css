@@ -53,46 +53,6 @@
 .slide-content h1 em { color: var(--accent); font-style: normal; }
 .slide-content > p { color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: var(--sp-8); max-width: 520px; }
 
-/* Search bar */
-.hero-search {
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(16px);
-  border-radius: var(--r-xl);
-  padding: var(--sp-3);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  max-width: 780px;
-  box-shadow: var(--shadow-xl);
-}
-.search-field {
-  display: flex; align-items: center; gap: 10px;
-  flex: 1; padding: 10px 16px;
-  border-right: 1px solid var(--border);
-}
-.search-field:last-of-type { border-right: none; }
-.search-field i { color: var(--primary); font-size: 1rem; flex-shrink: 0; }
-.search-field label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; }
-.search-field select,
-.search-field input {
-  border: none; background: transparent;
-  font-size: 0.88rem; color: var(--text-secondary);
-  outline: none; width: 100%; cursor: pointer;
-}
-.btn-search {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--primary);
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: var(--r-lg);
-  font-weight: 700; font-size: 0.95rem;
-  border: none; cursor: pointer;
-  transition: var(--t);
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-.btn-search:hover { background: var(--primary-dark); transform: translateY(-2px); }
-
 /* Slider controls */
 .hero-dots {
   position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
@@ -332,3 +292,43 @@
   transition: var(--t);
 }
 .newsletter-form button:hover { background: var(--primary-dark); }
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: var(--sp-1);
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 24px;
+  border-radius: var(--r-full);
+  font-weight: 800;
+  font-size: 0.92rem;
+  transition: var(--t);
+}
+
+.hero-btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 14px 30px rgba(255, 107, 53, 0.28);
+}
+
+.hero-btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.hero-btn-outline {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.hero-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: translateY(-2px);
+}

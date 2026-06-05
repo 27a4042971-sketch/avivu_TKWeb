@@ -725,7 +725,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const mealPlan = document.getElementById('meal-plan-select')?.value || 'none';
 
         if (!startDate) { alert('Vui lòng chọn ngày khởi hành.'); return; }
-        window.location.href = `booking.html?id=${tourId}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&adults=${adults}&children=${children}&meal=${mealPlan}`;
+        const bookingUrl = `booking.html?id=${tourId}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&adults=${adults}&children=${children}&meal=${mealPlan}`;
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+        if (!currentUser) {
+            alert('Vui lòng đăng nhập để tiếp tục đặt tour.');
+            window.location.href = `login.html?redirect=${encodeURIComponent(bookingUrl)}`;
+            return;
+        }
+
+        window.location.href = bookingUrl;
     });
 
     // ── UTILS ────────────────────────────────────────────────────────
