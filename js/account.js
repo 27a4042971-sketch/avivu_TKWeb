@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBookings();
   renderFavorites();
   bindTabs();
+  openTabFromHash();
   bindProfileForm();
   bindLogout();
 });
@@ -272,25 +273,79 @@ function renderFavorites() {
   const favoriteTours = resolveFavoriteTours(favorites);
 
   list.innerHTML = favoriteTours.map(tour => `
-    <article class="favorite-card">
+  <article class="favorite-card favorite-modern-card">
+    <div class="favorite-image-wrap">
       <img src="${tour.image || '../assets/images/banners/tours-banner.jpg'}" alt="${escapeHtml(tour.name)}">
-      <div class="favorite-body">
-        <h3>${escapeHtml(tour.name)}</h3>
-        <div class="favorite-meta">
-          <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(tour.location || 'Việt Nam')}</span>
+
+      ${tour.badge ? `
+        <span class="favorite-badge">
+          <i class="fas fa-bolt"></i>
+          ${escapeHtml(tour.badge)}
+        </span>
+      ` : ''}
+
+      <button 
+        class="favorite-remove-floating" 
+        type="button" 
+        onclick="removeFavorite('${tour.id}')"
+        aria-label="Xóa khỏi mục yêu thích">
+        <i class="fas fa-heart-crack"></i>
+      </button>
+    </div>
+
+    <div class="favorite-body">
+      <div class="favorite-topline">
+        <span>
+          <i class="fas fa-map-marker-alt"></i>
+          ${escapeHtml(tour.location || 'Việt Nam')}
+        </span>
+
+        <span class="favorite-rating">
+          <i class="fas fa-star"></i>
+          ${tour.rating || '4.8'}
+        </span>
+      </div>
+
+      <h3>${escapeHtml(tour.name)}</h3>
+
+      <div class="favorite-mini-info">
+        <span>
+          <i class="fas fa-clock"></i>
+          ${escapeHtml(tour.duration || 'Đang cập nhật')}
+        </span>
+
+        <span>
+          <i class="fas fa-plane-departure"></i>
+          ${escapeHtml(tour.departure || 'Linh hoạt')}
+        </span>
+      </div>
+
+      <div class="favorite-price-row">
+        <div>
+          <small>Giá từ</small>
           <strong>${formatPrice(tour.price || 0)}</strong>
         </div>
-        <div class="favorite-actions">
-          <a href="tour-detail.html?id=${tour.id}">
-            Xem chi tiết
-          </a>
-          <button type="button" onclick="removeFavorite('${tour.id}')">
-            Xóa
-          </button>
-        </div>
+
+        <span class="favorite-save-chip">
+          <i class="fas fa-bookmark"></i>
+          Đã lưu
+        </span>
       </div>
-    </article>
-  `).join('');
+
+      <div class="favorite-actions">
+        <a href="tour-detail.html?id=${tour.id}">
+          <i class="fas fa-eye"></i>
+          Xem chi tiết
+        </a>
+
+        <a href="booking.html?tourId=${tour.id}" class="favorite-book-btn">
+          <i class="fas fa-calendar-check"></i>
+          Đặt ngay
+        </a>
+      </div>
+    </div>
+  </article>
+`).join('');
 }
 
 function resolveFavoriteTours(favorites) {
@@ -310,27 +365,74 @@ function removeFavorite(tourId) {
   const user = getCurrentUser();
   if (!user) return;
 
-  const users = getUsers();
-  const idx = users.findIndex(item => item.email === user.email);
+  const ok = confirm('Bạn muốn xóa tour này khỏi mục yêu thích?');
+  if (!ok) return;
 
-  if (idx !== -1) {
-    users[idx].favorites = (users[idx].favorites || []).filter(id => String(id) !== String(tourId));
-    saveUsers(users);
+  const card = document
+    .querySelector(`button[onclick="removeFavorite('${tourId}')"]`)
+    ?.closest('.favorite-card');
+
+  if (card) {
+    card.classList.add('favorite-removing');
   }
 
-  try {
-    const globalFavorites = JSON.parse(localStorage.getItem('avivu_favorites') || '[]');
-    const next = globalFavorites.filter(item => {
-      const id = typeof item === 'object' ? item.id : item;
-      return String(id) !== String(tourId);
-    });
-    localStorage.setItem('avivu_favorites', JSON.stringify(next));
-  } catch {
-    // ignore
-  }
+  setTimeout(() => {
+    const users = getUsers();
+    const idx = users.findIndex(item => item.email === user.email);
 
-  renderFavorites();
-  renderAccountStats();
+    if (idx !== -1) {
+      users[idx].favorites = (users[idx].favorites || [])
+        .filter(id => String(id) !== String(tourId));
+      saveUsers(users);
+    }
+
+    try {
+      const globalFavorites = JSON.parse(localStorage.getItem('avivu_favorites') || '[]');
+      const next = globalFavorites.filter(item => {
+        const id = typeof item === 'object' ? item.id : item;
+        return String(id) !== String(tourId);
+      });
+
+      localStorage.setItem('avivu_favorites', JSON.stringify(next));
+
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        localStorage.setItem('currentUser', JSON.stringify({
+          ...currentUser,
+          favorites: next
+        }));
+      }
+    } catch {
+      // ignore
+    }
+
+    renderFavorites();
+    renderAccountStats();
+
+    if (typeof refreshWishlistButtons === 'function') {
+      refreshWishlistButtons();
+    }
+  }, 220);
+}
+function openTabFromHash() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return;
+
+  const tabButton = document.querySelector(`.account-tab[data-tab="${hash}"]`);
+  const panel = document.getElementById(`panel-${hash}`);
+
+  if (!tabButton || !panel) return;
+
+  document.querySelectorAll('.account-tab[data-tab]').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  document.querySelectorAll('.account-panel').forEach(item => {
+    item.classList.remove('active');
+  });
+
+  tabButton.classList.add('active');
+  panel.classList.add('active');
 }
 
 /* =========================

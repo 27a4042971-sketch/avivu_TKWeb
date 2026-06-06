@@ -107,7 +107,13 @@ function renderFeaturedTours() {
       <div class="card-img-wrap">
         <img src="${imageSrc}" alt="${tour.name}" loading="lazy" />
         ${tour.badge ? `<span class="card-badge badge badge-${tour.badgeType}">${tour.badge}</span>` : ''}
-        <button class="card-wishlist" aria-label="Yêu thích"><i class="far fa-heart"></i></button>
+        <button 
+          class="card-wishlist" 
+          type="button"
+          data-wishlist-id="${tour.id}"
+          aria-label="Thêm vào mục yêu thích">
+          <i class="${isTourWishlisted(String(tour.id)) ? 'fas' : 'far'} fa-heart"></i>
+        </button>
       </div>
       <div class="card-body">
         <div class="card-meta">
@@ -143,16 +149,108 @@ function renderFeaturedTours() {
   }
 }
 
-// Wishlist toggle
-document.addEventListener('click', e => {
-  if (e.target.closest('.card-wishlist')) {
-    const btn = e.target.closest('.card-wishlist');
-    const icon = btn.querySelector('i');
-    icon.classList.toggle('far');
-    icon.classList.toggle('fas');
-    btn.style.color = icon.classList.contains('fas') ? '#E53E3E' : '';
+/* =========================
+   WISHLIST GLOBAL
+========================= */
+
+function getWishlistIds() {
+  try {
+    return JSON.parse(localStorage.getItem('avivu_favorites') || '[]')
+      .map(item => typeof item === 'object' ? item.id : item)
+      .map(String);
+  } catch {
+    return [];
   }
+}
+
+function saveWishlistIds(ids) {
+  const uniqueIds = [...new Set(ids.map(String))];
+  localStorage.setItem('avivu_favorites', JSON.stringify(uniqueIds));
+
+  const user = getCurrentUser?.();
+  if (!user) return;
+
+  try {
+    const users = JSON.parse(localStorage.getItem('avivu_users') || '[]');
+    const index = users.findIndex(item => item.email === user.email);
+
+    if (index !== -1) {
+      users[index].favorites = uniqueIds;
+      localStorage.setItem('avivu_users', JSON.stringify(users));
+    }
+
+    localStorage.setItem('currentUser', JSON.stringify({
+      ...user,
+      favorites: uniqueIds
+    }));
+  } catch {
+    // Không làm vỡ giao diện nếu localStorage lỗi
+  }
+}
+
+function isTourWishlisted(tourId) {
+  return getWishlistIds().includes(String(tourId));
+}
+
+function updateWishlistButton(button, isActive) {
+  const icon = button.querySelector('i');
+  if (!icon) return;
+
+  button.classList.toggle('is-wishlisted', isActive);
+  icon.classList.toggle('far', !isActive);
+  icon.classList.toggle('fas', isActive);
+  button.setAttribute(
+    'aria-label',
+    isActive ? 'Bỏ khỏi mục yêu thích' : 'Thêm vào mục yêu thích'
+  );
+}
+
+function refreshWishlistButtons() {
+  document.querySelectorAll('[data-wishlist-id]').forEach(button => {
+    updateWishlistButton(button, isTourWishlisted(button.dataset.wishlistId));
+  });
+}
+
+function toggleWishlist(tourId, button) {
+  const user = getCurrentUser?.();
+
+  if (!user) {
+    const basePath = getBasePath();
+    window.location.href = `${basePath}login.html?redirect=account.html#favorites`;
+    return;
+  }
+
+  let ids = getWishlistIds();
+  const id = String(tourId);
+  const existed = ids.includes(id);
+
+  ids = existed
+    ? ids.filter(item => item !== id)
+    : [...ids, id];
+
+  saveWishlistIds(ids);
+
+  if (button) {
+    updateWishlistButton(button, !existed);
+    button.classList.add('wishlist-pop');
+
+    setTimeout(() => {
+      button.classList.remove('wishlist-pop');
+    }, 450);
+  }
+}
+
+document.addEventListener('click', e => {
+  const button = e.target.closest('[data-wishlist-id]');
+  if (!button) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  toggleWishlist(button.dataset.wishlistId, button);
 });
+
+document.addEventListener('DOMContentLoaded', refreshWishlistButtons);
 
 // Chuyển trang tours với filter danh mục
 function goToTours(category) {
@@ -317,15 +415,6 @@ function initAccountDropdown() {
     const basePath = getBasePath();
     window.location.href = `${basePath}login.html`;
   });
-
-  function showFavoriteNotice(e) {
-    e.preventDefault();
-
-    alert('Tính năng Mục yêu thích đang được hoàn thiện. Bạn có thể dùng nút tim trên tour để đánh dấu trước.');
-  }
-
-  favoriteBtn?.addEventListener('click', showFavoriteNotice);
-  favoriteMenuBtn?.addEventListener('click', showFavoriteNotice);
 }
 
 function initActiveNavLink() {

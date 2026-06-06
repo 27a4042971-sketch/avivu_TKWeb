@@ -558,3 +558,41 @@
     justify-content: center;
   }
 }
+.card-wishlist,
+.compact-heart {
+  overflow: hidden;
+}
+
+.card-wishlist.is-wishlisted,
+.compact-heart.is-wishlisted {
+  background: #ef4444 !important;
+  color: #fff !important;
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.35);
+}
+
+.card-wishlist.is-wishlisted i,
+.compact-heart.is-wishlisted i {
+  color: #fff;
+}
+
+.wishlist-pop {
+  animation: wishlistPop 0.42s ease;
+}
+
+@keyframes wishlistPop {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.22) rotate(-8deg);
+  }
+
+  70% {
+    transform: scale(0.94) rotate(4deg);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

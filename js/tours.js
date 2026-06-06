@@ -203,8 +203,12 @@ function renderTourCard(tour) {
           </span>
         ` : ''}
 
-        <button class="compact-heart" type="button" aria-label="Yêu thích">
-          <i class="far fa-heart"></i>
+        <button 
+          class="compact-heart" 
+          type="button" 
+          data-wishlist-id="${tour.id}"
+          aria-label="Thêm vào mục yêu thích">
+          <i class="${typeof isTourWishlisted === 'function' && isTourWishlisted(String(tour.id)) ? 'fas' : 'far'} fa-heart"></i>
         </button>
       </div>
 
@@ -419,6 +423,9 @@ function renderTours() {
 
   if (typeof AOS !== 'undefined') {
     AOS.refresh();
+  }
+  if (typeof refreshWishlistButtons === 'function') {
+    refreshWishlistButtons();
   }
 }
 
